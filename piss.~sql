@@ -7,8 +7,6 @@ Taken from the PIPS database
 
 */ 
 
-
-
 CREATE TABLE PHIC_201 (
     ID_NO           VARCHAR(16) CHARACTER SET NONE NOT NULL,
     L_NAME          VARCHAR(30) CHARACTER SET NONE,
