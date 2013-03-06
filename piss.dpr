@@ -1,15 +1,20 @@
 program piss;
 
+{%File 'db\piss-sp.sql'}
+{%File 'db\piss.sql'}
+{%File 'db\piss-data.txt'}
+{%File 'db\piss-triggers.sql'}
+
 uses
   Forms,
-  main in 'main.pas' {Form1},
-  dm in 'dm.pas' {DataModule1: TDataModule};
+  main in 'main.pas' {FormMain},
+  data_module in 'data_module.pas' {dm: TDataModule};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(Tdm, dm);
+  Application.CreateForm(TFormMain, FormMain);
   Application.Run;
 end.

@@ -1,4 +1,4 @@
-unit dm;
+unit data_module;
 
 interface
 
@@ -6,7 +6,7 @@ uses
   SysUtils, Classes, DB, IBCustomDataSet, IBQuery, IBDatabase;
 
 type
-  Tdm1 = class(TDataModule)
+  Tdm = class(TDataModule)
     ibd: TIBDatabase;
     ibt: TIBTransaction;
     ibq: TIBQuery;
@@ -18,13 +18,13 @@ type
   end;
 
 var
-  dm1: Tdm1;
+  dm: Tdm;
 
 implementation
 
 {$R *.dfm}
 
-procedure Tdm1.DataModuleCreate(Sender: TObject);
+procedure Tdm.DataModuleCreate(Sender: TObject);
 begin
     ibd.Connected := True; 
 end;

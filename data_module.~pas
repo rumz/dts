@@ -1,4 +1,4 @@
-unit dm;
+unit data_module;
 
 interface
 

@@ -1,4 +1,4 @@
-object dm1: Tdm1
+object dm: Tdm
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   Left = 1940

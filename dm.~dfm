@@ -1,5 +1,6 @@
-object DataModule1: TDataModule1
+object dm1: Tdm1
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Left = 607
   Top = 222
   Height = 150
