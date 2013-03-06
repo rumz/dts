@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 1596
-  Top = 289
+  Left = 1650
+  Top = 282
   Width = 928
   Height = 480
   Caption = 'Philhealth Inventory System Software '
@@ -95,9 +95,11 @@ object FormMain: TFormMain
     end
     object AddRecord1: TMenuItem
       Caption = 'Add Record'
+      OnClick = AddRecord1Click
     end
     object UpdateRecord1: TMenuItem
       Caption = 'Update Record'
+      OnClick = UpdateRecord1Click
     end
     object DeleteRecord1: TMenuItem
       Caption = 'Delete Record'

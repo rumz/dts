@@ -28,6 +28,8 @@ type
     procedure DeleteRecord1Click(Sender: TObject);
     procedure lsvItemLibSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure UpdateRecord1Click(Sender: TObject);
+    procedure AddRecord1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +44,7 @@ var
 
 implementation
 
-uses data_module;
+uses data_module, item_library;
 
 {$R *.dfm}
 
@@ -108,6 +110,29 @@ procedure TFormMain.lsvItemLibSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 begin
     NewItem := Item;
+end;
+
+procedure TFormMain.UpdateRecord1Click(Sender: TObject);
+begin
+    FormItemLibrary.led_IL_id.Text := NewItem.Caption;
+    FormItemLibrary.cboType.ItemIndex := FormItemLibrary.cboType.Items.IndexOf(NewItem.SubItems[0]);
+    FormItemLibrary.ledModel.Text := NewItem.SubItems[1];
+    FormItemLibrary.ledDescription.Text := NewItem.SubItems[4];
+    FormItemLibrary.cboCapex.Text := NewItem.SubItems[2];
+    FormItemLibrary.ledCost.Text := NewItem.SubItems[3];
+    FormItemLibrary.ShowModal;
+end;
+
+procedure TFormMain.AddRecord1Click(Sender: TObject);
+begin
+    FormItemLibrary.ShowModal;
+    FormItemLibrary.led_IL_id.Text := '0';
+    FormItemLibrary.cboType.ItemIndex := 0;
+    FormItemLibrary.ledModel.Text := '';
+    FormItemLibrary.ledDescription.Text := '';
+    FormItemLibrary.cboCapex.Text := '';
+    FormItemLibrary.ledCost.Text := '';
+    FormItemLibrary.ShowModal;
 end;
 
 end.
