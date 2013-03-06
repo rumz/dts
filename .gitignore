@@ -36,3 +36,6 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+# Temp Delphi Files #
+#####################
+*.~*

@@ -106,6 +106,7 @@ CREATE TABLE ITEM_LIB (
 
 insert into item_lib(itype, model, description, capex, cost) values('PC', 'HP Compaq DX 7400 Microtower', '', 1, 0) 
 insert into item_lib(itype, model, description, capex, cost) values('PC', 'HP Compaq DX 7400 Microtower', 'HP Compaq DX 7400 Microtower', 1, 62895)
+insert into item_lib(itype, model, description, capex, cost) values('PC', 'HP COMPAQ DC 7800 Convertible Mini Tower', 'HP COMPAQ DC 7800 Convertible Mini Tower', 1, 49942.93)
 
 
 

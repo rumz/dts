@@ -100,17 +100,6 @@ begin
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
     lsvRefresh;
-
-
-{    dm.ibq.SQL.Add('execute procedure UPDATE_TEST(:id,:name,:age)');
-    dm.ibq.Params[0].AsInteger := strtoint(lbl_ID.Caption);
-    dm.ibq.Params[1].AsString := Edit1.Text;
-    dm.ibq.Params[2].AsInteger := strtoint(Edit2.Text);
-    dm.ibq.Prepare;
-    dm.ibq.ExecSQL;
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
-}
 end;
 
 
