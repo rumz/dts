@@ -28,6 +28,8 @@ type
     LabeledEdit2: TLabeledEdit;
     StaticText1: TStaticText;
     Memo1: TMemo;
+    TabSheet1: TTabSheet;
+    lsvUsers: TListView;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
@@ -64,21 +66,46 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from SELECT_ITEM_LIB');
-    dm.ibq.Open;
-    lsvItemLib.Items.BeginUpdate;
-    lsvItemLib.Items.Clear;
-    while not dm.ibq.Eof do begin
-        NewItem := lsvItemLib.Items.Add;
-        NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
-        dm.ibq.Next;
+
+    if pgc.TabIndex = 1 then
+    begin
+        dm.ibq.SQL.Add('select * from SELECT_ITEM_LIB');
+    end
+    else if pgc.TabIndex = 3 then
+    begin
+        dm.ibq.SQL.Add('select * from SELECT_USERS');
     end;
-    lsvItemLib.Items.EndUpdate;
+    dm.ibq.Open;
+
+    if pgc.TabIndex = 1 then
+    begin
+      lsvItemLib.Items.BeginUpdate;
+      lsvItemLib.Items.Clear;
+      while not dm.ibq.Eof do begin
+          NewItem := lsvItemLib.Items.Add;
+          NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
+          dm.ibq.Next;
+      end;
+      lsvItemLib.Items.EndUpdate;
+    end
+    else if pgc.TabIndex = 3 then
+    begin
+       lsvUsers.Items.BeginUpdate;
+       lsvUsers.Items.Clear;
+       while not dm.ibq.Eof do begin
+          NewItem := lsvUsers.Items.Add;
+          NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
+          dm.ibq.Next;
+       end;
+       lsvUsers.Items.EndUpdate;
+    end
 end;
 
 

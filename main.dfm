@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 209
-  Top = 122
+  Left = 65
+  Top = 80
   Width = 928
   Height = 480
   Caption = 'Philhealth Inventory System Software '
@@ -21,16 +21,17 @@ object FormMain: TFormMain
     Top = 0
     Width = 920
     Height = 434
-    ActivePage = tabItemLib
+    ActivePage = TabSheet1
     Align = alClient
-    TabIndex = 1
+    Style = tsButtons
+    TabIndex = 3
     TabOrder = 0
     object tabRIV: TTabSheet
       Caption = 'RIV'
       ImageIndex = 2
       object lsvRIV: TListView
         Left = 0
-        Top = 147
+        Top = 144
         Width = 912
         Height = 259
         Align = alBottom
@@ -135,7 +136,7 @@ object FormMain: TFormMain
         Left = 0
         Top = 0
         Width = 912
-        Height = 406
+        Height = 403
         Align = alClient
         Columns = <
           item
@@ -173,6 +174,41 @@ object FormMain: TFormMain
     object tabItems: TTabSheet
       Caption = 'Items'
       ImageIndex = 1
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'User Management'
+      ImageIndex = 3
+      object lsvUsers: TListView
+        Left = 0
+        Top = 0
+        Width = 912
+        Height = 403
+        Align = alClient
+        Columns = <
+          item
+            Caption = 'ID'
+            Width = 0
+          end
+          item
+            Caption = 'Name'
+            Width = 200
+          end
+          item
+            Caption = 'Department'
+            Width = 200
+          end
+          item
+            Caption = 'Rights'
+            Width = 200
+          end>
+        GridLines = True
+        ReadOnly = True
+        RowSelect = True
+        PopupMenu = popItemLib
+        TabOrder = 0
+        ViewStyle = vsReport
+        OnSelectItem = lsvItemLibSelectItem
+      end
     end
   end
   object MainMenu1: TMainMenu

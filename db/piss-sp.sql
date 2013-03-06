@@ -1,4 +1,30 @@
 SET TERM ^ ;
+CREATE PROCEDURE SELECT_USERS
+RETURNS
+(
+    ID_NO           INTEGER,
+    FULL_NAME       VARCHAR(80) CHARACTER SET NONE,
+    DEPT            VARCHAR(30) CHARACTER SET NONE,
+    RIGHTS          VARCHAR(20) CHARACTER SET NONE
+)
+AS
+BEGIN
+    for
+    select id_no, L_NAME || ', ' || f_NAME || ' ' || M_NAME, '', ''
+      from PHIC_201
+     order by id_no
+      into :id_no, :full_name, :dept, :rights
+        do
+        begin
+          suspend;
+        end
+END^
+SET TERM ; ^
+
+
+
+
+SET TERM ^ ;
 CREATE PROCEDURE SELECT_ITEM_LIB
 RETURNS
 (
