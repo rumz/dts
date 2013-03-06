@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls;
+  Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TFormMain = class(TForm)
@@ -22,6 +22,12 @@ type
     AddRecord1: TMenuItem;
     DeleteRecord1: TMenuItem;
     UpdateRecord1: TMenuItem;
+    tabRIV: TTabSheet;
+    lsvRIV: TListView;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    StaticText1: TStaticText;
+    Memo1: TMemo;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);

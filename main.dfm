@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 1650
-  Top = 282
+  Left = 209
+  Top = 122
   Width = 928
   Height = 480
   Caption = 'Philhealth Inventory System Software '
@@ -12,6 +12,7 @@ object FormMain: TFormMain
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -22,8 +23,112 @@ object FormMain: TFormMain
     Height = 434
     ActivePage = tabItemLib
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
+    object tabRIV: TTabSheet
+      Caption = 'RIV'
+      ImageIndex = 2
+      object lsvRIV: TListView
+        Left = 0
+        Top = 147
+        Width = 912
+        Height = 259
+        Align = alBottom
+        Checkboxes = True
+        Columns = <
+          item
+            Caption = 'Approved?'
+            Width = 300
+          end
+          item
+            Caption = 'Approved By'
+            Width = 125
+          end
+          item
+            Caption = 'Date'
+            Width = 150
+          end
+          item
+            Caption = 'Remarks'
+            Width = 450
+          end>
+        GridLines = True
+        Items.Data = {
+          2F0200000B00000000000000FFFFFFFFFFFFFFFF000000000000000032455520
+          2D204372656174652052495620262047657420436C656172616E63652066726F
+          6D204469766973696F6E204865616400000000FFFFFFFFFFFFFFFF0000000000
+          00000026475355202D20436865636B2041505020262041737369676E20536572
+          696573204E756D62657200000000FFFFFFFFFFFFFFFF00000000000000001C46
+          4D53202D20436865636B2042756467657420616E6420436C65617200000000FF
+          FFFFFFFFFFFFFF0000000000000000124F525650202D20417070726F76652052
+          495600000000FFFFFFFFFFFFFFFF00000000000000001C475355202D20507265
+          706172652043512C2043412C20616E6420504F00000000FFFFFFFFFFFFFFFF00
+          0000000000000017464D53202D20417070726F766520414320616E6420504F00
+          000000FFFFFFFFFFFFFFFF0000000000000000114F525650202D20417070726F
+          766520504F00000000FFFFFFFFFFFFFFFF000000000000000010475355202D20
+          5072657061726520445600000000FFFFFFFFFFFFFFFF00000000000000001843
+          617368696572202D20497373756520436865636B28732900000000FFFFFFFFFF
+          FFFFFF000000000000000025475355202D205365727665205061796D656E7420
+          616E642041637175697265204974656D7300000000FFFFFFFFFFFFFFFF000000
+          0000000000294555202D205265636569766520537570706C6965732076696120
+          5769746864726177616C20536C6970}
+        ReadOnly = True
+        RowSelect = True
+        TabOrder = 0
+        ViewStyle = vsReport
+      end
+      object LabeledEdit1: TLabeledEdit
+        Left = 328
+        Top = 8
+        Width = 225
+        Height = 21
+        EditLabel.Width = 84
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Short Description '
+        LabelPosition = lpLeft
+        LabelSpacing = 3
+        TabOrder = 1
+        Text = 'Request for IC Recorder 4GB'
+      end
+      object LabeledEdit2: TLabeledEdit
+        Left = 80
+        Top = 8
+        Width = 153
+        Height = 21
+        EditLabel.Width = 58
+        EditLabel.Height = 13
+        EditLabel.Caption = 'RIV Number'
+        LabelPosition = lpLeft
+        LabelSpacing = 3
+        TabOrder = 2
+        Text = '234-12'
+      end
+      object StaticText1: TStaticText
+        Left = 24
+        Top = 48
+        Width = 84
+        Height = 17
+        Caption = 'Long Description'
+        TabOrder = 3
+      end
+      object Memo1: TMemo
+        Left = 120
+        Top = 40
+        Width = 433
+        Height = 89
+        Lines.Strings = (
+          
+            'This is a long description of RIV 234-12 blah blah blah blah bla' +
+            'h blah blah blah blah blah '
+          
+            'blah blah blah blah blah blah blah blah blah blah blah blah blah' +
+            ' blah blah blah blah blah '
+          'blah blah '
+          ''
+          'Purpose is for blah blah blah blah')
+        TabOrder = 4
+      end
+    end
     object tabItemLib: TTabSheet
       Caption = 'Item Library'
       object lsvItemLib: TListView
