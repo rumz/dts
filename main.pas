@@ -30,6 +30,8 @@ type
     Memo1: TMemo;
     TabSheet1: TTabSheet;
     lsvUsers: TListView;
+    cboRequestor: TComboBox;
+    Label1: TLabel;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);

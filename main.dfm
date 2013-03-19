@@ -1,8 +1,8 @@
 object FormMain: TFormMain
-  Left = 65
-  Top = 80
-  Width = 928
-  Height = 480
+  Left = 102
+  Top = 93
+  Width = 1158
+  Height = 522
   Caption = 'Philhealth Inventory System Software '
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,20 +19,27 @@ object FormMain: TFormMain
   object pgc: TPageControl
     Left = 0
     Top = 0
-    Width = 920
-    Height = 434
-    ActivePage = TabSheet1
+    Width = 1150
+    Height = 476
+    ActivePage = tabRIV
     Align = alClient
     Style = tsButtons
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 0
     object tabRIV: TTabSheet
       Caption = 'RIV'
       ImageIndex = 2
+      object Label1: TLabel
+        Left = 576
+        Top = 11
+        Width = 52
+        Height = 13
+        Caption = 'Requestor:'
+      end
       object lsvRIV: TListView
         Left = 0
-        Top = 144
-        Width = 912
+        Top = 186
+        Width = 1142
         Height = 259
         Align = alBottom
         Checkboxes = True
@@ -40,6 +47,14 @@ object FormMain: TFormMain
           item
             Caption = 'Approved?'
             Width = 300
+          end
+          item
+            Caption = 'Received'
+            Width = 125
+          end
+          item
+            Caption = 'Date Received'
+            Width = 150
           end
           item
             Caption = 'Approved By'
@@ -129,14 +144,22 @@ object FormMain: TFormMain
           'Purpose is for blah blah blah blah')
         TabOrder = 4
       end
+      object cboRequestor: TComboBox
+        Left = 632
+        Top = 8
+        Width = 145
+        Height = 21
+        ItemHeight = 13
+        TabOrder = 5
+      end
     end
     object tabItemLib: TTabSheet
       Caption = 'Item Library'
       object lsvItemLib: TListView
         Left = 0
         Top = 0
-        Width = 912
-        Height = 403
+        Width = 1142
+        Height = 445
         Align = alClient
         Columns = <
           item
@@ -181,8 +204,8 @@ object FormMain: TFormMain
       object lsvUsers: TListView
         Left = 0
         Top = 0
-        Width = 912
-        Height = 403
+        Width = 1142
+        Height = 445
         Align = alClient
         Columns = <
           item

@@ -40,9 +40,46 @@ CREATE TABLE USER_RIGHTS (
   RIGHT_ID VARCHAR(16) CHARACTER SET NONE NOT NULL
 )
 
-CREATE TABLE APPROVAL_
 
-/*  Items Table
+
+/**************************************************
+FLOW TABLE:
+
+Flow Types:  RIV, ACTIVITY, OT, TRAVEL
+Flow ID: Each type has a sequence to complete
+Next ID: The next ID to go to  (usually n+1)
+Rights: The user rights needed to approve/disapprove
+Description: e.g.  'EU - Create RIV and Get Clearance from Division Head'
+
+**************************************************/
+
+
+CREATE TABLE FLOW_LIB (
+    FTYPE VARCHAR(50),
+    FLOW_ID INTEGER,
+    NEXT_ID INTEGER,
+    RIGHTS VARCHAR(16) CHARACTER SET NONE NOT NULL,
+    DESCRIPTION VARCHAR(255) CHARACTER SET NONE NOT NULL
+)
+
+
+
+CREATE TABLE FLOW_DATA (
+    ID INTEGER,
+    FTYPE VARCHAR(50),
+    FLOW_ID INTEGER,
+    RECEIVED_DATE DATE,
+    RECEIVED_BY VARCHAR(16),
+    APPROVED INTEGER,
+    REMARKS VARCHAR(255)
+)
+
+
+
+
+
+/************************************************
+Items Table
 This table stores each individual item.
 
 ID - system PK
@@ -56,7 +93,7 @@ RIV_NUM - RIV number
 PO_NUM - Purchase Order Number
 DOA - Date of Acquisition
 LOCATION - Current Location of Item
-*/
+*************************************************/
 
 DROP TABLE ITEMS;
 CREATE TABLE ITEMS (
