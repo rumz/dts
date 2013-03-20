@@ -74,27 +74,29 @@ create table test2 (
 )
 
 
-DROP TABLE FLOW_DATA;
-CREATE TABLE FLOW_DATA (
-    ID INTEGER,
-    FTYPE VARCHAR(50),
-    RIV_ID INTEGER,
-    FLOW_ID INTEGER,
-    RECEIVED_DATE TIMESTAMP,
-    RECEIVED_BY VARCHAR(16),
-    APPROVED INTEGER,
-    RETURNED_TO VARCHAR(16),
-    APPROVED_DATE TIMESTAMP, 
-    REMARKS VARCHAR(255),
-    LASTUPDATE TIMESTAMP
+drop table FLOW_DATA;
+create table flow_data (
+    id integer,
+    ftype varchar(50),
+    riv_id integer,
+    flow_id integer,
+    received_date timestamp,
+    received_by varchar(16),
+    approved integer,
+    approved_date timestamp,
+    returned_to varchar(16),
+    returned_remarks varchar(255),
+    remarks varchar(255),
+    lastupdate timestamp
 )
 
 
-drop table rivs;
-create table RIVS (
+drop table RIVs;
+create table RIVs (
     id integer,
     description varchar(255),
     riv_no varchar(10),
+    series_no varchar(20),
     requestor varchar(16),
     create_date date,
     created_by varchar(16)
@@ -108,12 +110,6 @@ create table RIV_DATA (
     unit varchar(20),
     item_id integer
 )
-
-
-
-CREATE TABLE FLOWS (
-    ID INTEGER,
-
 
 
 

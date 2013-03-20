@@ -2,7 +2,7 @@ object FormMain: TFormMain
   Left = 102
   Top = 93
   Width = 1158
-  Height = 522
+  Height = 504
   Caption = 'Philhealth Inventory System Software '
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object FormMain: TFormMain
     Left = 0
     Top = 0
     Width = 1150
-    Height = 476
+    Height = 458
     ActivePage = tabRIV
     Align = alClient
     Style = tsButtons
@@ -38,7 +38,7 @@ object FormMain: TFormMain
       end
       object lsvRIV: TListView
         Left = 0
-        Top = 186
+        Top = 168
         Width = 1142
         Height = 259
         Align = alBottom
@@ -138,7 +138,7 @@ object FormMain: TFormMain
         Left = 0
         Top = 0
         Width = 1142
-        Height = 445
+        Height = 427
         Align = alClient
         Columns = <
           item
@@ -184,7 +184,7 @@ object FormMain: TFormMain
         Left = 0
         Top = 0
         Width = 1142
-        Height = 445
+        Height = 427
         Align = alClient
         Columns = <
           item
