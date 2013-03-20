@@ -92,6 +92,33 @@ SET TERM ; ^
 
 
 
+DROP PROCEDURE UPDATE_FLOW_DATA;
+SET TERM ^ ;
+CREATE PROCEDURE UPDATE_FLOW_DATA(
+    id integer,
+    ftype varchar(50) character set none,
+    flow_id integer,
+    received_date  date,
+    received_by    varchar(16) character set none,
+    approved       integer,
+    remarks        varchar(255) character set none
+)
+AS
+BEGIN
+    if (:id = 0) then
+    begin
+        insert into flow_data(ftype, flow_id, received_date, received_by, approved, remarks) values(:ftype, :flow_id, :received_date, :received_by, :approved, :remarks);
+    end
+    else
+    begin
+    update FLOW_DATA
+       set ftype = :ftype, flow_id = :flow_id, received_date = :received_date,
+           received_by = :received_by, approved = :approved, remarks = :remarks
+     where id = :id;
+    end
+END^
+SET TERM ; ^
+
 
 
 

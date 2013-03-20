@@ -24,7 +24,6 @@ type
     UpdateRecord1: TMenuItem;
     tabRIV: TTabSheet;
     lsvRIV: TListView;
-    LabeledEdit1: TLabeledEdit;
     LabeledEdit2: TLabeledEdit;
     StaticText1: TStaticText;
     Memo1: TMemo;

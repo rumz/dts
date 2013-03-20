@@ -30,7 +30,7 @@ object FormMain: TFormMain
       Caption = 'RIV'
       ImageIndex = 2
       object Label1: TLabel
-        Left = 576
+        Left = 256
         Top = 11
         Width = 52
         Height = 13
@@ -57,8 +57,8 @@ object FormMain: TFormMain
             Width = 150
           end
           item
-            Caption = 'Approved By'
-            Width = 125
+            Caption = 'Approved?'
+            Width = 100
           end
           item
             Caption = 'Date'
@@ -93,19 +93,6 @@ object FormMain: TFormMain
         TabOrder = 0
         ViewStyle = vsReport
       end
-      object LabeledEdit1: TLabeledEdit
-        Left = 328
-        Top = 8
-        Width = 225
-        Height = 21
-        EditLabel.Width = 84
-        EditLabel.Height = 13
-        EditLabel.Caption = 'Short Description '
-        LabelPosition = lpLeft
-        LabelSpacing = 3
-        TabOrder = 1
-        Text = 'Request for IC Recorder 4GB'
-      end
       object LabeledEdit2: TLabeledEdit
         Left = 80
         Top = 8
@@ -116,41 +103,33 @@ object FormMain: TFormMain
         EditLabel.Caption = 'RIV Number'
         LabelPosition = lpLeft
         LabelSpacing = 3
-        TabOrder = 2
+        TabOrder = 1
         Text = '234-12'
       end
       object StaticText1: TStaticText
-        Left = 24
-        Top = 48
-        Width = 84
+        Left = 16
+        Top = 40
+        Width = 57
         Height = 17
-        Caption = 'Long Description'
-        TabOrder = 3
+        Caption = 'Description'
+        TabOrder = 2
       end
       object Memo1: TMemo
-        Left = 120
+        Left = 80
         Top = 40
-        Width = 433
-        Height = 89
+        Width = 377
+        Height = 113
         Lines.Strings = (
-          
-            'This is a long description of RIV 234-12 blah blah blah blah bla' +
-            'h blah blah blah blah blah '
-          
-            'blah blah blah blah blah blah blah blah blah blah blah blah blah' +
-            ' blah blah blah blah blah '
-          'blah blah '
-          ''
-          'Purpose is for blah blah blah blah')
-        TabOrder = 4
+          'Request for IC Recorder 4GB')
+        TabOrder = 3
       end
       object cboRequestor: TComboBox
-        Left = 632
+        Left = 312
         Top = 8
         Width = 145
         Height = 21
         ItemHeight = 13
-        TabOrder = 5
+        TabOrder = 4
       end
     end
     object tabItemLib: TTabSheet

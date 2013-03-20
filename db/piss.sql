@@ -1,3 +1,8 @@
+{$A+,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N+,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
+{$MINSTACKSIZE $00004000}
+{$MAXSTACKSIZE $00100000}
+{$IMAGEBASE $00400000}
+{$APPTYPE GUI}
 /* inventory.sql */
 
 
@@ -53,6 +58,7 @@ Description: e.g.  'EU - Create RIV and Get Clearance from Division Head'
 
 **************************************************/
 
+drop table flow_lib;
 
 CREATE TABLE FLOW_LIB (
     FTYPE VARCHAR(50),
@@ -62,17 +68,51 @@ CREATE TABLE FLOW_LIB (
     DESCRIPTION VARCHAR(255) CHARACTER SET NONE NOT NULL
 )
 
+create table test2 (
+    id integer,
+    test_date timestamp
+)
 
 
+DROP TABLE FLOW_DATA;
 CREATE TABLE FLOW_DATA (
     ID INTEGER,
     FTYPE VARCHAR(50),
+    RIV_ID INTEGER,
     FLOW_ID INTEGER,
-    RECEIVED_DATE DATE,
+    RECEIVED_DATE TIMESTAMP,
     RECEIVED_BY VARCHAR(16),
     APPROVED INTEGER,
-    REMARKS VARCHAR(255)
+    RETURNED_TO VARCHAR(16),
+    APPROVED_DATE TIMESTAMP, 
+    REMARKS VARCHAR(255),
+    LASTUPDATE TIMESTAMP
 )
+
+
+drop table rivs;
+create table RIVS (
+    id integer,
+    description varchar(255),
+    riv_no varchar(10),
+    requestor varchar(16),
+    create_date date,
+    created_by varchar(16)
+)
+
+
+create table RIV_DATA (
+    id integer,
+    riv_id integer,
+    qty integer,
+    unit varchar(20),
+    item_id integer
+)
+
+
+
+CREATE TABLE FLOWS (
+    ID INTEGER,
 
 
 
