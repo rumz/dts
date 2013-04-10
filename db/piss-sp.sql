@@ -1,19 +1,20 @@
 SET TERM ^ ;
-CREATE PROCEDURE SELECT_USERS
+alter PROCEDURE SELECT_USERS
 RETURNS
 (
     ID_NO           INTEGER,
-    FULL_NAME       VARCHAR(80) CHARACTER SET NONE,
+    LAST_NAME       VARCHAR(80) CHARACTER SET NONE,
+    FIRST_NAME       VARCHAR(80) CHARACTER SET NONE,
     DEPT            VARCHAR(30) CHARACTER SET NONE,
     RIGHTS          VARCHAR(20) CHARACTER SET NONE
 )
 AS
 BEGIN
     for
-    select id_no, L_NAME || ', ' || f_NAME || ' ' || M_NAME, '', ''
+    select id_no, L_NAME, f_NAME, '', ''
       from PHIC_201
      order by id_no
-      into :id_no, :full_name, :dept, :rights
+      into :id_no, :last_name, :first_name, :dept, :rights
         do
         begin
           suspend;
@@ -121,9 +122,64 @@ SET TERM ; ^
 
 
 
+SET TERM ^ ;
+alter PROCEDURE SELECT_USERS
+RETURNS
+(
+    ID_NO           INTEGER,
+    LAST_NAME       VARCHAR(80) CHARACTER SET NONE,
+    FIRST_NAME       VARCHAR(80) CHARACTER SET NONE,
+    DEPT            VARCHAR(30) CHARACTER SET NONE,
+    RIGHTS          VARCHAR(20) CHARACTER SET NONE
+)
+AS
+BEGIN
+    for
+    select id_no, L_NAME, f_NAME, '', ''
+      from PHIC_201
+     order by id_no
+      into :id_no, :last_name, :first_name, :dept, :rights
+        do
+        begin
+          suspend;
+        end
+END^
+SET TERM ; ^
 
 
 
+
+
+alter procedure select_rivs
+(
+    s_type integer,
+    s_data varchar(255)
+)
+returns
+(
+    id   integer,
+    riv_no  varchar(20),
+    requestor varchar(20),
+    description varchar(100),
+    create_date  date
+)
+as
+begin
+    /* 0 for description */
+    if (:s_type = 0) then
+    begin
+         for
+      select id, riv_no, requestor, description, create_date
+        from RIVS
+       where description like :s_data
+       order by id
+        into :id, :riv_no, :requestor, :description, :create_date
+          do
+            begin
+              suspend;
+            end
+    end
+end
 
 
 

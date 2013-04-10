@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls, Buttons;
 
 type
   TFormMain = class(TForm)
@@ -31,6 +31,13 @@ type
     lsvUsers: TListView;
     cboRequestor: TComboBox;
     Label1: TLabel;
+    TabRiv2: TTabSheet;
+    StatusBar1: TStatusBar;
+    ControlBar1: TControlBar;
+    Label2: TLabel;
+    SpeedButton1: TSpeedButton;
+    EditRIVSearch: TEdit;
+    lsvRIV2: TListView;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
@@ -39,6 +46,7 @@ type
       Selected: Boolean);
     procedure UpdateRecord1Click(Sender: TObject);
     procedure AddRecord1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,31 +76,36 @@ begin
 
     dm.ibq.SQL.Clear;
 
-    if pgc.TabIndex = 1 then
+    if pgc.TabIndex = 0 then
     begin
-        dm.ibq.SQL.Add('select * from SELECT_ITEM_LIB');
+        dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b)');
+        dm.ibq.Params[0].AsInteger := 0;
+        dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text;
+        //dm.ibq.SQL.Add('select * from SELECT_ITEM_LIB');
     end
     else if pgc.TabIndex = 3 then
     begin
-        dm.ibq.SQL.Add('select * from SELECT_USERS');
+        //dm.ibq.SQL.Add('select * from SELECT_USERS');
     end;
     dm.ibq.Open;
 
-    if pgc.TabIndex = 1 then
+
+    if pgc.TabIndex = 0 then
     begin
-      lsvItemLib.Items.BeginUpdate;
-      lsvItemLib.Items.Clear;
+      lsvRIV2.Items.BeginUpdate;
+      lsvRIV2.Items.Clear;
+//      lsvItemLib.Items.BeginUpdate;
+//      lsvItemLib.Items.Clear;
       while not dm.ibq.Eof do begin
-          NewItem := lsvItemLib.Items.Add;
+          NewItem := lsvRIV2.Items.Add;
           NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
           dm.ibq.Next;
       end;
-      lsvItemLib.Items.EndUpdate;
+      lsvRIV2.Items.EndUpdate;
     end
     else if pgc.TabIndex = 3 then
     begin
@@ -103,6 +116,7 @@ begin
           NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
           dm.ibq.Next;
        end;
        lsvUsers.Items.EndUpdate;
@@ -167,6 +181,11 @@ begin
     FormItemLibrary.cboCapex.Text := '';
     FormItemLibrary.ledCost.Text := '';
     FormItemLibrary.ShowModal;
+end;
+
+procedure TFormMain.SpeedButton1Click(Sender: TObject);
+begin
+    lsvRefresh;
 end;
 
 end.

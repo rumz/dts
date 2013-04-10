@@ -1,8 +1,8 @@
 object FormMain: TFormMain
-  Left = 102
-  Top = 93
-  Width = 1158
-  Height = 504
+  Left = 77
+  Top = 95
+  Width = 1207
+  Height = 498
   Caption = 'Philhealth Inventory System Software '
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,15 +19,92 @@ object FormMain: TFormMain
   object pgc: TPageControl
     Left = 0
     Top = 0
-    Width = 1150
-    Height = 458
-    ActivePage = tabRIV
+    Width = 1199
+    Height = 452
+    ActivePage = TabRiv2
     Align = alClient
     Style = tsButtons
     TabIndex = 0
     TabOrder = 0
+    object TabRiv2: TTabSheet
+      Caption = 'RIV Status 2'
+      ImageIndex = 4
+      object StatusBar1: TStatusBar
+        Left = 0
+        Top = 402
+        Width = 1191
+        Height = 19
+        Panels = <>
+        SimplePanel = False
+      end
+      object ControlBar1: TControlBar
+        Left = 0
+        Top = 0
+        Width = 1191
+        Height = 31
+        Align = alTop
+        TabOrder = 1
+        object Label2: TLabel
+          Left = 11
+          Top = 2
+          Width = 61
+          Height = 22
+          Caption = 'RIV Search: '
+        end
+        object SpeedButton1: TSpeedButton
+          Left = 390
+          Top = 2
+          Width = 60
+          Height = 22
+          Caption = 'Go!'
+          OnClick = SpeedButton1Click
+        end
+        object EditRIVSearch: TEdit
+          Left = 85
+          Top = 2
+          Width = 292
+          Height = 22
+          TabOrder = 0
+        end
+      end
+      object lsvRIV2: TListView
+        Left = 0
+        Top = 31
+        Width = 1191
+        Height = 371
+        Align = alClient
+        Columns = <
+          item
+            Caption = 'ID'
+            Width = 0
+          end
+          item
+            Caption = 'RIV No'
+            Width = 75
+          end
+          item
+            Caption = 'Requestor '
+            Width = 175
+          end
+          item
+            Caption = 'Description'
+            Width = 500
+          end
+          item
+            Caption = 'Create Date'
+            Width = 200
+          end>
+        GridLines = True
+        ReadOnly = True
+        RowSelect = True
+        PopupMenu = popItemLib
+        TabOrder = 2
+        ViewStyle = vsReport
+        OnSelectItem = lsvItemLibSelectItem
+      end
+    end
     object tabRIV: TTabSheet
-      Caption = 'RIV'
+      Caption = 'RIV Status'
       ImageIndex = 2
       object Label1: TLabel
         Left = 256
@@ -38,9 +115,9 @@ object FormMain: TFormMain
       end
       object lsvRIV: TListView
         Left = 0
-        Top = 168
-        Width = 1142
-        Height = 259
+        Top = 193
+        Width = 1191
+        Height = 228
         Align = alBottom
         Checkboxes = True
         Columns = <
@@ -132,13 +209,19 @@ object FormMain: TFormMain
         TabOrder = 4
       end
     end
+    object tabItems: TTabSheet
+      Caption = 'Items'
+      ImageIndex = 1
+      TabVisible = False
+    end
     object tabItemLib: TTabSheet
       Caption = 'Item Library'
+      TabVisible = False
       object lsvItemLib: TListView
         Left = 0
         Top = 0
-        Width = 1142
-        Height = 427
+        Width = 1191
+        Height = 421
         Align = alClient
         Columns = <
           item
@@ -173,18 +256,14 @@ object FormMain: TFormMain
         OnSelectItem = lsvItemLibSelectItem
       end
     end
-    object tabItems: TTabSheet
-      Caption = 'Items'
-      ImageIndex = 1
-    end
     object TabSheet1: TTabSheet
       Caption = 'User Management'
       ImageIndex = 3
       object lsvUsers: TListView
         Left = 0
         Top = 0
-        Width = 1142
-        Height = 427
+        Width = 1191
+        Height = 421
         Align = alClient
         Columns = <
           item
@@ -192,8 +271,12 @@ object FormMain: TFormMain
             Width = 0
           end
           item
-            Caption = 'Name'
+            Caption = 'Last Name'
             Width = 200
+          end
+          item
+            Caption = 'First Name'
+            Width = 175
           end
           item
             Caption = 'Department'
