@@ -36,7 +36,6 @@ implementation
 procedure TFormItemLibrary.ButtonILCancelClick(Sender: TObject);
 begin
     Close;
-
     { TODO: ask ronald for code that will check if keypress = VK_ESCAPE and close the form } 
 end;
 

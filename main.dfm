@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 77
-  Top = 95
+  Left = 79
+  Top = 156
   Width = 1207
   Height = 498
   Caption = 'Philhealth Inventory System Software '
@@ -34,7 +34,16 @@ object FormMain: TFormMain
         Top = 402
         Width = 1191
         Height = 19
-        Panels = <>
+        Panels = <
+          item
+            Width = 75
+          end
+          item
+            Width = 150
+          end
+          item
+            Width = 200
+          end>
         SimplePanel = False
       end
       object ControlBar1: TControlBar
@@ -58,6 +67,16 @@ object FormMain: TFormMain
           Height = 22
           Caption = 'Go!'
           OnClick = SpeedButton1Click
+        end
+        object SpeedButton2: TSpeedButton
+          Left = 463
+          Top = 2
+          Width = 42
+          Height = 22
+          Hint = 'Add RIV'
+          Caption = '&Add '
+          ParentShowHint = False
+          ShowHint = True
         end
         object EditRIVSearch: TEdit
           Left = 85

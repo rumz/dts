@@ -1,6 +1,6 @@
 object FormItemLibrary: TFormItemLibrary
-  Left = 1859
-  Top = 411
+  Left = 361
+  Top = 491
   BorderStyle = bsDialog
   Caption = 'Item Library'
   ClientHeight = 198

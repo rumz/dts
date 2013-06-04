@@ -38,6 +38,7 @@ type
     SpeedButton1: TSpeedButton;
     EditRIVSearch: TEdit;
     lsvRIV2: TListView;
+    SpeedButton2: TSpeedButton;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
@@ -52,6 +53,7 @@ type
   public
     { Public declarations }
     NewItem: TListItem;
+    CurrentUser: String;
   end;
 
 var
@@ -61,7 +63,7 @@ var
 
 implementation
 
-uses data_module, item_library;
+uses data_module, item_library, riv;
 
 {$R *.dfm}
 
@@ -173,7 +175,12 @@ end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
-    FormItemLibrary.ShowModal;
+    FormRIV.riv_form_state := 'Add';
+    FormRIV.led_rivno.Text := '';
+    FormRIV.cbo_Requestor.Items.Clear;
+    FormRIV.Memo_RIV_Description.Lines.Clear;
+    FormRIV.ShowModal;
+{    FormItemLibrary.ShowModal;
     FormItemLibrary.led_IL_id.Text := '0';
     FormItemLibrary.cboType.ItemIndex := 0;
     FormItemLibrary.ledModel.Text := '';
@@ -181,6 +188,7 @@ begin
     FormItemLibrary.cboCapex.Text := '';
     FormItemLibrary.ledCost.Text := '';
     FormItemLibrary.ShowModal;
+}
 end;
 
 procedure TFormMain.SpeedButton1Click(Sender: TObject);

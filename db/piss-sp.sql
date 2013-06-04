@@ -1,3 +1,28 @@
+create PROCEDURE login(id_no varchar(20), pw varchar(30))
+RETURNS
+(
+    NAME       VARCHAR(80) CHARACTER SET NONE,
+    RIGHTS     VARCHAR(20) CHARACTER SET NONE
+)
+AS
+BEGIN
+    for
+ select f_name || ' ' || l_name, right_id
+   from phic_201
+  inner join user_rights on phic_201.id_no = user_id
+  where id_no = :id_no
+    and pw = :pw
+   into :name, :rights
+     do
+     begin
+       suspend;
+     end
+END^
+
+
+
+
+
 SET TERM ^ ;
 alter PROCEDURE SELECT_USERS
 RETURNS
@@ -122,7 +147,7 @@ SET TERM ; ^
 
 
 
-SET TERM ^ ;
+
 alter PROCEDURE SELECT_USERS
 RETURNS
 (
@@ -136,16 +161,16 @@ AS
 BEGIN
     for
     select id_no, L_NAME, f_NAME, '', ''
-      from PHIC_201
-     order by id_no
+      from PHIC_201 a
+     inner join USER_RIGHTS b
+        on a.id_no = b.user_id
+     where b.right_id = 'EU'
       into :id_no, :last_name, :first_name, :dept, :rights
         do
         begin
           suspend;
         end
-END^
-SET TERM ; ^
-
+END
 
 
 
@@ -183,5 +208,24 @@ end
 
 
 
-
-
+create procedure update_rivs(
+    id   integer,
+    description varchar(100),
+    riv_no  varchar(20),
+    requestor varchar(20),
+    create_date  date,
+    created_by varchar(50)
+)
+as
+begin
+    if (:id = 0) then
+    begin
+        insert into RIVS(description, riv_no, requestor, create_date, created_by) values(:description, :riv_no, :requestor, :create_date, :created_by);
+    end
+    else
+    begin
+    update RIVS
+       set description = :description, riv_no = :riv_no, requestor = :requestor, create_date = :create_date, created_by = :created_by
+     where id = :id;
+    end
+end

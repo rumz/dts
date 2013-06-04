@@ -22,6 +22,7 @@ CREATE TABLE PHIC_201 (
     HOME_TEL        VARCHAR(30) CHARACTER SET NONE,
     PROV_ADDRESS    VARCHAR(83) CHARACTER SET NONE,
     PROV_TEL        VARCHAR(30) CHARACTER SET NONE,
+    PW              VARCHAR(30) CHARACTER SET NONE,
     REMARK          BLOB SUB_TYPE 1 SEGMENT SIZE 80,
     DATEHIRE        DATE
 );
@@ -58,7 +59,6 @@ drop table flow_lib;
 CREATE TABLE FLOW_LIB (
     FTYPE VARCHAR(50),
     FLOW_ID INTEGER,
-    NEXT_ID INTEGER,
     RIGHTS VARCHAR(16) CHARACTER SET NONE NOT NULL,
     DESCRIPTION VARCHAR(255) CHARACTER SET NONE NOT NULL
 )
@@ -107,6 +107,7 @@ ID - PK
 DESCRIPTION - Short description for easier tracking
 RIV_NO - defined by (XXX-YY) e.g 001-13   (this is the series number)
 REQUESTOR - user who requested the RIV
+CURRENT_STEP - current step in the flow_data table
 CREATE_DATE - timestamp
 CREATED_BY - in most cases this is the same as REQUESTOR but just in case
   the RIV is created in lieu of someone else we can use this field.
@@ -119,6 +120,7 @@ create table RIVs (
     description varchar(255),
     riv_no varchar(10),
     requestor varchar(16),
+    current_step integer,
     create_date timestamp,
     created_by varchar(16)
 )
