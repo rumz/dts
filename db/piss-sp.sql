@@ -186,7 +186,8 @@ returns
     riv_no  varchar(20),
     requestor varchar(20),
     description varchar(100),
-    create_date  date
+    create_date  date,
+    status varchar(20)
 )
 as
 begin
@@ -194,11 +195,11 @@ begin
     if (:s_type = 0) then
     begin
          for
-      select id, riv_no, requestor, description, create_date
+      select id, riv_no, requestor, description, create_date, status
         from RIVS
        where description like :s_data
        order by id
-        into :id, :riv_no, :requestor, :description, :create_date
+        into :id, :riv_no, :requestor, :description, :create_date, :status
           do
             begin
               suspend;
@@ -208,24 +209,33 @@ end
 
 
 
-create procedure update_rivs(
+alter procedure update_rivs(
     id   integer,
     description varchar(100),
     riv_no  varchar(20),
     requestor varchar(20),
     create_date  date,
-    created_by varchar(50)
+    created_by varchar(50),
+    current_step integer,
+    status varchar(30)
 )
 as
 begin
     if (:id = 0) then
     begin
-        insert into RIVS(description, riv_no, requestor, create_date, created_by) values(:description, :riv_no, :requestor, :create_date, :created_by);
+        insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status)
+        values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status);
     end
     else
     begin
     update RIVS
-       set description = :description, riv_no = :riv_no, requestor = :requestor, create_date = :create_date, created_by = :created_by
+       set description = :description,
+           riv_no = :riv_no,
+           requestor = :requestor,
+           create_date = :create_date,
+           created_by = :created_by,
+           current_step = :current_step,
+           status = :status
      where id = :id;
     end
 end

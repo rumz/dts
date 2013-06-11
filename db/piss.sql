@@ -101,7 +101,7 @@ create table flow_data (
 
 
 /************************************************
-RIV_DATA table
+RIV table
 
 ID - PK
 DESCRIPTION - Short description for easier tracking
@@ -111,6 +111,7 @@ CURRENT_STEP - current step in the flow_data table
 CREATE_DATE - timestamp
 CREATED_BY - in most cases this is the same as REQUESTOR but just in case
   the RIV is created in lieu of someone else we can use this field.
+STATUS - we can probably put COMPLETED, CANCELLED, or the current_step and invalidate the current_step field 
 ************************************************/
 
 
@@ -122,7 +123,8 @@ create table RIVs (
     requestor varchar(16),
     current_step integer,
     create_date timestamp,
-    created_by varchar(16)
+    created_by varchar(16),
+    status varchar(20)
 )
 
 

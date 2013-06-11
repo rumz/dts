@@ -1,5 +1,5 @@
 CREATE GENERATOR Rivs_Generator;
-SET GENERATOR Rivs_Generator TO 0;
+SET GENERATOR Rivs_Generator TO 4;
 
 
 SET TERM ^ ;

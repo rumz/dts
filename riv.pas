@@ -69,7 +69,7 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f');
+    dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h)');
     if riv_form_state = 'Add' then
         dm.ibq.Params[0].AsInteger := 0
     else
@@ -77,10 +77,18 @@ begin
     dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text;
     dm.ibq.Params[2].AsString := led_rivno.Text;
     dm.ibq.Params[3].AsString := cbo_Requestor.Text;
-    dm.ibq.Params[4].AsString := cbo_Requestor.Text;  // create date
-    dm.ibq.Params[5].AsString := cbo_Requestor.Text;  // created by                  
-    dm.ibq.Params[6].AsInteger := 2;  // current_step = 2
+    dm.ibq.Params[4].AsDateTime := Now;
+    dm.ibq.Params[5].AsString := FormMain.CurrentUser;  // created by
+    dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
+    dm.ibq.Params[7].AsString := 'WIP';  // status
     dm.ibq.ExecSQL;
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit;
+
+    Close;
+    FormMain.lsvRefresh;
+
+
 end;
 
 end.

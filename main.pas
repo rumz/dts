@@ -48,6 +48,8 @@ type
     procedure UpdateRecord1Click(Sender: TObject);
     procedure AddRecord1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -63,7 +65,7 @@ var
 
 implementation
 
-uses data_module, item_library, riv;
+uses data_module, item_library, riv, login;
 
 {$R *.dfm}
 
@@ -83,7 +85,6 @@ begin
         dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b)');
         dm.ibq.Params[0].AsInteger := 0;
         dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text;
-        //dm.ibq.SQL.Add('select * from SELECT_ITEM_LIB');
     end
     else if pgc.TabIndex = 3 then
     begin
@@ -129,7 +130,7 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-    lsvRefresh;
+//    FormLogin.ShowModal;
 end;
 
 procedure TFormMain.Refresh1Click(Sender: TObject);
@@ -164,13 +165,12 @@ end;
 
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
-    FormItemLibrary.led_IL_id.Text := NewItem.Caption;
-    FormItemLibrary.cboType.ItemIndex := FormItemLibrary.cboType.Items.IndexOf(NewItem.SubItems[0]);
-    FormItemLibrary.ledModel.Text := NewItem.SubItems[1];
-    FormItemLibrary.ledDescription.Text := NewItem.SubItems[4];
-    FormItemLibrary.cboCapex.Text := NewItem.SubItems[2];
-    FormItemLibrary.ledCost.Text := NewItem.SubItems[3];
-    FormItemLibrary.ShowModal;
+    FormRIV.riv_form_state := 'Update';
+    FormRIV.led_rivno.Text := ''
+    FormRIV.cbo_Requestor.Items.Clear;
+    FormRIV.Memo_RIV_Description.Lines.Clear;
+    FormRIV.ShowModal;
+
 end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
@@ -180,20 +180,21 @@ begin
     FormRIV.cbo_Requestor.Items.Clear;
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.ShowModal;
-{    FormItemLibrary.ShowModal;
-    FormItemLibrary.led_IL_id.Text := '0';
-    FormItemLibrary.cboType.ItemIndex := 0;
-    FormItemLibrary.ledModel.Text := '';
-    FormItemLibrary.ledDescription.Text := '';
-    FormItemLibrary.cboCapex.Text := '';
-    FormItemLibrary.ledCost.Text := '';
-    FormItemLibrary.ShowModal;
-}
 end;
 
 procedure TFormMain.SpeedButton1Click(Sender: TObject);
 begin
     lsvRefresh;
+end;
+
+procedure TFormMain.FormShow(Sender: TObject);
+begin
+    lsvRefresh;
+end;
+
+procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    Application.Terminate;
 end;
 
 end.

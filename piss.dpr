@@ -18,8 +18,8 @@ uses
 begin
   Application.Initialize;
   Application.CreateForm(TFormLogin, FormLogin);
-  Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFormMain, FormMain);
+  Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFormItemLibrary, FormItemLibrary);
   Application.CreateForm(TFormRIV, FormRIV);
   Application.Run;

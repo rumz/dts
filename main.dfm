@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 79
-  Top = 156
+  Left = 1417
+  Top = 204
   Width = 1207
   Height = 498
   Caption = 'Philhealth Inventory System Software '
@@ -13,7 +13,9 @@ object FormMain: TFormMain
   Menu = MainMenu1
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pgc: TPageControl
@@ -112,6 +114,10 @@ object FormMain: TFormMain
           item
             Caption = 'Create Date'
             Width = 200
+          end
+          item
+            Caption = 'Status'
+            Width = 70
           end>
         GridLines = True
         ReadOnly = True
