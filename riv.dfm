@@ -63,6 +63,7 @@ object FormRIV: TFormRIV
     Top = 96
     Width = 513
     Height = 129
+    MaxLength = 255
     TabOrder = 3
   end
   object cbo_Requestor: TComboBox

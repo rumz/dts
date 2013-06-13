@@ -50,11 +50,12 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure lsvRIV2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    NewItem: TListItem;
+    NewItem, CurrentRIV : TListItem;
     CurrentUser: String;
   end;
 
@@ -97,8 +98,6 @@ begin
     begin
       lsvRIV2.Items.BeginUpdate;
       lsvRIV2.Items.Clear;
-//      lsvItemLib.Items.BeginUpdate;
-//      lsvItemLib.Items.Clear;
       while not dm.ibq.Eof do begin
           NewItem := lsvRIV2.Items.Add;
           NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
@@ -166,10 +165,16 @@ end;
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
     FormRIV.riv_form_state := 'Update';
-    FormRIV.led_rivno.Text := ''
-    FormRIV.cbo_Requestor.Items.Clear;
+    FormRIV.led_ID.Text := CurrentRIV.Caption;
+    FormRIV.led_rivno.Text := CurrentRIV.SubItems.Strings[0];
+//    MessageDlg(CurrentRIV.SubItems.Strings[1],mtInformation,mbOKCancel,1);
+    //MessageDlg(FormRIV.cbo_Requestor.Items.IndexOf(CurrentRIV.SubItems.Strings[1]), mtInformation,mbOKCancel,1);
+    FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
+
     FormRIV.Memo_RIV_Description.Lines.Clear;
+    FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[2];
     FormRIV.ShowModal;
+//    FormRIV.cbo_Requestor.ItemIndex := FormRIV.cbo_Requestor.Items.IndexOf(CurrentRIV.SubItems.Strings[1]);
 
 end;
 
@@ -177,7 +182,7 @@ procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
     FormRIV.riv_form_state := 'Add';
     FormRIV.led_rivno.Text := '';
-    FormRIV.cbo_Requestor.Items.Clear;
+    FormRIV.cbo_Requestor.ItemIndex := 0;
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.ShowModal;
 end;
@@ -195,6 +200,12 @@ end;
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     Application.Terminate;
+end;
+
+procedure TFormMain.lsvRIV2Click(Sender: TObject);
+begin
+    CurrentRIV := lsvRIV2.Selected;
+
 end;
 
 end.

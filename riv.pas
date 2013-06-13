@@ -16,6 +16,7 @@ type
     cbo_Requestor: TComboBox;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    procedure loadElements;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
@@ -35,9 +36,9 @@ uses data_module, main;
 
 {$R *.dfm}
 
-procedure TFormRIV.FormShow(Sender: TObject);
+
+procedure TFormRIV.loadElements;
 begin
-    
     if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
@@ -53,6 +54,18 @@ begin
         dm.ibq.Next;
     end;
     cbo_Requestor.Items.EndUpdate;
+end;
+
+
+procedure TFormRIV.FormShow(Sender: TObject);
+begin
+    if cbo_Requestor.Items.Count = 0 then begin
+        loadElements;
+    end;
+    if riv_form_state = 'Update' then
+        cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormMain.CurrentRIV.SubItems.Strings[1]);
+    
+
 
 end;
 
@@ -73,7 +86,7 @@ begin
     if riv_form_state = 'Add' then
         dm.ibq.Params[0].AsInteger := 0
     else
-        dm.ibq.Params[0].AsInteger := 2; // int(led_ID.Text)
+        dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
     dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text;
     dm.ibq.Params[2].AsString := led_rivno.Text;
     dm.ibq.Params[3].AsString := cbo_Requestor.Text;

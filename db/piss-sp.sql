@@ -211,13 +211,13 @@ end
 
 alter procedure update_rivs(
     id   integer,
-    description varchar(100),
-    riv_no  varchar(20),
-    requestor varchar(20),
+    description varchar(255),
+    riv_no  varchar(10),
+    requestor varchar(16),
     create_date  date,
-    created_by varchar(50),
+    created_by varchar(16),
     current_step integer,
-    status varchar(30)
+    status varchar(20)
 )
 as
 begin

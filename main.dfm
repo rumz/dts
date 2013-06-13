@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 1417
-  Top = 204
+  Left = 54
+  Top = 154
   Width = 1207
   Height = 498
   Caption = 'Philhealth Inventory System Software '
@@ -125,6 +125,7 @@ object FormMain: TFormMain
         PopupMenu = popItemLib
         TabOrder = 2
         ViewStyle = vsReport
+        OnClick = lsvRIV2Click
         OnSelectItem = lsvItemLibSelectItem
       end
     end
