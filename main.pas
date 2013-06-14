@@ -50,9 +50,10 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure lsvRIV2Click(Sender: TObject);
     procedure lsvRIV2Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -87,7 +88,7 @@ begin
     begin
         dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b)');
         dm.ibq.Params[0].AsInteger := 0;
-        dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text;
+        dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
     end
     else if pgc.TabIndex = 3 then
     begin
@@ -147,8 +148,16 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure DELETE_ITEM_LIB(:id)');
-    dm.ibq.Params[0].AsInteger := strtoint(NewItem.Caption);
+    dm.ibq.SQL.Add('execute procedure update_rivs(:id, :b, :c, :d, :e, :f, :g, :h)');
+    dm.ibq.Params[0].AsInteger := strtoint(CurrentRIV.Caption) * -1;
+    dm.ibq.Params[1].AsString := '';
+    dm.ibq.Params[2].AsString := '';
+    dm.ibq.Params[3].AsString := '';
+    dm.ibq.Params[4].AsDateTime := Now;
+    dm.ibq.Params[5].AsString := '';
+    dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
+    dm.ibq.Params[7].AsString := '';
+
     dm.ibq.Prepare;
     dm.ibq.ExecSQL;
     if dm.ibt.InTransaction then
@@ -200,15 +209,18 @@ begin
     Application.Terminate;
 end;
 
-procedure TFormMain.lsvRIV2Click(Sender: TObject);
-begin
-//    CurrentRIV := lsvRIV2.Selected;
-end;
-
 procedure TFormMain.lsvRIV2Change(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
     CurrentRIV := lsvRIV2.Selected;
+end;
+
+procedure TFormMain.EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    if Key = VK_RETURN then
+        lsvRefresh;
+
 end;
 
 end.

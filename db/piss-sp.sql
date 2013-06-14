@@ -183,9 +183,9 @@ alter procedure select_rivs
 returns
 (
     id   integer,
-    riv_no  varchar(20),
-    requestor varchar(20),
-    description varchar(100),
+    riv_no  varchar(10),
+    requestor varchar(16),
+    description varchar(255),
     create_date  date,
     status varchar(20)
 )
@@ -197,7 +197,7 @@ begin
          for
       select id, riv_no, requestor, description, create_date, status
         from RIVS
-       where description like :s_data
+       where upper(description) like upper(:s_data)
        order by id
         into :id, :riv_no, :requestor, :description, :create_date, :status
           do

@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 54
-  Top = 154
+  Left = 1421
+  Top = 299
   Width = 1207
   Height = 498
   Caption = 'Philhealth Inventory System Software '
@@ -86,6 +86,7 @@ object FormMain: TFormMain
           Width = 292
           Height = 22
           TabOrder = 0
+          OnKeyDown = EditRIVSearchKeyDown
         end
       end
       object lsvRIV2: TListView
@@ -126,7 +127,6 @@ object FormMain: TFormMain
         TabOrder = 2
         ViewStyle = vsReport
         OnChange = lsvRIV2Change
-        OnClick = lsvRIV2Click
         OnSelectItem = lsvItemLibSelectItem
       end
     end
