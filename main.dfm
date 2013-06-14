@@ -29,7 +29,7 @@ object FormMain: TFormMain
     TabIndex = 0
     TabOrder = 0
     object TabRiv2: TTabSheet
-      Caption = 'RIV Status 2'
+      Caption = 'RIV Status'
       ImageIndex = 4
       object StatusBar1: TStatusBar
         Left = 0
@@ -125,6 +125,7 @@ object FormMain: TFormMain
         PopupMenu = popItemLib
         TabOrder = 2
         ViewStyle = vsReport
+        OnChange = lsvRIV2Change
         OnClick = lsvRIV2Click
         OnSelectItem = lsvItemLibSelectItem
       end

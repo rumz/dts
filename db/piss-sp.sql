@@ -221,21 +221,26 @@ alter procedure update_rivs(
 )
 as
 begin
-    if (:id = 0) then
-    begin
+    if (:id = 0) then begin
         insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status)
         values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status);
     end
-    else
-    begin
-    update RIVS
-       set description = :description,
-           riv_no = :riv_no,
-           requestor = :requestor,
-           create_date = :create_date,
-           created_by = :created_by,
-           current_step = :current_step,
-           status = :status
-     where id = :id;
+    else if (:id < 0) then begin
+        delete from RIVS where id = (:id * -1);
+    end
+    else begin
+      update RIVS
+         set description = :description,
+             riv_no = :riv_no,
+             requestor = :requestor,
+             create_date = :create_date,
+             created_by = :created_by,
+             current_step = :current_step,
+             status = :status
+       where id = :id;
     end
 end
+
+
+
+

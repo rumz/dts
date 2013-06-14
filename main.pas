@@ -51,6 +51,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lsvRIV2Click(Sender: TObject);
+    procedure lsvRIV2Change(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
   private
     { Private declarations }
   public
@@ -167,15 +169,11 @@ begin
     FormRIV.riv_form_state := 'Update';
     FormRIV.led_ID.Text := CurrentRIV.Caption;
     FormRIV.led_rivno.Text := CurrentRIV.SubItems.Strings[0];
-//    MessageDlg(CurrentRIV.SubItems.Strings[1],mtInformation,mbOKCancel,1);
-    //MessageDlg(FormRIV.cbo_Requestor.Items.IndexOf(CurrentRIV.SubItems.Strings[1]), mtInformation,mbOKCancel,1);
     FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
 
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[2];
     FormRIV.ShowModal;
-//    FormRIV.cbo_Requestor.ItemIndex := FormRIV.cbo_Requestor.Items.IndexOf(CurrentRIV.SubItems.Strings[1]);
-
 end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
@@ -204,8 +202,13 @@ end;
 
 procedure TFormMain.lsvRIV2Click(Sender: TObject);
 begin
-    CurrentRIV := lsvRIV2.Selected;
+//    CurrentRIV := lsvRIV2.Selected;
+end;
 
+procedure TFormMain.lsvRIV2Change(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+begin
+    CurrentRIV := lsvRIV2.Selected;
 end;
 
 end.
