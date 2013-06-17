@@ -106,15 +106,11 @@ object FormMain: TFormMain
           end
           item
             Caption = 'Requestor '
-            Width = 175
+            Width = 100
           end
           item
             Caption = 'Description'
             Width = 500
-          end
-          item
-            Caption = 'Remarks'
-            Width = 150
           end
           item
             Caption = 'Create Date'
@@ -123,6 +119,10 @@ object FormMain: TFormMain
           item
             Caption = 'Status'
             Width = 70
+          end
+          item
+            Caption = 'Remarks'
+            Width = 150
           end>
         GridLines = True
         ReadOnly = True
@@ -277,44 +277,6 @@ object FormMain: TFormMain
           item
             Caption = 'Description'
             Width = 500
-          end>
-        GridLines = True
-        ReadOnly = True
-        RowSelect = True
-        PopupMenu = popItemLib
-        TabOrder = 0
-        ViewStyle = vsReport
-      end
-    end
-    object TabSheet1: TTabSheet
-      Caption = 'User Management'
-      ImageIndex = 3
-      object lsvUsers: TListView
-        Left = 0
-        Top = 0
-        Width = 1191
-        Height = 421
-        Align = alClient
-        Columns = <
-          item
-            Caption = 'ID'
-            Width = 0
-          end
-          item
-            Caption = 'Last Name'
-            Width = 200
-          end
-          item
-            Caption = 'First Name'
-            Width = 175
-          end
-          item
-            Caption = 'Department'
-            Width = 200
-          end
-          item
-            Caption = 'Rights'
-            Width = 200
           end>
         GridLines = True
         ReadOnly = True

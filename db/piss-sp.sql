@@ -187,7 +187,8 @@ returns
     requestor varchar(16),
     description varchar(255),
     create_date  date,
-    status varchar(20)
+    status varchar(20),
+    remarks varchar(255)
 )
 as
 begin
@@ -195,11 +196,11 @@ begin
     if (:s_type = 0) then
     begin
          for
-      select id, riv_no, requestor, description, create_date, status
+      select id, riv_no, requestor, description, status, remarks, create_date
         from RIVS
        where upper(description) like upper(:s_data)
        order by id
-        into :id, :riv_no, :requestor, :description, :create_date, :status
+        into :id, :riv_no, :requestor, :description, :status, :remarks, :create_date
           do
             begin
               suspend;

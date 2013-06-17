@@ -27,8 +27,6 @@ type
     LabeledEdit2: TLabeledEdit;
     StaticText1: TStaticText;
     Memo1: TMemo;
-    TabSheet1: TTabSheet;
-    lsvUsers: TListView;
     cboRequestor: TComboBox;
     Label1: TLabel;
     TabRiv2: TTabSheet;
@@ -106,24 +104,12 @@ begin
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
           dm.ibq.Next;
       end;
       lsvRIV2.Items.EndUpdate;
-    end
-    else if pgc.TabIndex = 3 then
-    begin
-       lsvUsers.Items.BeginUpdate;
-       lsvUsers.Items.Clear;
-       while not dm.ibq.Eof do begin
-          NewItem := lsvUsers.Items.Add;
-          NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
-          dm.ibq.Next;
-       end;
-       lsvUsers.Items.EndUpdate;
-    end
+    end;
 end;
 
 
@@ -225,6 +211,7 @@ end;
 
 procedure TFormMain.popItemLibPopup(Sender: TObject);
 begin
+    { TODO: check rights based on the rights of the user and the current status the item has } 
     if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
         ProcessRecord1.Enabled := True
     else
