@@ -113,6 +113,10 @@ object FormMain: TFormMain
             Width = 500
           end
           item
+            Caption = 'Remarks'
+            Width = 150
+          end
+          item
             Caption = 'Create Date'
             Width = 200
           end
@@ -127,7 +131,7 @@ object FormMain: TFormMain
         TabOrder = 2
         ViewStyle = vsReport
         OnChange = lsvRIV2Change
-        OnSelectItem = lsvItemLibSelectItem
+        OnDblClick = lsvRIV2DblClick
       end
     end
     object tabRIV: TTabSheet
@@ -280,7 +284,6 @@ object FormMain: TFormMain
         PopupMenu = popItemLib
         TabOrder = 0
         ViewStyle = vsReport
-        OnSelectItem = lsvItemLibSelectItem
       end
     end
     object TabSheet1: TTabSheet
@@ -319,7 +322,6 @@ object FormMain: TFormMain
         PopupMenu = popItemLib
         TabOrder = 0
         ViewStyle = vsReport
-        OnSelectItem = lsvItemLibSelectItem
       end
     end
   end
@@ -340,6 +342,7 @@ object FormMain: TFormMain
     end
   end
   object popItemLib: TPopupMenu
+    OnPopup = popItemLibPopup
     Left = 632
     Top = 264
     object Refresh1: TMenuItem
@@ -353,6 +356,12 @@ object FormMain: TFormMain
     object UpdateRecord1: TMenuItem
       Caption = 'Update Record'
       OnClick = UpdateRecord1Click
+    end
+    object ProcessRecord1: TMenuItem
+      Caption = '&Process Record'
+    end
+    object N2: TMenuItem
+      Caption = ' '
     end
     object DeleteRecord1: TMenuItem
       Caption = 'Delete Record'

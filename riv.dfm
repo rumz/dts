@@ -1,10 +1,10 @@
 object FormRIV: TFormRIV
-  Left = 263
-  Top = 184
+  Left = 1702
+  Top = 392
   BorderStyle = bsDialog
   Caption = 'RIV '
-  ClientHeight = 290
-  ClientWidth = 548
+  ClientHeight = 368
+  ClientWidth = 457
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,21 +18,28 @@ object FormRIV: TFormRIV
   TextHeight = 13
   object Label1: TLabel
     Left = 16
-    Top = 72
+    Top = 48
     Width = 56
     Height = 13
     Caption = 'Description '
   end
   object Label2: TLabel
-    Left = 287
-    Top = 33
+    Left = 196
+    Top = 20
     Width = 55
     Height = 13
     Caption = 'Requestor  '
   end
+  object Label3: TLabel
+    Left = 18
+    Top = 184
+    Width = 107
+    Height = 13
+    Caption = 'Remarks (PO/DV, etc)'
+  end
   object led_ID: TLabeledEdit
-    Left = 32
-    Top = 32
+    Left = 55
+    Top = 275
     Width = 49
     Height = 21
     Color = clScrollBar
@@ -43,10 +50,11 @@ object FormRIV: TFormRIV
     LabelSpacing = 3
     ReadOnly = True
     TabOrder = 0
+    Visible = False
   end
   object led_rivno: TLabeledEdit
-    Left = 171
-    Top = 31
+    Left = 85
+    Top = 15
     Width = 98
     Height = 21
     EditLabel.Width = 64
@@ -59,25 +67,25 @@ object FormRIV: TFormRIV
     TabOrder = 1
   end
   object Memo_RIV_Description: TMemo
-    Left = 16
-    Top = 96
-    Width = 513
-    Height = 129
+    Left = 14
+    Top = 67
+    Width = 419
+    Height = 105
     MaxLength = 255
     TabOrder = 3
   end
   object cbo_Requestor: TComboBox
-    Left = 343
-    Top = 30
-    Width = 186
+    Left = 255
+    Top = 15
+    Width = 188
     Height = 21
     Style = csDropDownList
     ItemHeight = 13
     TabOrder = 2
   end
   object BitBtn1: TBitBtn
-    Left = 168
-    Top = 248
+    Left = 160
+    Top = 320
     Width = 75
     Height = 25
     Caption = 'Save'
@@ -85,13 +93,21 @@ object FormRIV: TFormRIV
     OnClick = BitBtn1Click
   end
   object BitBtn2: TBitBtn
-    Left = 280
-    Top = 248
+    Left = 248
+    Top = 320
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 5
     OnClick = BitBtn2Click
+  end
+  object Memo_Remarks: TMemo
+    Left = 16
+    Top = 203
+    Width = 419
+    Height = 105
+    MaxLength = 255
+    TabOrder = 6
   end
 end

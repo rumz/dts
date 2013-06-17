@@ -124,7 +124,9 @@ create table RIVs (
     current_step integer,
     create_date timestamp,
     created_by varchar(16),
-    status varchar(20)
+    status varchar(20),
+    po varchar(10),
+    dv varchar(15)
 )
 
 

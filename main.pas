@@ -39,12 +39,12 @@ type
     EditRIVSearch: TEdit;
     lsvRIV2: TListView;
     SpeedButton2: TSpeedButton;
+    N2: TMenuItem;
+    ProcessRecord1: TMenuItem;
     procedure lsvRefresh;
     procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
     procedure DeleteRecord1Click(Sender: TObject);
-    procedure lsvItemLibSelectItem(Sender: TObject; Item: TListItem;
-      Selected: Boolean);
     procedure UpdateRecord1Click(Sender: TObject);
     procedure AddRecord1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -54,6 +54,8 @@ type
       Change: TItemChange);
     procedure EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure lsvRIV2DblClick(Sender: TObject);
+    procedure popItemLibPopup(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,10 +91,6 @@ begin
         dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b)');
         dm.ibq.Params[0].AsInteger := 0;
         dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
-    end
-    else if pgc.TabIndex = 3 then
-    begin
-        //dm.ibq.SQL.Add('select * from SELECT_USERS');
     end;
     dm.ibq.Open;
 
@@ -167,12 +165,6 @@ end;
 
 
 
-procedure TFormMain.lsvItemLibSelectItem(Sender: TObject; Item: TListItem;
-  Selected: Boolean);
-begin
-    NewItem := Item;
-end;
-
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
     FormRIV.riv_form_state := 'Update';
@@ -213,6 +205,7 @@ procedure TFormMain.lsvRIV2Change(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
     CurrentRIV := lsvRIV2.Selected;
+
 end;
 
 procedure TFormMain.EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
@@ -220,6 +213,22 @@ procedure TFormMain.EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
 begin
     if Key = VK_RETURN then
         lsvRefresh;
+
+end;
+
+procedure TFormMain.lsvRIV2DblClick(Sender: TObject);
+begin
+  if CurrentRIV <> nil then
+      UpdateRecord1Click(self);
+
+end;
+
+procedure TFormMain.popItemLibPopup(Sender: TObject);
+begin
+    if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
+        ProcessRecord1.Enabled := True
+    else
+        ProcessRecord1.Enabled := False;
 
 end;
 

@@ -217,13 +217,14 @@ alter procedure update_rivs(
     create_date  date,
     created_by varchar(16),
     current_step integer,
-    status varchar(20)
+    status varchar(20),
+    remarks varchar(255)
 )
 as
 begin
     if (:id = 0) then begin
-        insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status)
-        values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status);
+        insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status, remarks)
+        values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status, :remarks);
     end
     else if (:id < 0) then begin
         delete from RIVS where id = (:id * -1);
@@ -233,10 +234,10 @@ begin
          set description = :description,
              riv_no = :riv_no,
              requestor = :requestor,
-             create_date = :create_date,
              created_by = :created_by,
              current_step = :current_step,
-             status = :status
+             status = :status,
+             remarks = :remarks
        where id = :id;
     end
 end

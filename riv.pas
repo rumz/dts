@@ -16,6 +16,8 @@ type
     cbo_Requestor: TComboBox;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    Label3: TLabel;
+    Memo_Remarks: TMemo;
     procedure loadElements;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -82,7 +84,7 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h)');
+    dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h,:i)');
     if riv_form_state = 'Add' then
         dm.ibq.Params[0].AsInteger := 0
     else
@@ -94,6 +96,7 @@ begin
     dm.ibq.Params[5].AsString := FormMain.CurrentUser;  // created by
     dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
     dm.ibq.Params[7].AsString := 'WIP';  // status
+    dm.ibq.Params[8].AsString := Memo_Remarks.Lines.Text; 
     dm.ibq.ExecSQL;
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
