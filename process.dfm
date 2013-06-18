@@ -11,6 +11,7 @@ object FormProcess: TFormProcess
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -104,5 +105,6 @@ object FormProcess: TFormProcess
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 4
+    OnClick = BitBtn2Click
   end
 end

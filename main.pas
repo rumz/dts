@@ -54,6 +54,7 @@ type
       Shift: TShiftState);
     procedure lsvRIV2DblClick(Sender: TObject);
     procedure popItemLibPopup(Sender: TObject);
+    procedure ProcessRecord1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,7 +70,7 @@ var
 
 implementation
 
-uses data_module, item_library, riv, login;
+uses data_module, item_library, riv, login, process;
 
 {$R *.dfm}
 
@@ -160,6 +161,7 @@ begin
 
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[2];
+    FormRIV.Memo_Remarks.Lines.Text := CurrentRIV.SubItems.Strings[5];
     FormRIV.ShowModal;
 end;
 
@@ -217,6 +219,11 @@ begin
     else
         ProcessRecord1.Enabled := False;
 
+end;
+
+procedure TFormMain.ProcessRecord1Click(Sender: TObject);
+begin
+    FormProcess.ShowModal;
 end;
 
 end.

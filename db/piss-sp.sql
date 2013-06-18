@@ -245,4 +245,35 @@ end
 
 
 
+create procedure select_riv_transactions(
+    riv_id integer
+)
+returns(
+    flow_id varchar(10),
+    approved_date date,
+    approved_by varchar(16),
+    approved varchar(20),
+    remarks varchar(255)
+)
+as
+begin
+       for
+    select flow_id, approved, approved_by, approved_date, remarks
+      from flow_data
+     where riv_id = :riv_id
+     order by flow_id, approved_date
+      into :flow_id, :approved, :approved_by, :approved_date, :remarks
+        do
+        begin
+            suspend;
+        end
+end
 
+
+
+/*
+select flow_id, approved_by, approved, approved_date, remarks
+  from flow_data
+ where riv_id = 1
+ order by flow_id, approved_date
+*/

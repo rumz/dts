@@ -321,6 +321,7 @@ object FormMain: TFormMain
     end
     object ProcessRecord1: TMenuItem
       Caption = '&Process Record'
+      OnClick = ProcessRecord1Click
     end
     object N2: TMenuItem
       Caption = ' '
