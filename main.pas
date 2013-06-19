@@ -187,7 +187,6 @@ procedure TFormMain.lsvRIV2Change(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
     CurrentRIV := lsvRIV2.Selected;
-
 end;
 
 procedure TFormMain.EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
@@ -207,11 +206,14 @@ end;
 
 procedure TFormMain.popItemLibPopup(Sender: TObject);
 begin
-    { TODO: check rights based on the rights of the user and the current status the item has } 
-    if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
-        ProcessRecord1.Enabled := True
-    else
-        ProcessRecord1.Enabled := False;
+    { TODO: check rights based on the rights of the user and the current status the item has }
+    if not (CurrentRIV.Caption = '') then
+    begin
+        if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
+            ProcessRecord1.Enabled := True
+        else
+            ProcessRecord1.Enabled := False;
+    end
 
 end;
 

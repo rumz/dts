@@ -55,25 +55,20 @@ begin
     lsvRIVtransactions.Items.Clear;
     while not dm.ibq.Eof do begin
         NewItem := lsvRIVtransactions.Items.Add;
-        NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
+        NewItem.Caption := dm.ibq.Fields.Fields[1].AsString;
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[0].AsString);
         if dm.ibq.Fields.Fields[2].AsString = '1' then
-            NewItem.SubItems.Add('True')
+        begin
+            NewItem.Checked := True;
+        end
         else
-            NewItem.SubItems.Add('False');
+            NewItem.Checked := False;
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
         dm.ibq.Next;
     end;
     lsvRIVtransactions.Items.EndUpdate;
-
-{        flow_id integer,
-    description varchar(255),
-    approved varchar(20),
-    approved_by varchar(16),
-    approved_date date,
-    remarks varchar(255)
-}
 end;
 
 procedure TFormProcess.FormShow(Sender: TObject);

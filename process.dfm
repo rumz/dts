@@ -55,26 +55,27 @@ object FormProcess: TFormProcess
       Width = 601
       Height = 212
       Align = alClient
+      Checkboxes = True
       Columns = <
+        item
+          Caption = 'Status'
+          Width = 200
+        end
         item
           Caption = 'ID'
           Width = 0
         end
         item
-          Caption = 'Status'
+          Caption = 'Approved by'
           Width = 75
-        end
-        item
-          Caption = 'Approved?'
-          Width = 70
         end
         item
           Caption = 'Date'
-          Width = 75
+          Width = 120
         end
         item
           Caption = 'Remarks'
-          Width = 375
+          Width = 300
         end>
       GridLines = True
       TabOrder = 0

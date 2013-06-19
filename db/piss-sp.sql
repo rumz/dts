@@ -208,16 +208,21 @@ alter procedure update_rivs(
     description varchar(255),
     riv_no  varchar(10),
     requestor varchar(16),
-    create_date  date,
+    create_date timestamp,
     created_by varchar(16),
     current_step integer,
     status varchar(20),
     remarks varchar(255)
 )
-as begin
+as
+declare variable newid integer;
+begin
     if (:id = 0) then begin
         insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status, remarks)
         values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status, :remarks);
+        select id from RIVS where create_date= :create_date into :newid;
+        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
+        values('RIV', :newid, 1, '1', :requestor, :create_date, '', :create_date);
     end
     else if (:id < 0) then begin
         delete from RIVS where id = (:id * -1);
@@ -234,6 +239,8 @@ as begin
        where id = :id;
     end
 end
+
+
 
 
 
@@ -280,9 +287,9 @@ create table flow_data (
     lastupdate timestamp
 )
 
-
 create procedure update_flow_data(
     id integer,
+    ftype varchar(50),
     riv_id integer,
     flow_id integer,
     approved integer,
@@ -293,7 +300,25 @@ create procedure update_flow_data(
 )
 as begin
     if (:id = 0) then begin
-        insert into flow_data(id, ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
+        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
+        values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks, :lastupdate);
+    end
+    else if (:id < 0) then begin
+        delete from flow_data where id = (:id * -1);
+    end
+    else begin
+        update flow_data
+           set ftype         = :ftype,
+               riv_id        = :riv_id,
+               flow_id       = :flow_id,
+               approved      = :approved,
+               approved_by   = :approved_by,
+               approved_date = :approved_date,
+               remarks       = :remarks,
+               lastupdate    = :lastupdate
+         where id = :id;
+    end
+end
 
 
 
