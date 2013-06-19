@@ -34,9 +34,6 @@ SET TERM ; ^
 
 
 
-
-
-
 CREATE GENERATOR Flow_Data_Generator;
 SET GENERATOR Flow_Data_Generator TO 1;
 
@@ -50,6 +47,37 @@ BEGIN
     NEW.id = gen_id(Flow_Data_GENERATOR, 1);
     /* enter trigger code here */
 END^
+
+
+
+CREATE GENERATOR Flow_Lib_Generator;
+SET GENERATOR Flow_Data_Generator TO 1;
+
+
+CREATE TRIGGER TRIG_Flow_Lib FOR Flow_Lib
+ ACTIVE
+ BEFORE INSERT
+ POSITION 0
+AS
+BEGIN
+    NEW.id = gen_id(Flow_Lib_GENERATOR, 1);
+    /* enter trigger code here */
+END^
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -69,10 +97,6 @@ END^
 SET TERM ; ^
 
 
-
-
-
-
 CREATE GENERATOR Item_Lib_Generator;
 SET GENERATOR Item_Lib_Generator TO 1;
 
@@ -87,10 +111,6 @@ BEGIN
     /* enter trigger code here */
 END^
 SET TERM ; ^
-
-
-
-
 
 
 

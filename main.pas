@@ -22,13 +22,6 @@ type
     AddRecord1: TMenuItem;
     DeleteRecord1: TMenuItem;
     UpdateRecord1: TMenuItem;
-    tabRIV: TTabSheet;
-    lsvRIV: TListView;
-    LabeledEdit2: TLabeledEdit;
-    StaticText1: TStaticText;
-    Memo1: TMemo;
-    cboRequestor: TComboBox;
-    Label1: TLabel;
     TabRiv2: TTabSheet;
     StatusBar1: TStatusBar;
     ControlBar1: TControlBar;
@@ -169,8 +162,9 @@ procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
     FormRIV.riv_form_state := 'Add';
     FormRIV.led_rivno.Text := '';
-    FormRIV.cbo_Requestor.ItemIndex := 0;
+    FormRIV.cbo_Requestor.ItemIndex := -1;
     FormRIV.Memo_RIV_Description.Lines.Clear;
+    FormRIV.Memo_Remarks.Lines.Clear;    
     FormRIV.ShowModal;
 end;
 
@@ -223,6 +217,7 @@ end;
 
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
+    FormProcess.rivid := strtoint(CurrentRIV.Caption);
     FormProcess.ShowModal;
 end;
 

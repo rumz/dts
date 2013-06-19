@@ -1,6 +1,6 @@
 object FormRIV: TFormRIV
-  Left = 1702
-  Top = 392
+  Left = 677
+  Top = 171
   BorderStyle = bsDialog
   Caption = 'RIV '
   ClientHeight = 368
@@ -49,7 +49,7 @@ object FormRIV: TFormRIV
     LabelPosition = lpLeft
     LabelSpacing = 3
     ReadOnly = True
-    TabOrder = 0
+    TabOrder = 6
     Visible = False
   end
   object led_rivno: TLabeledEdit
@@ -64,7 +64,7 @@ object FormRIV: TFormRIV
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     LabelSpacing = 3
-    TabOrder = 1
+    TabOrder = 0
   end
   object Memo_RIV_Description: TMemo
     Left = 14
@@ -72,7 +72,7 @@ object FormRIV: TFormRIV
     Width = 419
     Height = 105
     MaxLength = 255
-    TabOrder = 3
+    TabOrder = 2
   end
   object cbo_Requestor: TComboBox
     Left = 255
@@ -81,7 +81,7 @@ object FormRIV: TFormRIV
     Height = 21
     Style = csDropDownList
     ItemHeight = 13
-    TabOrder = 2
+    TabOrder = 1
   end
   object BitBtn1: TBitBtn
     Left = 160
@@ -108,6 +108,6 @@ object FormRIV: TFormRIV
     Width = 419
     Height = 105
     MaxLength = 255
-    TabOrder = 6
+    TabOrder = 3
   end
 end

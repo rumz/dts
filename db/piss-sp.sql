@@ -4,8 +4,7 @@ RETURNS
     NAME       VARCHAR(80) CHARACTER SET NONE,
     RIGHTS     VARCHAR(20) CHARACTER SET NONE
 )
-AS
-BEGIN
+AS BEGIN
     for
  select f_name || ' ' || l_name, right_id
    from phic_201
@@ -33,8 +32,7 @@ RETURNS
     DEPT            VARCHAR(30) CHARACTER SET NONE,
     RIGHTS          VARCHAR(20) CHARACTER SET NONE
 )
-AS
-BEGIN
+AS BEGIN
     for
     select id_no, L_NAME, f_NAME, '', ''
       from PHIC_201
@@ -61,8 +59,7 @@ RETURNS
     cost double precision,
     description varchar(255) character set none
 )
-AS
-BEGIN
+AS BEGIN
     for
     select id, itype, model, capex, cost, description
       from ITEM_LIB
@@ -80,8 +77,7 @@ SET TERM ; ^
 SET TERM ^ ;
 CREATE PROCEDURE DELETE_ITEM_LIB(
     ID INTEGER)
-AS
-BEGIN
+AS BEGIN
     delete from ITEM_LIB
      where ID = :ID;
 END^
@@ -129,8 +125,7 @@ CREATE PROCEDURE UPDATE_FLOW_DATA(
     approved       integer,
     remarks        varchar(255) character set none
 )
-AS
-BEGIN
+AS BEGIN
     if (:id = 0) then
     begin
         insert into flow_data(ftype, flow_id, received_date, received_by, approved, remarks) values(:ftype, :flow_id, :received_date, :received_by, :approved, :remarks);
@@ -157,8 +152,7 @@ RETURNS
     DEPT            VARCHAR(30) CHARACTER SET NONE,
     RIGHTS          VARCHAR(20) CHARACTER SET NONE
 )
-AS
-BEGIN
+AS BEGIN
     for
     select id_no, L_NAME, f_NAME, '', ''
       from PHIC_201 a
@@ -190,8 +184,7 @@ returns
     status varchar(20),
     remarks varchar(255)
 )
-as
-begin
+as begin
     /* 0 for description */
     if (:s_type = 0) then
     begin
@@ -221,8 +214,7 @@ alter procedure update_rivs(
     status varchar(20),
     remarks varchar(255)
 )
-as
-begin
+as begin
     if (:id = 0) then begin
         insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status, remarks)
         values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status, :remarks);
@@ -245,24 +237,26 @@ end
 
 
 
-create procedure select_riv_transactions(
+alter procedure select_riv_transactions(
     riv_id integer
 )
 returns(
-    flow_id varchar(10),
-    approved_date date,
-    approved_by varchar(16),
+    flow_id integer,
+    description varchar(255),
     approved varchar(20),
+    approved_by varchar(16),
+    approved_date timestamp,
     remarks varchar(255)
 )
-as
-begin
+as begin
        for
-    select flow_id, approved, approved_by, approved_date, remarks
-      from flow_data
-     where riv_id = :riv_id
+    select flow_id, fl.rights || ' - ' || fl.description, approved, approved_by, approved_date, remarks
+      from flow_data fd, flow_lib fl
+     where fl.id = fd.flow_id
+       and riv_id = :riv_id
+       and fl.ftype = 'RIV'
      order by flow_id, approved_date
-      into :flow_id, :approved, :approved_by, :approved_date, :remarks
+      into :flow_id, :description, :approved, :approved_by, :approved_date, :remarks
         do
         begin
             suspend;
@@ -271,6 +265,39 @@ end
 
 
 
+select * from select_riv_transactions(14)
+
+
+create table flow_data (
+    id integer,
+    ftype varchar(50),
+    riv_id integer,
+    flow_id integer,
+    approved integer,
+    approved_by varchar(16),
+    approved_date timestamp,
+    remarks varchar(255),
+    lastupdate timestamp
+)
+
+
+create procedure update_flow_data(
+    id integer,
+    riv_id integer,
+    flow_id integer,
+    approved integer,
+    approved_by varchar(16),
+    approved_date timestamp,
+    remarks varchar(255),
+    lastupdate timestamp
+)
+as begin
+    if (:id = 0) then begin
+        insert into flow_data(id, ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
+
+
+
+create procedure select
 /*
 select flow_id, approved_by, approved, approved_date, remarks
   from flow_data

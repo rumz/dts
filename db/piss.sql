@@ -1,3 +1,8 @@
+{$A+,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N+,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
+{$MINSTACKSIZE $00004000}
+{$MAXSTACKSIZE $00100000}
+{$IMAGEBASE $00400000}
+{$APPTYPE GUI}
 /* inventory.sql */
 
 
@@ -57,8 +62,8 @@ Description: e.g.  'EU - Create RIV and Get Clearance from Division Head'
 drop table flow_lib;
 
 CREATE TABLE FLOW_LIB (
+    ID INTEGER,
     FTYPE VARCHAR(50),
-    FLOW_ID INTEGER,
     RIGHTS VARCHAR(16) CHARACTER SET NONE NOT NULL,
     DESCRIPTION VARCHAR(255) CHARACTER SET NONE NOT NULL
 )
@@ -89,15 +94,14 @@ create table flow_data (
     ftype varchar(50),
     riv_id integer,
     flow_id integer,
-    received_date timestamp,
-    received_by varchar(16),
     approved integer,
+    approved_by varchar(16),
     approved_date timestamp,
-    returned_to varchar(16),
-    returned_remarks varchar(255),
     remarks varchar(255),
     lastupdate timestamp
 )
+
+
 
 
 /************************************************

@@ -1,9 +1,9 @@
 object FormMain: TFormMain
-  Left = 1421
-  Top = 299
-  Width = 1207
-  Height = 498
-  Caption = 'Philhealth Inventory System Software '
+  Left = 1531
+  Top = 300
+  Width = 999
+  Height = 565
+  Caption = 'DTS'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,8 +21,8 @@ object FormMain: TFormMain
   object pgc: TPageControl
     Left = 0
     Top = 0
-    Width = 1199
-    Height = 452
+    Width = 991
+    Height = 519
     ActivePage = TabRiv2
     Align = alClient
     Style = tsButtons
@@ -33,8 +33,8 @@ object FormMain: TFormMain
       ImageIndex = 4
       object StatusBar1: TStatusBar
         Left = 0
-        Top = 402
-        Width = 1191
+        Top = 469
+        Width = 983
         Height = 19
         Panels = <
           item
@@ -51,10 +51,10 @@ object FormMain: TFormMain
       object ControlBar1: TControlBar
         Left = 0
         Top = 0
-        Width = 1191
+        Width = 983
         Height = 31
         Align = alTop
-        TabOrder = 1
+        TabOrder = 2
         object Label2: TLabel
           Left = 11
           Top = 2
@@ -79,6 +79,7 @@ object FormMain: TFormMain
           Caption = '&Add '
           ParentShowHint = False
           ShowHint = True
+          OnClick = AddRecord1Click
         end
         object EditRIVSearch: TEdit
           Left = 85
@@ -92,8 +93,8 @@ object FormMain: TFormMain
       object lsvRIV2: TListView
         Left = 0
         Top = 31
-        Width = 1191
-        Height = 371
+        Width = 983
+        Height = 438
         Align = alClient
         Columns = <
           item
@@ -128,116 +129,10 @@ object FormMain: TFormMain
         ReadOnly = True
         RowSelect = True
         PopupMenu = popItemLib
-        TabOrder = 2
+        TabOrder = 1
         ViewStyle = vsReport
         OnChange = lsvRIV2Change
         OnDblClick = lsvRIV2DblClick
-      end
-    end
-    object tabRIV: TTabSheet
-      Caption = 'RIV Status'
-      ImageIndex = 2
-      object Label1: TLabel
-        Left = 256
-        Top = 11
-        Width = 52
-        Height = 13
-        Caption = 'Requestor:'
-      end
-      object lsvRIV: TListView
-        Left = 0
-        Top = 193
-        Width = 1191
-        Height = 228
-        Align = alBottom
-        Checkboxes = True
-        Columns = <
-          item
-            Caption = 'Approved?'
-            Width = 300
-          end
-          item
-            Caption = 'Received'
-            Width = 125
-          end
-          item
-            Caption = 'Date Received'
-            Width = 150
-          end
-          item
-            Caption = 'Approved?'
-            Width = 100
-          end
-          item
-            Caption = 'Date'
-            Width = 150
-          end
-          item
-            Caption = 'Remarks'
-            Width = 450
-          end>
-        GridLines = True
-        Items.Data = {
-          2F0200000B00000000000000FFFFFFFFFFFFFFFF000000000000000032455520
-          2D204372656174652052495620262047657420436C656172616E63652066726F
-          6D204469766973696F6E204865616400000000FFFFFFFFFFFFFFFF0000000000
-          00000026475355202D20436865636B2041505020262041737369676E20536572
-          696573204E756D62657200000000FFFFFFFFFFFFFFFF00000000000000001C46
-          4D53202D20436865636B2042756467657420616E6420436C65617200000000FF
-          FFFFFFFFFFFFFF0000000000000000124F525650202D20417070726F76652052
-          495600000000FFFFFFFFFFFFFFFF00000000000000001C475355202D20507265
-          706172652043512C2043412C20616E6420504F00000000FFFFFFFFFFFFFFFF00
-          0000000000000017464D53202D20417070726F766520414320616E6420504F00
-          000000FFFFFFFFFFFFFFFF0000000000000000114F525650202D20417070726F
-          766520504F00000000FFFFFFFFFFFFFFFF000000000000000010475355202D20
-          5072657061726520445600000000FFFFFFFFFFFFFFFF00000000000000001843
-          617368696572202D20497373756520436865636B28732900000000FFFFFFFFFF
-          FFFFFF000000000000000025475355202D205365727665205061796D656E7420
-          616E642041637175697265204974656D7300000000FFFFFFFFFFFFFFFF000000
-          0000000000294555202D205265636569766520537570706C6965732076696120
-          5769746864726177616C20536C6970}
-        ReadOnly = True
-        RowSelect = True
-        TabOrder = 0
-        ViewStyle = vsReport
-      end
-      object LabeledEdit2: TLabeledEdit
-        Left = 80
-        Top = 8
-        Width = 153
-        Height = 21
-        EditLabel.Width = 58
-        EditLabel.Height = 13
-        EditLabel.Caption = 'RIV Number'
-        LabelPosition = lpLeft
-        LabelSpacing = 3
-        TabOrder = 1
-        Text = '234-12'
-      end
-      object StaticText1: TStaticText
-        Left = 16
-        Top = 40
-        Width = 57
-        Height = 17
-        Caption = 'Description'
-        TabOrder = 2
-      end
-      object Memo1: TMemo
-        Left = 80
-        Top = 40
-        Width = 377
-        Height = 113
-        Lines.Strings = (
-          'Request for IC Recorder 4GB')
-        TabOrder = 3
-      end
-      object cboRequestor: TComboBox
-        Left = 312
-        Top = 8
-        Width = 145
-        Height = 21
-        ItemHeight = 13
-        TabOrder = 4
       end
     end
     object tabItems: TTabSheet
@@ -251,8 +146,8 @@ object FormMain: TFormMain
       object lsvItemLib: TListView
         Left = 0
         Top = 0
-        Width = 1191
-        Height = 421
+        Width = 983
+        Height = 488
         Align = alClient
         Columns = <
           item
