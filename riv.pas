@@ -26,7 +26,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    riv_form_state : String; 
+    riv_form_state : String;
   end;
 
 var
@@ -34,7 +34,7 @@ var
 
 implementation
 
-uses data_module, main;
+uses data_module, login, main;
 
 {$R *.dfm}
 
@@ -56,6 +56,11 @@ begin
         dm.ibq.Next;
     end;
     cbo_Requestor.Items.EndUpdate;
+
+    dm.ibt.Commit;
+
+//    cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf()
+
 end;
 
 
@@ -64,6 +69,8 @@ begin
     if cbo_Requestor.Items.Count = 0 then begin
         loadElements;
     end;
+    if riv_form_state = 'Add' then
+        cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormLogin.user_id);
     if riv_form_state = 'Update' then
         cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormMain.CurrentRIV.SubItems.Strings[1]);
     

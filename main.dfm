@@ -110,7 +110,7 @@ object FormMain: TFormMain
           end
           item
             Caption = 'Description'
-            Width = 500
+            Width = 400
           end
           item
             Caption = 'Create Date'

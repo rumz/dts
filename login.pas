@@ -21,7 +21,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    user_name: String;
+    user_id, user_name: String;
     rights : String;
 end;
 
@@ -63,6 +63,7 @@ end;
 procedure TFormLogin.BitBtn1Click(Sender: TObject);
 begin
     user_name := '';
+    user_id := LabeledEdit1.Text;
     rights := '';
 
 

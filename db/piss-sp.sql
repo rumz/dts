@@ -271,6 +271,29 @@ as begin
 end
 
 
+// probably dont need this anymore but lets keep it around for the meantime
+alter procedure select_current_transaction(
+    riv_id integer
+)
+returns(
+    id integer,
+    rights varchar(16),
+    description varchar(255)
+)
+as begin
+    select id, rights, description
+      from flow_lib
+     where id = (select count(fd.flow_id)
+                   from flow_data fd, flow_lib fl
+                  where fd.flow_id = fl.id
+                    and riv_id = :riv_id
+                    and fd.approved = 1) + 1
+      into :id, :rights, :description;
+      suspend;
+end
+
+
+select * from select_current_transaction(14)
 
 select * from select_riv_transactions(14)
 

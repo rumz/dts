@@ -14,13 +14,6 @@ object FormProcess: TFormProcess
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 24
-    Top = 272
-    Width = 49
-    Height = 13
-    Caption = 'Approve? '
-  end
   object Label2: TLabel
     Left = 24
     Top = 304
@@ -28,24 +21,12 @@ object FormProcess: TFormProcess
     Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
   end
-  object cbo_approve: TComboBox
-    Left = 83
-    Top = 268
-    Width = 86
-    Height = 21
-    Style = csDropDownList
-    ItemHeight = 13
-    TabOrder = 0
-    Items.Strings = (
-      'Yes'
-      'No')
-  end
   object TabControl1: TTabControl
     Left = 0
     Top = 1
     Width = 609
     Height = 240
-    TabOrder = 1
+    TabOrder = 0
     Tabs.Strings = (
       'Transactions')
     TabIndex = 0
@@ -88,25 +69,25 @@ object FormProcess: TFormProcess
     Width = 601
     Height = 49
     MaxLength = 255
-    TabOrder = 2
+    TabOrder = 1
   end
-  object BitBtn1: TBitBtn
-    Left = 232
+  object Deny: TBitBtn
+    Left = 264
     Top = 392
     Width = 75
     Height = 25
-    Caption = 'Save'
-    TabOrder = 3
-    OnClick = BitBtn1Click
+    Caption = 'Deny'
+    TabOrder = 2
+    OnClick = DenyClick
   end
   object BitBtn2: TBitBtn
-    Left = 320
+    Left = 368
     Top = 392
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Cancel'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = BitBtn2Click
   end
   object TabControl2: TTabControl
@@ -114,7 +95,7 @@ object FormProcess: TFormProcess
     Top = 0
     Width = 296
     Height = 241
-    TabOrder = 5
+    TabOrder = 4
     Tabs.Strings = (
       'Sample RIV')
     TabIndex = 0
@@ -155,5 +136,40 @@ object FormProcess: TFormProcess
       TabOrder = 0
       ViewStyle = vsReport
     end
+  end
+  object led_status: TLabeledEdit
+    Left = 160
+    Top = 267
+    Width = 457
+    Height = 24
+    TabStop = False
+    EditLabel.Width = 133
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Current Status for Approval: '
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clRed
+    EditLabel.Font.Height = -11
+    EditLabel.Font.Name = 'MS Sans Serif'
+    EditLabel.Font.Style = []
+    EditLabel.ParentFont = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    LabelPosition = lpLeft
+    LabelSpacing = 3
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 5
+  end
+  object Approve: TBitBtn
+    Left = 160
+    Top = 392
+    Width = 75
+    Height = 25
+    Caption = 'Approve'
+    TabOrder = 6
+    OnClick = DenyClick
   end
 end
