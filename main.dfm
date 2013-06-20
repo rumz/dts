@@ -14,7 +14,6 @@ object FormMain: TFormMain
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
-  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -124,6 +123,10 @@ object FormMain: TFormMain
           item
             Caption = 'Remarks'
             Width = 150
+          end
+          item
+            Caption = 'CurrentStep'
+            Width = 0
           end>
         GridLines = True
         ReadOnly = True

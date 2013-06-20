@@ -189,7 +189,7 @@ as begin
     if (:s_type = 0) then
     begin
          for
-      select id, riv_no, requestor, description, status, remarks, create_date
+      select id, riv_no, requestor, description, current_step, remarks, create_date
         from RIVS
        where upper(description) like upper(:s_data)
        order by id
@@ -286,6 +286,7 @@ create table flow_data (
     remarks varchar(255),
     lastupdate timestamp
 )
+
 
 create procedure update_flow_data(
     id integer,

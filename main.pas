@@ -33,7 +33,6 @@ type
     N2: TMenuItem;
     ProcessRecord1: TMenuItem;
     procedure lsvRefresh;
-    procedure FormCreate(Sender: TObject);
     procedure Refresh1Click(Sender: TObject);
     procedure DeleteRecord1Click(Sender: TObject);
     procedure UpdateRecord1Click(Sender: TObject);
@@ -97,9 +96,10 @@ begin
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
+          NewItem.SubItems.Add('Step ' + dm.ibq.Fields.Fields[4].AsString + '/11');
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
           dm.ibq.Next;
       end;
       lsvRIV2.Items.EndUpdate;
@@ -108,15 +108,11 @@ end;
 
 
 
-procedure TFormMain.FormCreate(Sender: TObject);
-begin
-//    FormLogin.ShowModal;
-end;
-
 procedure TFormMain.Refresh1Click(Sender: TObject);
 begin
     lsvRefresh;
 end;
+
 
 procedure TFormMain.DeleteRecord1Click(Sender: TObject);
 begin
@@ -126,7 +122,7 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure update_rivs(:id, :b, :c, :d, :e, :f, :g, :h)');
+    dm.ibq.SQL.Add('execute procedure update_rivs(:id, :b, :c, :d, :e, :f, :g, :h, :i)');
     dm.ibq.Params[0].AsInteger := strtoint(CurrentRIV.Caption) * -1;
     dm.ibq.Params[1].AsString := '';
     dm.ibq.Params[2].AsString := '';
@@ -135,6 +131,7 @@ begin
     dm.ibq.Params[5].AsString := '';
     dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
     dm.ibq.Params[7].AsString := '';
+    dm.ibq.Params[8].AsString := '';
 
     dm.ibq.Prepare;
     dm.ibq.ExecSQL;
@@ -207,7 +204,7 @@ end;
 procedure TFormMain.popItemLibPopup(Sender: TObject);
 begin
     { TODO: check rights based on the rights of the user and the current status the item has }
-    if not (CurrentRIV.Caption = '') then
+    if (CurrentRIV <> nil) then
     begin
         if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
             ProcessRecord1.Enabled := True
@@ -219,7 +216,9 @@ end;
 
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
-    FormProcess.rivid := strtoint(CurrentRIV.Caption);
+    FormProcess.riv_id := strtoint(CurrentRIV.Caption);
+    FormProcess.riv_no := CurrentRIV.SubItems.Strings[0];
+    FormProcess.riv_description := CurrentRIV.SubItems.Strings[2];
     FormProcess.ShowModal;
 end;
 

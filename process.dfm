@@ -3,7 +3,7 @@ object FormProcess: TFormProcess
   Top = 235
   Width = 921
   Height = 462
-  Caption = 'Approve Form'
+  Caption = 'Approve RIV'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

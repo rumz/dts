@@ -27,7 +27,8 @@ type
   public
     { Public declarations }
     NewItem : TListItem;
-    rivid : integer;
+    riv_id : integer;
+    riv_no, riv_description : string;
   end;
 
 var
@@ -48,7 +49,7 @@ begin
 
     dm.ibq.SQL.Clear;
     dm.ibq.SQL.Add('select * from SELECT_RIV_TRANSACTIONS(:a)');
-    dm.ibq.Params[0].AsInteger := rivid;
+    dm.ibq.Params[0].AsInteger := riv_id;
     dm.ibq.Open;
 
     lsvRIVtransactions.Items.BeginUpdate;
@@ -74,6 +75,7 @@ end;
 procedure TFormProcess.FormShow(Sender: TObject);
 begin
     transactionsRefresh;
+    FormProcess.Caption := FormProcess.Caption + ' - ' + riv_no + ' (' + riv_description + ')'; 
 end;
 
 

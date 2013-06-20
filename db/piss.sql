@@ -125,12 +125,11 @@ create table RIVs (
     description varchar(255),
     riv_no varchar(10),
     requestor varchar(16),
-    current_step integer,
     create_date timestamp,
     created_by varchar(16),
+    current_step integer,
     status varchar(20),
-    po varchar(10),
-    dv varchar(15)
+    remarks varchar(255)
 )
 
 
