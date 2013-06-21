@@ -22,6 +22,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure DenyClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -91,7 +92,7 @@ begin
     dm.ibq.Params[0].AsInteger := riv_id;
     dm.ibq.Open;
     while not dm.ibq.Eof do begin
-        current_flow_id := dm.ibq.Fields.Fields[0].AsInteger;
+//        current_flow_id := dm.ibq.Fields.Fields[0].AsInteger;
 
         dm.ibq.Next;
     end;
@@ -157,6 +158,12 @@ begin
 
     transactionsRefresh;
 
+end;
+
+procedure TFormProcess.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    FormMain.lsvRefresh;
 end;
 
 end.

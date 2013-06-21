@@ -311,7 +311,7 @@ create table flow_data (
 )
 
 
-create procedure update_flow_data(
+alter procedure update_flow_data(
     id integer,
     ftype varchar(50),
     riv_id integer,
@@ -326,6 +326,9 @@ as begin
     if (:id = 0) then begin
         insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
         values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks, :lastupdate);
+        update rivs
+           set current_step = :flow_id
+         where id = :riv_id;
     end
     else if (:id < 0) then begin
         delete from flow_data where id = (:id * -1);

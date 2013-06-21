@@ -1,8 +1,8 @@
 object FormProcess: TFormProcess
   Left = 1533
   Top = 235
-  Width = 921
-  Height = 462
+  Width = 917
+  Height = 573
   Caption = 'Approve RIV'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,12 +11,13 @@ object FormProcess: TFormProcess
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
     Left = 24
-    Top = 304
+    Top = 400
     Width = 228
     Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
@@ -25,7 +26,7 @@ object FormProcess: TFormProcess
     Left = 0
     Top = 1
     Width = 609
-    Height = 240
+    Height = 334
     TabOrder = 0
     Tabs.Strings = (
       'Transactions')
@@ -34,7 +35,7 @@ object FormProcess: TFormProcess
       Left = 4
       Top = 24
       Width = 601
-      Height = 212
+      Height = 306
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -65,7 +66,7 @@ object FormProcess: TFormProcess
   end
   object MemoRemarks: TMemo
     Left = 16
-    Top = 328
+    Top = 424
     Width = 601
     Height = 49
     MaxLength = 255
@@ -73,7 +74,7 @@ object FormProcess: TFormProcess
   end
   object Deny: TBitBtn
     Left = 264
-    Top = 392
+    Top = 488
     Width = 75
     Height = 25
     Caption = 'Deny'
@@ -82,7 +83,7 @@ object FormProcess: TFormProcess
   end
   object BitBtn2: TBitBtn
     Left = 368
-    Top = 392
+    Top = 488
     Width = 75
     Height = 25
     Cancel = True
@@ -94,7 +95,7 @@ object FormProcess: TFormProcess
     Left = 611
     Top = 0
     Width = 296
-    Height = 241
+    Height = 334
     TabOrder = 4
     Tabs.Strings = (
       'Sample RIV')
@@ -103,7 +104,7 @@ object FormProcess: TFormProcess
       Left = 4
       Top = 24
       Width = 288
-      Height = 213
+      Height = 306
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -139,7 +140,7 @@ object FormProcess: TFormProcess
   end
   object led_status: TLabeledEdit
     Left = 160
-    Top = 267
+    Top = 363
     Width = 457
     Height = 24
     TabStop = False
@@ -165,7 +166,7 @@ object FormProcess: TFormProcess
   end
   object Approve: TBitBtn
     Left = 160
-    Top = 392
+    Top = 488
     Width = 75
     Height = 25
     Caption = 'Approve'
