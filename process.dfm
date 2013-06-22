@@ -1,6 +1,6 @@
 object FormProcess: TFormProcess
-  Left = 1533
-  Top = 235
+  Left = 1418
+  Top = 179
   Width = 917
   Height = 573
   Caption = 'Approve RIV'
@@ -21,6 +21,13 @@ object FormProcess: TFormProcess
     Width = 228
     Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
+  end
+  object Label1: TLabel
+    Left = 400
+    Top = 344
+    Width = 32
+    Height = 13
+    Caption = 'Label1'
   end
   object TabControl1: TTabControl
     Left = 0
