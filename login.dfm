@@ -1,6 +1,6 @@
 object FormLogin: TFormLogin
-  Left = 1782
-  Top = 389
+  Left = 526
+  Top = 260
   Width = 363
   Height = 250
   Caption = 'Login - Philhealth Document Tracker'
@@ -12,6 +12,7 @@ object FormLogin: TFormLogin
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96

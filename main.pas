@@ -206,10 +206,11 @@ begin
     { TODO: check rights based on the rights of the user and the current status the item has }
     if (CurrentRIV <> nil) then
     begin
-        if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
+{        if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
             ProcessRecord1.Enabled := True
         else
             ProcessRecord1.Enabled := False;
+}
     end
 
 end;

@@ -18,7 +18,6 @@ type
     lsvRIV: TListView;
     led_status: TLabeledEdit;
     Approve: TBitBtn;
-    Label1: TLabel;
     procedure transactionsRefresh;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -81,7 +80,6 @@ begin
 
     led_status.Text := lsvRIV.Items.Item[current_flow_id].Caption;
 
-     Label2.Caption := 'Hello';
     // todo get the rights needed for the current transaction and then compare this with the current user's rights
     // if the user does not have the rights,
 
