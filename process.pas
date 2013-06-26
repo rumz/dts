@@ -83,7 +83,7 @@ begin
 
     if lsvRIV.Items.Count > current_flow_id then
     begin
-        led_status.Text := lsvRIV.Items.Item[current_flow_id].SubItems[1]  // lsvRIV.Items.Item[current_flow_id].Caption +  
+        led_status.Text := lsvRIV.Items.Item[current_flow_id].SubItems[0]  // lsvRIV.Items.Item[current_flow_id].Caption +  
     end
     else
         led_status.Text := '';

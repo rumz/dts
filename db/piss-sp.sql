@@ -355,9 +355,4 @@ as begin
             suspend;
         end
 end
-/*
-select flow_id, approved_by, approved, approved_date, remarks
-  from flow_data
- where riv_id = 1
- order by flow_id, approved_date
-*/
+

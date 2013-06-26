@@ -27,10 +27,12 @@ type
   public
     { Public declarations }
     riv_form_state : String;
+
   end;
 
 var
   FormRIV: TFormRIV;
+  names : array[0..200] of String;
 
 implementation
 
@@ -40,6 +42,8 @@ uses data_module, login, main;
 
 
 procedure TFormRIV.loadElements;
+var i: integer;
+    name: string;
 begin
     if dm.ibt.InTransaction then
         dm.ibt.Commit
@@ -47,13 +51,17 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select ID_NO from SELECT_USERS order by id_no');
+    dm.ibq.SQL.Add('select ID_NO, Last_name, first_name from SELECT_USERS order by last_name');
     dm.ibq.Open;
     cbo_Requestor.Items.BeginUpdate;
     cbo_Requestor.Items.Clear;
+    i := 0;
     while not dm.ibq.Eof do begin
-        cbo_Requestor.Items.Add(dm.ibq.Fields.Fields[0].AsString);
+        names[i] := dm.ibq.Fields.Fields[0].AsString;
+        name := dm.ibq.Fields.Fields[1].AsString + ', ' + dm.ibq.Fields.Fields[2].AsString;
+        cbo_Requestor.Items.Add(name);
         dm.ibq.Next;
+        i := i + 1;
     end;
     cbo_Requestor.Items.EndUpdate;
 
@@ -98,7 +106,8 @@ begin
         dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
     dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text;
     dm.ibq.Params[2].AsString := led_rivno.Text;
-    dm.ibq.Params[3].AsString := cbo_Requestor.Text;
+    dm.ibq.Params[3].AsString := names[cbo_Requestor.ItemIndex];
+
     dm.ibq.Params[4].AsDateTime := Now;
     dm.ibq.Params[5].AsString := FormMain.CurrentUser;  // created by
     dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
