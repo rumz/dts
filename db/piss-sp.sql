@@ -249,6 +249,7 @@ alter procedure select_riv_transactions(
 )
 returns(
     flow_id integer,
+    rights varchar
     description varchar(255),
     approved varchar(20),
     approved_by varchar(16),
@@ -298,18 +299,6 @@ select * from select_current_transaction(14)
 select * from select_riv_transactions(14)
 
 
-create table flow_data (
-    id integer,
-    ftype varchar(50),
-    riv_id integer,
-    flow_id integer,
-    approved integer,
-    approved_by varchar(16),
-    approved_date timestamp,
-    remarks varchar(255),
-    lastupdate timestamp
-)
-
 
 alter procedure update_flow_data(
     id integer,
@@ -349,7 +338,23 @@ end
 
 
 
-create procedure select
+alter  procedure select_riv_flow
+returns(
+    rights varchar(16),
+    description  varchar(255)
+)
+as begin
+       for
+    select rights, description
+      from flow_lib
+     where ftype = 'RIV'
+     order by id
+      into :rights, :description
+      do
+        begin
+            suspend;
+        end
+end
 /*
 select flow_id, approved_by, approved, approved_date, remarks
   from flow_data

@@ -43,7 +43,10 @@ implementation
 uses data_module, main, login, DB;
 
 procedure TFormProcess.transactionsRefresh;
+var
+    Location : PChar;
 begin
+    // get transactions for the current RIV
     current_flow_id := 0;
     if dm.ibt.InTransaction then
         dm.ibt.Commit
@@ -78,10 +81,29 @@ begin
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
 
-    led_status.Text := lsvRIV.Items.Item[current_flow_id].Caption;
+    if lsvRIV.Items.Count > current_flow_id then
+    begin
+        led_status.Text := lsvRIV.Items.Item[current_flow_id].SubItems[1]  // lsvRIV.Items.Item[current_flow_id].Caption +  
+    end
+    else
+        led_status.Text := '';
+
+ //   MessageDlg(lsvRIV.Items.Item[current_flow_id].SubItems[0], mtInformation, mbOKCancel, 1);
+    if StrPos(PChar(lsvRIV.Items.Item[current_flow_id].SubItems[0]), PChar(FormLogin.rights)) = nil then
+    begin
+        Approve.Enabled := False;
+        Deny.Enabled := False;
+    end
+    else begin
+        Approve.Enabled := True;
+        Deny.Enabled := True;
+    end;
+
+
 
     // todo get the rights needed for the current transaction and then compare this with the current user's rights
-    // if the user does not have the rights,
+    // if the user does not have the rights, rights are in
+    // lsvRIV.Items.Item[current_flow_id].SubItems[0]
 
     if dm.ibt.InTransaction then
         dm.ibt.Commit
@@ -97,7 +119,10 @@ begin
 
         dm.ibq.Next;
     end;
-    
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit;
+
+
 
 
 
@@ -105,6 +130,28 @@ end;
 
 procedure TFormProcess.FormShow(Sender: TObject);
 begin
+    // load up the STEPS needed for RIVS; we only need to do this once
+    lsvRIV.Items.BeginUpdate;
+    lsvRIV.Items.Clear;
+
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit
+    else
+        dm.ibt.StartTransaction;
+
+    dm.ibq.SQL.Clear;
+    dm.ibq.SQL.Add('select * from select_riv_flow');
+    dm.ibq.Open;
+    while not dm.ibq.Eof do begin
+        NewItem := lsvRIV.Items.Add;
+        NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
+        dm.ibq.Next;
+    end;
+    lsvRIV.Items.EndUpdate;
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit;
+
     transactionsRefresh;
     FormProcess.Caption := FormProcess.Caption + ' - ' + riv_no + ' (' + riv_description + ')';
 end;
@@ -125,8 +172,6 @@ begin
 
     // todo check user rights before running the SP
 
-
-
     if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
@@ -142,7 +187,7 @@ begin
     dm.ibq.Params[4].AsInteger := action;                 // approved
     dm.ibq.Params[5].AsString := FormLogin.user_id;       // approved_by
     dm.ibq.Params[6].AsDateTime := Now;                   // lastupdate
-    if MemoRemarks.Lines.Text = '' then
+    if MemoRemarks.Lines.Text = '' then                   // default remarks if left blank
         if action = 1 then
             dm.ibq.Params[7].AsString := 'Approved'
         else
@@ -155,6 +200,7 @@ begin
     dm.ibq.ExecSQL;
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
+    MemoRemarks.Lines.Clear;
 
     transactionsRefresh;
 

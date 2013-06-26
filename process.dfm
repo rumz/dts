@@ -1,8 +1,8 @@
 object FormProcess: TFormProcess
-  Left = 90
-  Top = 128
-  Width = 917
-  Height = 573
+  Left = 248
+  Top = 14
+  Width = 971
+  Height = 698
   Caption = 'Approve RIV'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormProcess: TFormProcess
   TextHeight = 13
   object Label2: TLabel
     Left = 24
-    Top = 400
+    Top = 536
     Width = 228
     Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
@@ -25,8 +25,8 @@ object FormProcess: TFormProcess
   object TabControl1: TTabControl
     Left = 0
     Top = 1
-    Width = 609
-    Height = 334
+    Width = 671
+    Height = 478
     TabOrder = 0
     Tabs.Strings = (
       'Transactions')
@@ -34,8 +34,8 @@ object FormProcess: TFormProcess
     object lsvRIVtransactions: TListView
       Left = 4
       Top = 24
-      Width = 601
-      Height = 306
+      Width = 663
+      Height = 450
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -66,7 +66,7 @@ object FormProcess: TFormProcess
   end
   object MemoRemarks: TMemo
     Left = 16
-    Top = 424
+    Top = 560
     Width = 601
     Height = 49
     MaxLength = 255
@@ -74,7 +74,7 @@ object FormProcess: TFormProcess
   end
   object Deny: TBitBtn
     Left = 264
-    Top = 488
+    Top = 624
     Width = 75
     Height = 25
     Caption = 'Deny'
@@ -83,7 +83,7 @@ object FormProcess: TFormProcess
   end
   object BitBtn2: TBitBtn
     Left = 368
-    Top = 488
+    Top = 624
     Width = 75
     Height = 25
     Cancel = True
@@ -92,10 +92,10 @@ object FormProcess: TFormProcess
     OnClick = BitBtn2Click
   end
   object TabControl2: TTabControl
-    Left = 611
+    Left = 671
     Top = 0
-    Width = 296
-    Height = 334
+    Width = 292
+    Height = 479
     TabOrder = 4
     Tabs.Strings = (
       'Sample RIV')
@@ -103,11 +103,14 @@ object FormProcess: TFormProcess
     object lsvRIV: TListView
       Left = 4
       Top = 24
-      Width = 288
-      Height = 306
+      Width = 284
+      Height = 451
       Align = alClient
-      Checkboxes = True
       Columns = <
+        item
+          Caption = 'Rights'
+          Width = 45
+        end
         item
           Caption = 'Approved?'
           Width = 276
@@ -144,7 +147,7 @@ object FormProcess: TFormProcess
   end
   object led_status: TLabeledEdit
     Left = 160
-    Top = 363
+    Top = 499
     Width = 457
     Height = 24
     TabStop = False
@@ -170,7 +173,7 @@ object FormProcess: TFormProcess
   end
   object Approve: TBitBtn
     Left = 160
-    Top = 488
+    Top = 624
     Width = 75
     Height = 25
     Caption = 'Approve'
