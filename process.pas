@@ -18,6 +18,8 @@ type
     lsvRIV: TListView;
     led_status: TLabeledEdit;
     Approve: TBitBtn;
+    Label1: TLabel;
+    Label3: TLabel;
     procedure transactionsRefresh;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -88,8 +90,15 @@ begin
     else
         led_status.Text := '';
 
- //   MessageDlg(lsvRIV.Items.Item[current_flow_id].SubItems[0], mtInformation, mbOKCancel, 1);
-    if StrPos(PChar(lsvRIV.Items.Item[current_flow_id].SubItems[0]), PChar(FormLogin.rights)) = nil then
+    // MessageDlg(lsvRIV.Items.Item[current_flow_id].SubItems[0], mtInformation, mbOKCancel, 1);
+    // check if  user has rights to the current FLOW
+    // function StrPos(const Str1, Str2: PChar): PChar;
+    // StrPos returns a pointer to the first occurrence of Str2 in Str1. If Str2 does not occur in Str1, StrPos returns nil.
+
+    Label1.Caption := 'User Rights ' + FormLogin.rights;
+    Label3.Caption := 'Current Rights ' + lsvRIV.Items.Item[current_flow_id].Caption;
+
+    if StrPos(PChar(FormLogin.rights), PChar(lsvRIV.Items.Item[current_flow_id].Caption)) = nil then
     begin
         Approve.Enabled := False;
         Deny.Enabled := False;

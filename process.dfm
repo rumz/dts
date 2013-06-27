@@ -22,6 +22,20 @@ object FormProcess: TFormProcess
     Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
   end
+  object Label1: TLabel
+    Left = 664
+    Top = 536
+    Width = 48
+    Height = 13
+    Caption = 'user rights'
+  end
+  object Label3: TLabel
+    Left = 664
+    Top = 560
+    Width = 100
+    Height = 13
+    Caption = 'current rights needed'
+  end
   object TabControl1: TTabControl
     Left = 0
     Top = 1
