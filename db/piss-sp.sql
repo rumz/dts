@@ -180,8 +180,8 @@ returns
     riv_no  varchar(10),
     requestor varchar(16),
     description varchar(255),
-    create_date  date,
-    status varchar(20),
+    create_date  timestamp,
+    status varchar(271),
     remarks varchar(255)
 )
 as begin
@@ -189,9 +189,10 @@ as begin
     if (:s_type = 0) then
     begin
          for
-      select id, riv_no, requestor, description, current_step, remarks, create_date
-        from RIVS
-       where upper(description) like upper(:s_data)
+      select r.id, riv_no, requestor, r.description, fl.rights || ' - ' || fl.description , remarks, create_date
+        from RIVS r, flow_lib fl
+       where r.current_step = fl.id
+         and upper(r.description) like upper(:s_data)
        order by id
         into :id, :riv_no, :requestor, :description, :status, :remarks, :create_date
           do

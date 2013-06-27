@@ -26,9 +26,11 @@ INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '15', 'FMS'
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '16', 'GSU',     'Prepare Voucher');
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '17', 'GSU',     'Forward to FMS');  // for checking
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '18', 'FMS',     'Forward to Cashier');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '19', 'Cashier', 'Issue Checks');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '19', 'C', 'Issue Checks');
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '20', 'GSU',     'Serve Payment and Pickup Supplies');
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '21', 'EU',      'Receive Supplies via Withdrawal Slip');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '22', 'GSU',     'Prepare Inspection Report and Delivery Receipt');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '23', 'C',       'File Voucher');
 
 insert into
 
