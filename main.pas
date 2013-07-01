@@ -62,7 +62,7 @@ var
 
 implementation
 
-uses data_module, item_library, riv, login, process;
+uses data_module, item_library, riv, login, process, shared;
 
 {$R *.dfm}
 
@@ -143,7 +143,7 @@ end;
 
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
-    FormRIV.riv_form_state := 'Update';
+    shared.riv_form_state := 'Update';
     FormRIV.led_ID.Text := CurrentRIV.Caption;
     FormRIV.led_rivno.Text := CurrentRIV.SubItems.Strings[0];
     FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
@@ -156,7 +156,7 @@ end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
-    FormRIV.riv_form_state := 'Add';
+    shared.riv_form_state := 'Add';
     FormRIV.led_rivno.Text := '';
     FormRIV.cbo_Requestor.ItemIndex := -1;
     FormRIV.Memo_RIV_Description.Lines.Clear;
@@ -216,9 +216,9 @@ end;
 
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
-    FormProcess.riv_id := strtoint(CurrentRIV.Caption);
-    FormProcess.riv_no := CurrentRIV.SubItems.Strings[0];
-    FormProcess.riv_description := CurrentRIV.SubItems.Strings[2];
+    shared.riv_id := strtoint(CurrentRIV.Caption);
+    shared.riv_no := CurrentRIV.SubItems.Strings[0];
+    shared.riv_description := CurrentRIV.SubItems.Strings[2];
     FormProcess.ShowModal;
 end;
 

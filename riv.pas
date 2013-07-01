@@ -26,7 +26,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-    riv_form_state : String;
 
   end;
 
@@ -36,7 +35,7 @@ var
 
 implementation
 
-uses data_module, login, main;
+uses data_module, login, main, shared;
 
 {$R *.dfm}
 
@@ -77,8 +76,8 @@ begin
     if cbo_Requestor.Items.Count = 0 then begin
         loadElements;
     end;
-    if riv_form_state = 'Add' then
-        cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormLogin.user_id);
+    if shared.riv_form_state = 'Add' then
+        cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(shared.user_id);
     if riv_form_state = 'Update' then
         cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormMain.CurrentRIV.SubItems.Strings[1]);
     
@@ -118,7 +117,7 @@ begin
         dm.ibt.Commit;
 
     // add a record to the flow_data table for this RIV 
-    // do this via the stored procedure
+    // instead i did this via the stored procedure
 
     Close;
     FormMain.lsvRefresh;

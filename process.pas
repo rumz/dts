@@ -30,8 +30,6 @@ type
   public
     { Public declarations }
     NewItem : TListItem;
-    riv_id : integer;
-    riv_no, riv_rights, riv_description : string;
     current_flow_id : integer;
   end;
 
@@ -42,7 +40,7 @@ implementation
 
 {$R *.dfm}
 
-uses data_module, main, login, DB;
+uses data_module, main, login, DB, shared;
 
 procedure TFormProcess.transactionsRefresh;
 var
@@ -95,10 +93,10 @@ begin
     // function StrPos(const Str1, Str2: PChar): PChar;
     // StrPos returns a pointer to the first occurrence of Str2 in Str1. If Str2 does not occur in Str1, StrPos returns nil.
 
-    Label1.Caption := 'User Rights ' + FormLogin.rights;
+    Label1.Caption := 'User Rights ' + shared.rights;
     Label3.Caption := 'Current Rights ' + lsvRIV.Items.Item[current_flow_id].Caption;
 
-    if StrPos(PChar(FormLogin.rights), PChar(lsvRIV.Items.Item[current_flow_id].Caption)) = nil then
+    if StrPos(PChar(shared.rights), PChar(lsvRIV.Items.Item[current_flow_id].Caption)) = nil then
     begin
         Approve.Enabled := False;
         Deny.Enabled := False;
@@ -194,7 +192,7 @@ begin
     dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
     dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
     dm.ibq.Params[4].AsInteger := action;                 // approved
-    dm.ibq.Params[5].AsString := FormLogin.user_id;       // approved_by
+    dm.ibq.Params[5].AsString := shared.user_id;       // approved_by
     dm.ibq.Params[6].AsDateTime := Now;                   // lastupdate
     if MemoRemarks.Lines.Text = '' then                   // default remarks if left blank
         if action = 1 then

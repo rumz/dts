@@ -21,8 +21,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-    user_id, user_name: String;
-    rights : String;
 end;
 
 var
@@ -30,7 +28,7 @@ var
 
 implementation
 
-uses data_module, main;
+uses data_module, main, shared;
 
 {$R *.dfm}
 
@@ -62,9 +60,9 @@ end;
 
 procedure TFormLogin.BitBtn1Click(Sender: TObject);
 begin
-    user_name := '';
-    user_id := LabeledEdit1.Text;
-    rights := '';
+    shared.user_name := '';
+    shared.user_id := LabeledEdit1.Text;
+    shared.rights := '';
 
 
     if dm.ibt.InTransaction then
@@ -89,10 +87,10 @@ begin
             FormMain.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
             FormMain.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
             FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
-            rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
+            shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
             dm.ibq.Next;
         end;
-        FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + rights;
+        FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
         FormMain.Show;
         FormLogin.Hide;
     end

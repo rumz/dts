@@ -12,7 +12,8 @@ uses
   item_library in 'item_library.pas' {FormItemLibrary},
   riv in 'riv.pas' {FormRIV},
   login in 'login.pas' {FormLogin},
-  process in 'process.pas' {FormProcess};
+  process in 'process.pas' {FormProcess},
+  shared in 'shared.pas';
 
 {$R *.res}
 
