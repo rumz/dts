@@ -179,6 +179,7 @@ returns
     id   integer,
     riv_no  varchar(10),
     requestor varchar(16),
+    requestor_name varchar(60),
     description varchar(255),
     create_date  timestamp,
     status varchar(271),
@@ -189,12 +190,13 @@ as begin
     if (:s_type = 0) then
     begin
          for
-      select r.id, riv_no, requestor, r.description, fl.rights || ' - ' || fl.description , remarks, create_date
-        from RIVS r, flow_lib fl
+      select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name,r.description, fl.rights || ' - ' || fl.description , remarks, create_date
+        from RIVS r, flow_lib fl, phic_201 p
        where r.current_step = fl.id
+         and r.requestor = phic_201.id_no
          and upper(r.description) like upper(:s_data)
        order by id
-        into :id, :riv_no, :requestor, :description, :status, :remarks, :create_date
+        into :id, :riv_no, :requestor, :requestor_name, :description, :status, :remarks, :create_date
           do
             begin
               suspend;

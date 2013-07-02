@@ -52,7 +52,6 @@ type
   public
     { Public declarations }
     NewItem, CurrentRIV : TListItem;
-    CurrentUser: String;
   end;
 
 var
@@ -96,9 +95,10 @@ begin
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
           NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
           dm.ibq.Next;
       end;
       lsvRIV2.Items.EndUpdate;

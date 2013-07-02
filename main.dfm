@@ -105,6 +105,10 @@ object FormMain: TFormMain
             Width = 75
           end
           item
+            Caption = 'R_ID'
+            Width = 1
+          end
+          item
             Caption = 'Requestor '
             Width = 100
           end
@@ -126,7 +130,7 @@ object FormMain: TFormMain
           end
           item
             Caption = 'CurrentStep'
-            Width = 0
+            Width = 1
           end>
         GridLines = True
         ReadOnly = True
