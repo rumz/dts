@@ -36,7 +36,12 @@ INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '23', 'C', 
 
 insert into user_rights (user_id, right_id) values('30070809', 'GSU');
 insert into user_rights (user_id, right_id) values('30077010', 'GSU');
-insert into user_rights (user_id, right_id) values('30068408', 'GSU');
+insert into user_rights (user_id, right_id) values('30068408', 'GSU');  // rhodz
 insert into user_rights (user_id, right_id) values('30071209', 'GSU');
 
+
+-- TEMP RIGHTS FOR RHODZ
+insert into user_rights (user_id, right_id) values('30068408', 'FMS');
+insert into user_rights (user_id, right_id) values('30068408', 'C');
+insert into user_rights (user_id, right_id) values('30068408', 'ORVP');
 

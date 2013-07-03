@@ -8,17 +8,19 @@ uses
 
 type
   TFormProcess = class(TForm)
-    TabControl1: TTabControl;
-    lsvRIVtransactions: TListView;
     Label2: TLabel;
     MemoRemarks: TMemo;
     Deny: TBitBtn;
     BitBtn2: TBitBtn;
-    TabControl2: TTabControl;
-    lsvRIV: TListView;
     led_status: TLabeledEdit;
     Approve: TBitBtn;
     StatusBar1: TStatusBar;
+    Panel1: TPanel;
+    TabControl2: TTabControl;
+    lsvRIV: TListView;
+    TabControl1: TTabControl;
+    lsvRIVtransactions: TListView;
+    Splitter1: TSplitter;
     procedure transactionsRefresh;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
