@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses data_module, main, shared;
+uses data_module, main, shared, process;
 
 {$R *.dfm}
 
@@ -87,10 +87,14 @@ begin
             shared.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
             FormMain.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
             FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
+
+            FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
+            FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
             shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
             dm.ibq.Next;
         end;
         FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
+        FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
         FormMain.Show;
         FormLogin.Hide;
     end

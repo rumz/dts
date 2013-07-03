@@ -13,6 +13,7 @@ object FormMain: TFormMain
   Menu = MainMenu1
   OldCreateOrder = False
   Position = poScreenCenter
+  WindowState = wsMaximized
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96

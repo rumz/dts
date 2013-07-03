@@ -217,7 +217,7 @@ procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
     shared.riv_id := strtoint(CurrentRIV.Caption);
     shared.riv_no := CurrentRIV.SubItems.Strings[0];
-    shared.riv_description := CurrentRIV.SubItems.Strings[2];
+    shared.riv_description := CurrentRIV.SubItems.Strings[3];
     FormProcess.ShowModal;
 end;
 
