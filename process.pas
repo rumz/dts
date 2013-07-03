@@ -187,7 +187,7 @@ begin
     dm.ibq.SQL.Clear;
 
     dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h, :i)');
-    dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 > generate_id
+    dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 then generate_id
     dm.ibq.Params[1].AsString := 'RIV';                   // ftype
     dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
     dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id

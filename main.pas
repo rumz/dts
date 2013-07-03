@@ -148,8 +148,8 @@ begin
     FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
 
     FormRIV.Memo_RIV_Description.Lines.Clear;
-    FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[2];
-    FormRIV.Memo_Remarks.Lines.Text := CurrentRIV.SubItems.Strings[5];
+    FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[3];
+    FormRIV.Memo_Remarks.Lines.Text := CurrentRIV.SubItems.Strings[6];
     FormRIV.ShowModal;
 end;
 
@@ -159,7 +159,7 @@ begin
     FormRIV.led_rivno.Text := '';
     FormRIV.cbo_Requestor.ItemIndex := -1;
     FormRIV.Memo_RIV_Description.Lines.Clear;
-    FormRIV.Memo_Remarks.Lines.Clear;    
+    FormRIV.Memo_Remarks.Lines.Clear;
     FormRIV.ShowModal;
 end;
 

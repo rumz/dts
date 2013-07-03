@@ -110,27 +110,33 @@ object FormMain: TFormMain
           end
           item
             Caption = 'Requestor '
-            Width = 100
+            Width = 150
           end
           item
             Caption = 'Description'
-            Width = 400
+            Width = 300
           end
           item
             Caption = 'Create Date'
-            Width = 200
+            Width = 130
           end
           item
             Caption = 'Status'
-            Width = 70
+            Width = 250
           end
           item
             Caption = 'Remarks'
             Width = 150
           end>
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
         GridLines = True
         ReadOnly = True
         RowSelect = True
+        ParentFont = False
         PopupMenu = popItemLib
         TabOrder = 1
         ViewStyle = vsReport
