@@ -123,11 +123,11 @@ object FormMain: TFormMain
           end
           item
             Caption = 'Status'
-            Width = 250
+            Width = 300
           end
           item
             Caption = 'Remarks'
-            Width = 150
+            Width = 100
           end>
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

@@ -6,7 +6,7 @@ object dm: Tdm
   Height = 150
   Width = 215
   object ibd: TIBDatabase
-    DatabaseName = 'D:\db\DTS.GDB'
+    DatabaseName = '172.22.16.72:d:\db\DTS.GDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=mis_sdd_3ggs')
