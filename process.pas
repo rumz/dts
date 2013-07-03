@@ -62,18 +62,18 @@ begin
     lsvRIVtransactions.Items.Clear;
     while not dm.ibq.Eof do begin
         NewItem := lsvRIVtransactions.Items.Add;
-        NewItem.Caption := dm.ibq.Fields.Fields[1].AsString;
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[0].AsString);
-        if dm.ibq.Fields.Fields[2].AsString = '1' then
+        NewItem.Caption := dm.ibq.Fields.Fields[1].AsString;           // status
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[0].AsString);        // flow_id
+        if dm.ibq.Fields.Fields[2].AsString = '1' then                 // approved
         begin
             NewItem.Checked := True;
-            current_flow_id := dm.ibq.Fields.Fields[0].AsInteger; // if we use a SP we dont need this anymore
+            current_flow_id := dm.ibq.Fields.Fields[0].AsInteger;      // if we use a SP we dont need this anymore
         end
         else
             NewItem.Checked := False;
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);        // approved_by
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);        // approved_date
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);        // remarks
         dm.ibq.Next;
     end;
     lsvRIVtransactions.Items.EndUpdate;
@@ -83,7 +83,7 @@ begin
 
     if lsvRIV.Items.Count > current_flow_id then
     begin
-        led_status.Text := lsvRIV.Items.Item[current_flow_id].SubItems[0]  // lsvRIV.Items.Item[current_flow_id].Caption +  
+        led_status.Text := lsvRIV.Items.Item[current_flow_id].SubItems[0]
     end
     else
         led_status.Text := '';
@@ -128,9 +128,6 @@ begin
     end;
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
-
-
-
 
 
 end;

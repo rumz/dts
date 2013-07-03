@@ -47,9 +47,8 @@ SET TERM ; ^
 
 
 
-DROP PROCEDURE UPDATE_FLOW_DATA;
 SET TERM ^ ;
-CREATE PROCEDURE UPDATE_FLOW_DATA(
+alter PROCEDURE UPDATE_FLOW_DATA(
     id integer,
     ftype varchar(50) character set none,
     flow_id integer,
@@ -61,7 +60,8 @@ CREATE PROCEDURE UPDATE_FLOW_DATA(
 AS BEGIN
     if (:id = 0) then
     begin
-        insert into flow_data(ftype, flow_id, received_date, received_by, approved, remarks) values(:ftype, :flow_id, :received_date, :received_by, :approved, :remarks);
+        insert into flow_data(ftype, flow_id, received_date, received_by, approved, remarks)
+                       values(:ftype, :flow_id, :received_date, :received_by, :approved, :remarks);
     end
     else
     begin
