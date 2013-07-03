@@ -90,15 +90,14 @@ begin
       lsvRIV2.Items.Clear;
       while not dm.ibq.Eof do begin
           NewItem := lsvRIV2.Items.Add;
-          NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);
-          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);
+          NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;      // id
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);   // riv_no
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);   // requestor
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);   // requestor_name
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // description
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // create_date
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // status
+          NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);   // remarks
           dm.ibq.Next;
       end;
       lsvRIV2.Items.EndUpdate;

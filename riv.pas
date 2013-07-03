@@ -60,8 +60,6 @@ begin
 end;
 
 
-
-
 procedure TFormRIV.loadElements;
 var i: integer;
     name: string;
@@ -110,7 +108,6 @@ begin
         cbo_Requestor.ItemIndex := findindex(shared.user_id);
     if riv_form_state = 'Update' then
         cbo_Requestor.ItemIndex := findindex(FormMain.CurrentRIV.SubItems.Strings[1]);
-        //cbo_Requestor.ItemIndex := cbo_Requestor.Items.IndexOf(FormMain.CurrentRIV.SubItems.Strings[1]);
 end;
 
 

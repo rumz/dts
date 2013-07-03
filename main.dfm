@@ -127,10 +127,6 @@ object FormMain: TFormMain
           item
             Caption = 'Remarks'
             Width = 150
-          end
-          item
-            Caption = 'CurrentStep'
-            Width = 1
           end>
         GridLines = True
         ReadOnly = True
