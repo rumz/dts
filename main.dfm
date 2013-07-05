@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 1475
-  Top = 277
+  Left = 116
+  Top = 203
   Width = 999
   Height = 565
   Caption = 'DTS'

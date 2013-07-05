@@ -185,22 +185,22 @@ alter procedure select_riv_transactions(
 )
 returns(
     flow_id integer,
-    rights varchar
     description varchar(255),
     approved varchar(20),
-    approved_by varchar(16),
+    approved_by varchar(60),
     approved_date timestamp,
     remarks varchar(255)
 )
 as begin
        for
-    select flow_id, fl.rights || ' - ' || fl.description, approved, approved_by, approved_date, remarks
-      from flow_data fd, flow_lib fl
+    select flow_id, fl.rights || ' - ' || fl.description, approved, l_name || ', ' || f_name, approved_date, remarks
+      from flow_data fd, flow_lib fl, phic_201 p
      where fl.id = fd.flow_id
        and riv_id = :riv_id
+       and fd.approved_by = p.id_no
        and fl.ftype = 'RIV'
      order by flow_id, approved_date
-      into :flow_id, :description, :approved, :approved_by, :approved_date, :remarks
+      into :flow_id, :description, :approved, :approved_by,  :approved_date, :remarks
         do
         begin
             suspend;

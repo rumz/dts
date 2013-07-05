@@ -1,8 +1,8 @@
 object dm: Tdm
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 1940
-  Top = 382
+  Left = 613
+  Top = 287
   Height = 150
   Width = 215
   object ibd: TIBDatabase
