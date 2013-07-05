@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 116
-  Top = 203
+  Left = 204
+  Top = 62
   Width = 999
   Height = 565
   Caption = 'DTS'
@@ -142,6 +142,7 @@ object FormMain: TFormMain
         TabOrder = 1
         ViewStyle = vsReport
         OnChange = lsvRIV2Change
+        OnColumnClick = lsvRIV2ColumnClick
         OnDblClick = lsvRIV2DblClick
       end
     end
