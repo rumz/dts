@@ -20,7 +20,7 @@ object FormProcess: TFormProcess
     Left = 56
     Top = 593
     Width = 228
-    Height = 11
+    Height = 13
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
   end
   object MemoRemarks: TMemo

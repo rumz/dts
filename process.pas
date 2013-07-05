@@ -44,8 +44,6 @@ implementation
 uses data_module, main, login, DB, shared;
 
 procedure TFormProcess.transactionsRefresh;
-var
-    Location : PChar;
 begin
     // get transactions for the current RIV
     current_flow_id := 0;
