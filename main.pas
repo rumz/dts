@@ -246,9 +246,9 @@ begin
 
   { Call the CustomSort method }
   lsvRIV2.CustomSort(@CustomSortProc, Column.Index -1);
-
   { Set the sort order for the column}
   LvSortOrder[Column.Index] := not LvSortOrder[Column.Index];
+
 end;
 
 end.

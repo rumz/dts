@@ -179,7 +179,7 @@ begin
     dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
     dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
     dm.ibq.Params[4].AsInteger := action;                 // approved
-    dm.ibq.Params[5].AsString := shared.user_id;       // approved_by
+    dm.ibq.Params[5].AsString := shared.user_id;          // approved_by
     dm.ibq.Params[6].AsDateTime := Now;                   // lastupdate
     if MemoRemarks.Lines.Text = '' then                   // default remarks if left blank
         if action = 1 then
