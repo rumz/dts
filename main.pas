@@ -66,7 +66,7 @@ var
 
 implementation
 
-uses data_module, item_library, riv, login, process, shared;
+uses data_module, riv, login, process, shared;
 
 {$R *.dfm}
 

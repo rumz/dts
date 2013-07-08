@@ -12,6 +12,9 @@ type
     LabeledEdit2: TLabeledEdit;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    ledServer: TLabeledEdit;
+    ledPath: TLabeledEdit;
+    function ConnectDB:Boolean;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure AppExit;
     procedure FormCreate(Sender: TObject);
@@ -43,7 +46,15 @@ begin
 end;
 
 
-
+function TFormLogin.ConnectDB:Boolean;
+begin
+    if dm.ibd.Connected = False then begin
+        dm.ibd.DatabaseName := trim(ledServer.Text) + ':' + trim(ledPath.Text);
+        // Sample: 172.22.16.72:d:\db\DTS.GDB
+        dm.ibd.Connected := True;
+    end;
+    Result := dm.ibd.Connected;
+end;
 
 
 
@@ -60,44 +71,46 @@ end;
 
 procedure TFormLogin.BitBtn1Click(Sender: TObject);
 begin
-    shared.user_name := '';
-    shared.user_id := LabeledEdit1.Text;
-    shared.rights := '';
+    if ConnectDB then begin
+        shared.user_name := '';
+        shared.user_id := LabeledEdit1.Text;
+        shared.rights := '';
 
 
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit
-    else
-        dm.ibt.StartTransaction;
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit
+        else
+            dm.ibt.StartTransaction;
 
-    dm.ibq.SQL.Clear;
+        dm.ibq.SQL.Clear;
 
-    dm.ibq.SQL.Add('select * from login(:a, :b)');
-    dm.ibq.Params[0].AsString := LabeledEdit1.Text;
-    dm.ibq.Params[1].AsString := LabeledEdit2.Text;
-    dm.ibq.Open;
+        dm.ibq.SQL.Add('select * from login(:a, :b)');
+        dm.ibq.Params[0].AsString := LabeledEdit1.Text;
+        dm.ibq.Params[1].AsString := LabeledEdit2.Text;
+        dm.ibq.Open;
 
-    if dm.ibq.Eof then
-    begin
-        MessageDlg('Incorrect Password. Try Again.', mtWarning, mbOKCancel, 1)
-    end
-    else
-    begin
-        while not dm.ibq.Eof do begin
-            shared.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
-            FormMain.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
-            FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
+        if dm.ibq.Eof then
+        begin
+            MessageDlg('Incorrect Password. Try Again.', mtWarning, mbOKCancel, 1)
+        end
+        else
+        begin
+            while not dm.ibq.Eof do begin
+                shared.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
+                FormMain.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
+                FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
 
-            FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
-            FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
-            shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
-            dm.ibq.Next;
-        end;
-        FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
-        FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
-        FormMain.Show;
-        FormLogin.Hide;
-    end
+                FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
+                FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
+                shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
+                dm.ibq.Next;
+            end;
+            FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
+            FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
+            FormMain.Show;
+            FormLogin.Hide;
+        end
+    end;
 end;
 
 end.

@@ -159,6 +159,7 @@ end;
 procedure TFormProcess.DenyClick(Sender: TObject);
 var action : integer;
 begin
+
     if Sender = Approve then
         action := 1
     else if Sender = Deny then

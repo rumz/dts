@@ -10,7 +10,6 @@ type
     ibd: TIBDatabase;
     ibt: TIBTransaction;
     ibq: TIBQuery;
-    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -23,10 +22,5 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure Tdm.DataModuleCreate(Sender: TObject);
-begin
-    ibd.Connected := True; 
-end;
 
 end.

@@ -1,8 +1,8 @@
 object FormLogin: TFormLogin
-  Left = 526
-  Top = 260
-  Width = 363
-  Height = 250
+  Left = 460
+  Top = 214
+  Width = 325
+  Height = 251
   Caption = 'Login - Philhealth Document Tracker'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,9 +18,9 @@ object FormLogin: TFormLogin
   PixelsPerInch = 96
   TextHeight = 13
   object LabeledEdit1: TLabeledEdit
-    Left = 88
-    Top = 56
-    Width = 193
+    Left = 91
+    Top = 91
+    Width = 202
     Height = 21
     EditLabel.Width = 66
     EditLabel.Height = 16
@@ -34,12 +34,11 @@ object FormLogin: TFormLogin
     LabelPosition = lpLeft
     LabelSpacing = 3
     TabOrder = 0
-    Text = '10323412'
   end
   object LabeledEdit2: TLabeledEdit
-    Left = 88
-    Top = 96
-    Width = 193
+    Left = 91
+    Top = 124
+    Width = 202
     Height = 21
     EditLabel.Width = 63
     EditLabel.Height = 16
@@ -54,11 +53,10 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     PasswordChar = '*'
     TabOrder = 1
-    Text = 'xxx123'
   end
   object BitBtn1: TBitBtn
-    Left = 80
-    Top = 144
+    Left = 64
+    Top = 168
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -67,13 +65,51 @@ object FormLogin: TFormLogin
     OnClick = BitBtn1Click
   end
   object BitBtn2: TBitBtn
-    Left = 200
-    Top = 144
+    Left = 184
+    Top = 168
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Close'
     TabOrder = 3
     OnClick = BitBtn2Click
+  end
+  object ledServer: TLabeledEdit
+    Left = 91
+    Top = 22
+    Width = 202
+    Height = 21
+    EditLabel.Width = 58
+    EditLabel.Height = 16
+    EditLabel.Caption = 'Server IP '
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -13
+    EditLabel.Font.Name = 'MS Sans Serif'
+    EditLabel.Font.Style = []
+    EditLabel.ParentFont = False
+    LabelPosition = lpLeft
+    LabelSpacing = 3
+    TabOrder = 4
+    Text = '172.22.16.72'
+  end
+  object ledPath: TLabeledEdit
+    Left = 91
+    Top = 54
+    Width = 202
+    Height = 21
+    EditLabel.Width = 49
+    EditLabel.Height = 16
+    EditLabel.Caption = 'DB Path'
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -13
+    EditLabel.Font.Name = 'MS Sans Serif'
+    EditLabel.Font.Style = []
+    EditLabel.ParentFont = False
+    LabelPosition = lpLeft
+    LabelSpacing = 3
+    TabOrder = 5
+    Text = 'd:\db\DTS.GDB'
   end
 end

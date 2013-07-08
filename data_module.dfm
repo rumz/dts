@@ -1,6 +1,5 @@
 object dm: Tdm
   OldCreateOrder = False
-  OnCreate = DataModuleCreate
   Left = 613
   Top = 287
   Height = 150
