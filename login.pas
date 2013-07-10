@@ -76,7 +76,6 @@ begin
         shared.user_id := LabeledEdit1.Text;
         shared.rights := '';
 
-
         if dm.ibt.InTransaction then
             dm.ibt.Commit
         else

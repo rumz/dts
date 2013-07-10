@@ -147,7 +147,7 @@ begin
         dm.ibt.Commit;
 
     transactionsRefresh;
-    FormProcess.Caption := FormProcess.Caption + ' - ' + riv_no + ' (' + riv_description + ')';
+    FormProcess.Caption := 'Process RIV - ' + riv_no + ' (' + riv_description + ')';
 end;
 
 

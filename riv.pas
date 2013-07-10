@@ -134,7 +134,7 @@ begin
     dm.ibq.Params[2].AsString := led_rivno.Text;                  // riv_no
     dm.ibq.Params[3].AsString := users[cbo_Requestor.ItemIndex].id_no;  // requestor
     dm.ibq.Params[4].AsDateTime := Now;                           // create_date
-    dm.ibq.Params[5].AsString := shared.CurrentUser;              // created by
+    dm.ibq.Params[5].AsString := shared.user_id;              // created by, this should be the ID Number
     dm.ibq.Params[6].AsInteger := 2;                              // current_step = 2
     dm.ibq.Params[7].AsString := 'WIP';                           // status
     dm.ibq.Params[8].AsString := Memo_Remarks.Lines.Text;         // remarks
