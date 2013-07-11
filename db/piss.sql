@@ -97,12 +97,10 @@ create table flow_data (
     approved integer,
     approved_by varchar(16),
     approved_date timestamp,
-    remarks varchar(255),
-    lastupdate timestamp
+    remarks varchar(255)
 )
 
-
-
+// approved can mean  1 approve, 0 deny, 2 received
 
 /************************************************
 RIV table

@@ -1,8 +1,8 @@
 object FormLogin: TFormLogin
-  Left = 460
-  Top = 214
-  Width = 325
-  Height = 251
+  Left = 2178
+  Top = 679
+  Width = 321
+  Height = 232
   Caption = 'Login - Philhealth Document Tracker'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -34,6 +34,7 @@ object FormLogin: TFormLogin
     LabelPosition = lpLeft
     LabelSpacing = 3
     TabOrder = 0
+    Text = '10323412'
   end
   object LabeledEdit2: TLabeledEdit
     Left = 91
@@ -53,6 +54,7 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     PasswordChar = '*'
     TabOrder = 1
+    Text = 'xxx123'
   end
   object BitBtn1: TBitBtn
     Left = 64

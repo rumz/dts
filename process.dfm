@@ -1,6 +1,6 @@
 object FormProcess: TFormProcess
-  Left = 128
-  Top = 0
+  Left = 1429
+  Top = 121
   Width = 1094
   Height = 713
   Caption = 'Process RIV'
@@ -41,7 +41,7 @@ object FormProcess: TFormProcess
     OnClick = DenyClick
   end
   object BitBtn2: TBitBtn
-    Left = 749
+    Left = 797
     Top = 621
     Width = 75
     Height = 25
@@ -204,5 +204,14 @@ object FormProcess: TFormProcess
         ViewStyle = vsReport
       end
     end
+  end
+  object Receive: TBitBtn
+    Left = 693
+    Top = 621
+    Width = 75
+    Height = 25
+    Caption = 'Receive'
+    TabOrder = 7
+    OnClick = DenyClick
   end
 end

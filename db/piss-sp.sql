@@ -48,31 +48,39 @@ SET TERM ; ^
 
 
 SET TERM ^ ;
-alter PROCEDURE UPDATE_FLOW_DATA(
+create PROCEDURE UPDATE_FLOW_DATA(
     id integer,
-    ftype varchar(50) character set none,
+    ftype varchar(50),
+    riv_id integer,
     flow_id integer,
-    received_date  date,
-    received_by    varchar(16) character set none,
-    approved       integer,
-    remarks        varchar(255) character set none
+    approved integer,
+    approved_by integer,
+    approved_date integer,
+    remarks varchar(255)
 )
-AS BEGIN
-    if (:id = 0) then
-    begin
-        insert into flow_data(ftype, flow_id, received_date, received_by, approved, remarks)
-                       values(:ftype, :flow_id, :received_date, :received_by, :approved, :remarks);
+as begin
+    if (:id = 0) then begin
+        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks)
+        values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks);
+        update rivs
+           set current_step = :flow_id
+         where id = :riv_id;
     end
-    else
-    begin
-    update FLOW_DATA
-       set ftype = :ftype, flow_id = :flow_id, received_date = :received_date,
-           received_by = :received_by, approved = :approved, remarks = :remarks
-     where id = :id;
+    else if (:id < 0) then begin
+        delete from flow_data where id = (:id * -1);
     end
-END^
-SET TERM ; ^
-
+    else begin
+        update flow_data
+           set ftype         = :ftype,
+               riv_id        = :riv_id,
+               flow_id       = :flow_id,
+               approved      = :approved,
+               approved_by   = :approved_by,
+               approved_date = :approved_date,
+               remarks       = :remarks
+         where id = :id;
+    end
+end
 
 
 
@@ -139,26 +147,26 @@ end
 
 
 
+
 alter procedure update_rivs(
-    id   integer,
-    description varchar(255),
-    riv_no  varchar(10),
-    requestor varchar(16),
-    create_date timestamp,
-    created_by varchar(16),
-    current_step integer,
-    status varchar(20),
-    remarks varchar(255)
-)
-as
-declare variable newid integer;
+    ID INTEGER,
+    DESCRIPTION VARCHAR(255) CHARACTER SET NONE,
+    RIV_NO VARCHAR(10) CHARACTER SET NONE,
+    REQUESTOR VARCHAR(16) CHARACTER SET NONE,
+    CREATE_DATE TIMESTAMP,
+    CREATED_BY VARCHAR(16) CHARACTER SET NONE,
+    CURRENT_STEP INTEGER,
+    STATUS VARCHAR(20) CHARACTER SET NONE,
+    REMARKS VARCHAR(255) CHARACTER SET NONE)
+AS
+DECLARE VARIABLE NEWID INTEGER;
 begin
     if (:id = 0) then begin
         insert into RIVS(description, riv_no, requestor, create_date, created_by, current_step, status, remarks)
         values(:description, :riv_no, :requestor, :create_date, :created_by, :current_step, :status, :remarks);
         select id from RIVS where create_date= :create_date into :newid;
-        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
-        values('RIV', :newid, 1, '1', :requestor, :create_date, '', :create_date);
+        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks)
+        values('RIV', :newid, 1, '1', :requestor, :create_date, '');
     end
     else if (:id < 0) then begin
         delete from RIVS where id = (:id * -1);
@@ -175,7 +183,6 @@ begin
        where id = :id;
     end
 end
-
 
 
 
@@ -230,6 +237,7 @@ as begin
 end
 
 
+
 select * from select_current_transaction(14)
 
 select * from select_riv_transactions(14)
@@ -244,13 +252,12 @@ alter procedure update_flow_data(
     approved integer,
     approved_by varchar(16),
     approved_date timestamp,
-    remarks varchar(255),
-    lastupdate timestamp
+    remarks varchar(255)
 )
 as begin
     if (:id = 0) then begin
-        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks, lastupdate)
-        values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks, :lastupdate);
+        insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks)
+        values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks);
         update rivs
            set current_step = :flow_id
          where id = :riv_id;
@@ -266,8 +273,7 @@ as begin
                approved      = :approved,
                approved_by   = :approved_by,
                approved_date = :approved_date,
-               remarks       = :remarks,
-               lastupdate    = :lastupdate
+               remarks       = :remarks
          where id = :id;
     end
 end

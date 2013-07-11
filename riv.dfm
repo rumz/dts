@@ -1,6 +1,6 @@
 object FormRIV: TFormRIV
-  Left = 463
-  Top = 258
+  Left = 2044
+  Top = 418
   BorderStyle = bsDialog
   Caption = 'RIV '
   ClientHeight = 368

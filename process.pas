@@ -21,6 +21,7 @@ type
     TabControl1: TTabControl;
     lsvRIVtransactions: TListView;
     Splitter1: TSplitter;
+    Receive: TBitBtn;
     procedure transactionsRefresh;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -157,13 +158,17 @@ begin
 end;
 
 procedure TFormProcess.DenyClick(Sender: TObject);
-var action : integer;
+var
+    action : integer;
+    remarks : string;
 begin
 
     if Sender = Approve then
         action := 1
     else if Sender = Deny then
-        action := 0;
+        action := 0
+    else if Sender = Receive then
+        action := 2;
 
     // todo check user rights before running the SP
 
@@ -174,22 +179,25 @@ begin
 
     dm.ibq.SQL.Clear;
 
-    dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h, :i)');
+    dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h)');
     dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 then generate_id
     dm.ibq.Params[1].AsString := 'RIV';                   // ftype
     dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
     dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
     dm.ibq.Params[4].AsInteger := action;                 // approved
     dm.ibq.Params[5].AsString := shared.user_id;          // approved_by
-    dm.ibq.Params[6].AsDateTime := Now;                   // lastupdate
-    if MemoRemarks.Lines.Text = '' then                   // default remarks if left blank
-        if action = 1 then
-            dm.ibq.Params[7].AsString := 'Approved'
-        else
-            dm.ibq.Params[7].AsString := 'Denied'
-    else
-        dm.ibq.Params[7].AsString := MemoRemarks.Lines.Text;
-    dm.ibq.Params[8].AsDateTime := Now;
+    dm.ibq.Params[6].AsDateTime := Now;                   // approved_date
+    if MemoRemarks.Lines.Text = '' then                   // remarks
+    if action = 1 then
+        remarks := 'Approved'
+    else if action = 0 then
+        remarks := 'Denied'
+    else if action = 2 then
+        remarks := 'Received';
+
+    if MemoRemarks.Lines.Text <> '' then
+        remarks := remarks + ' - ' + trim(MemoRemarks.Lines.Text);
+    dm.ibq.Params[7].AsString := remarks;
 
     dm.ibq.Prepare;
     dm.ibq.ExecSQL;
