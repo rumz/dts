@@ -109,6 +109,8 @@ END
 
 
 
+select * from select_rivs(0, '%')
+
 
 alter procedure select_rivs
 (
