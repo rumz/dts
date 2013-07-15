@@ -20,6 +20,9 @@ var
     riv_id : integer;
     riv_no, riv_rights, riv_description : string;
 
+    loginas, loginaspass, loginasrights : string;
+
+
   { variable to hold the sort style }
   LvSortStyle: TCustomSortStyle;
   { array to hold the sort order }

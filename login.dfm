@@ -1,6 +1,6 @@
 object FormLogin: TFormLogin
-  Left = 502
-  Top = 287
+  Left = 1893
+  Top = 376
   Width = 321
   Height = 232
   Caption = 'Login - Philhealth Document Tracker'
@@ -34,6 +34,7 @@ object FormLogin: TFormLogin
     LabelPosition = lpLeft
     LabelSpacing = 3
     TabOrder = 0
+    Text = '10323412'
   end
   object LabeledEdit2: TLabeledEdit
     Left = 91
@@ -53,26 +54,25 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     PasswordChar = '*'
     TabOrder = 1
+    Text = 'xxx123'
   end
   object BitBtn1: TBitBtn
     Left = 64
-    Top = 168
+    Top = 162
     Width = 75
     Height = 25
-    Caption = 'OK'
-    Default = True
     TabOrder = 2
     OnClick = BitBtn1Click
+    Kind = bkOK
   end
   object BitBtn2: TBitBtn
     Left = 184
-    Top = 168
+    Top = 162
     Width = 75
     Height = 25
-    Cancel = True
-    Caption = 'Close'
     TabOrder = 3
     OnClick = BitBtn2Click
+    Kind = bkCancel
   end
   object ledServer: TLabeledEdit
     Left = 91

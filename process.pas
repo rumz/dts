@@ -22,6 +22,8 @@ type
     lsvRIVtransactions: TListView;
     Splitter1: TSplitter;
     Receive: TBitBtn;
+    ApproveAs: TBitBtn;
+    DenyAs: TBitBtn;
     procedure transactionsRefresh;
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -42,7 +44,7 @@ implementation
 
 {$R *.dfm}
 
-uses data_module, main, login, DB, shared;
+uses data_module, main, login, DB, shared, loginas;
 
 procedure TFormProcess.transactionsRefresh;
 begin
@@ -105,7 +107,7 @@ begin
     // if the user does not have the rights, rights are in
     // lsvRIV.Items.Item[current_flow_id].SubItems[0]
 
-    if dm.ibt.InTransaction then
+{    if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
         dm.ibt.StartTransaction;
@@ -121,6 +123,7 @@ begin
     end;
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
+}
 end;
 
 procedure TFormProcess.FormShow(Sender: TObject);
@@ -169,6 +172,11 @@ begin
         action := 0
     else if Sender = Receive then
         action := 2;
+
+    if (Sender = ApproveAs) or (Sender = DenyAs) then
+        FormLoginAs.ShowModal;
+
+
 
     // todo check user rights before running the SP
 

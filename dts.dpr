@@ -12,7 +12,8 @@ uses
   riv in 'riv.pas' {FormRIV},
   login in 'login.pas' {FormLogin},
   process in 'process.pas' {FormProcess},
-  shared in 'shared.pas';
+  shared in 'shared.pas',
+  loginas in 'loginas.pas' {FormLoginAs};
 
 {$R *.res}
 
@@ -23,5 +24,6 @@ begin
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFormRIV, FormRIV);
   Application.CreateForm(TFormProcess, FormProcess);
+  Application.CreateForm(TFormLoginAs, FormLoginAs);
   Application.Run;
 end.

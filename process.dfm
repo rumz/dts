@@ -214,4 +214,22 @@ object FormProcess: TFormProcess
     TabOrder = 7
     OnClick = DenyClick
   end
+  object ApproveAs: TBitBtn
+    Left = 901
+    Top = 584
+    Width = 75
+    Height = 24
+    Caption = 'Approve As'
+    TabOrder = 8
+    OnClick = DenyClick
+  end
+  object DenyAs: TBitBtn
+    Left = 901
+    Top = 621
+    Width = 75
+    Height = 25
+    Caption = 'Deny As'
+    TabOrder = 9
+    OnClick = DenyClick
+  end
 end

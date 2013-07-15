@@ -84,8 +84,8 @@ begin
 
     if pgc.TabIndex = 0 then
     begin
-        dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b)');
-        dm.ibq.Params[0].AsInteger := 0;
+        dm.ibq.SQL.Add('select * from SELECT_RIVS2(:a, :b)');
+        dm.ibq.Params[0].AsString := 'riv_no';
         dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
     end;
     dm.ibq.Open;
