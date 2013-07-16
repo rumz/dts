@@ -20,7 +20,7 @@ var
     riv_id : integer;
     riv_no, riv_rights, riv_description : string;
 
-    loginas, loginaspass, loginasrights : string;
+    loginas, loginaspass, loginasrights, loginasuserid : string;
 
 
   { variable to hold the sort style }

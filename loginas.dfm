@@ -1,6 +1,6 @@
 object FormLoginAs: TFormLoginAs
-  Left = 541
-  Top = 256
+  Left = 1861
+  Top = 299
   Width = 321
   Height = 190
   Caption = 'Login As'

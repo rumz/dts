@@ -90,6 +90,7 @@ begin
     else
         led_status.Text := '';
 
+    // this is where the rights checking is
 
     if StrPos(PChar(shared.rights), PChar(lsvRIV.Items.Item[current_flow_id].Caption)) = nil then
     begin
@@ -102,28 +103,6 @@ begin
     end;
 
 
-
-    // todo get the rights needed for the current transaction and then compare this with the current user's rights
-    // if the user does not have the rights, rights are in
-    // lsvRIV.Items.Item[current_flow_id].SubItems[0]
-
-{    if dm.ibt.InTransaction then
-        dm.ibt.Commit
-    else
-        dm.ibt.StartTransaction;
-
-    dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from select_current_transaction(:a)');
-    dm.ibq.Params[0].AsInteger := riv_id;
-    dm.ibq.Open;
-    while not dm.ibq.Eof do begin
-//        current_flow_id := dm.ibq.Fields.Fields[0].AsInteger;
-
-        dm.ibq.Next;
-    end;
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
-}
 end;
 
 procedure TFormProcess.FormShow(Sender: TObject);
@@ -163,8 +142,11 @@ end;
 procedure TFormProcess.DenyClick(Sender: TObject);
 var
     action : integer;
-    remarks : string;
+    remarks, msg : string;
+    loginas_hasrights : integer;
+
 begin
+    // this is just an unbelievable mess.  please refactor this when you have time
 
     if Sender = Approve then
         action := 1
@@ -173,49 +155,71 @@ begin
     else if Sender = Receive then
         action := 2;
 
-    if (Sender = ApproveAs) or (Sender = DenyAs) then
+    if (Sender = ApproveAs) or (Sender = DenyAs) then begin
         FormLoginAs.ShowModal;
 
+        if StrPos(PChar(shared.loginasrights), PChar(lsvRIV.Items.Item[current_flow_id].Caption)) = nil then
+        begin
+            msg := 'Account ' + shared.loginas + ' does not have the rights needed to perform this operation.';
+            MessageDlg(msg, mtError, mbOKCancel, 1);
+            loginas_hasrights := 0;
+        end
+        else begin
+            // run update_flow_data using the correct data
+            if Sender = ApproveAs then
+                action := 1
+            else if Sender = DenyAs then
+                action := 0;
+            loginas_hasrights := 1;
+        end;
+    end;
 
 
     // todo check user rights before running the SP
 
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit
-    else
-        dm.ibt.StartTransaction;
+    if ((Sender = Approve) or (Sender = Deny)) or
+       (((Sender = ApproveAs) or (Sender = DenyAs)) and (loginas_hasrights = 1)) then begin
 
-    dm.ibq.SQL.Clear;
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit
+        else
+            dm.ibt.StartTransaction;
 
-    dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h)');
-    dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 then generate_id
-    dm.ibq.Params[1].AsString := 'RIV';                   // ftype
-    dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
-    dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
-    dm.ibq.Params[4].AsInteger := action;                 // approved
-    dm.ibq.Params[5].AsString := shared.user_id;          // approved_by
-    dm.ibq.Params[6].AsDateTime := Now;                   // approved_date
-    if MemoRemarks.Lines.Text = '' then                   // remarks
-    if action = 1 then
-        remarks := 'Approved'
-    else if action = 0 then
-        remarks := 'Denied'
-    else if action = 2 then
-        remarks := 'Received';
+        dm.ibq.SQL.Clear;
 
-    if MemoRemarks.Lines.Text <> '' then
-        remarks := remarks + ' - ' + trim(MemoRemarks.Lines.Text);
-    dm.ibq.Params[7].AsString := remarks;
+        dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h)');
+        dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 then generate_id
+        dm.ibq.Params[1].AsString := 'RIV';                   // ftype
+        dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
+        dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
+        dm.ibq.Params[4].AsInteger := action;                 // approved
+        if (Sender = ApproveAs) or (Sender = DenyAs) then
+            dm.ibq.Params[5].AsString := shared.loginasuserid // approved_by
+        else
+            dm.ibq.Params[5].AsString := shared.user_id;      // approved_by
+        dm.ibq.Params[6].AsDateTime := Now;                   // approved_date
+        if MemoRemarks.Lines.Text = '' then                   // remarks
+        if action = 1 then
+            remarks := 'Approved'
+        else if action = 0 then
+            remarks := 'Denied'
+        else if action = 2 then
+            remarks := 'Received';
 
-    dm.ibq.Prepare;
-    dm.ibq.ExecSQL;
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
-    MemoRemarks.Lines.Clear;
+        if MemoRemarks.Lines.Text <> '' then
+            remarks := remarks + ' - ' + trim(MemoRemarks.Lines.Text);
+        dm.ibq.Params[7].AsString := remarks;
 
-    transactionsRefresh;
+        dm.ibq.Prepare;
+        dm.ibq.ExecSQL;
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit;
+        MemoRemarks.Lines.Clear;
 
+        transactionsRefresh;
+    end;
 end;
+
 
 procedure TFormProcess.FormClose(Sender: TObject;
   var Action: TCloseAction);

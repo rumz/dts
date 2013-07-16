@@ -38,6 +38,7 @@ procedure TFormLoginAs.FormShow(Sender: TObject);
 begin
     leduser.Text := '';
     ledpass.Text := '';
+    leduser.SetFocus;
 end;
 
 procedure TFormLoginAs.BitBtn2Click(Sender: TObject);
@@ -47,8 +48,8 @@ end;
 
 procedure TFormLoginAs.BitBtn1Click(Sender: TObject);
 begin
-    shared.loginas := leduser.Text;
     shared.loginaspass := ledpass.Text;
+    shared.loginasuserid := leduser.Text;
 
     if dm.ibt.InTransaction then
         dm.ibt.Commit
@@ -74,6 +75,7 @@ begin
             shared.loginasrights := shared.loginasrights + dm.ibq.Fields.Fields[1].AsString + '|';
             dm.ibq.Next;
         end;
+
     end
 
 end;
