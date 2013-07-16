@@ -198,6 +198,11 @@ object FormMain: TFormMain
     Top = 264
     object N1: TMenuItem
       Caption = '&'
+      object Logout: TMenuItem
+        Caption = '&Logout'
+        ShortCut = 112
+        OnClick = LogoutClick
+      end
     end
     object File1: TMenuItem
       Caption = '&File'

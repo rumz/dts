@@ -39,7 +39,6 @@ var
   FormRIV: TFormRIV;
   users : array of TUser;
   id_nos, names : array of String;
-//  names : array[0..200] of String;
 
 implementation
 
@@ -84,11 +83,6 @@ begin
            id_no := dm.ibq.Fields.Fields[0].AsString;
            name  := dm.ibq.Fields.Fields[1].AsString + ', ' + dm.ibq.Fields.Fields[2].AsString;
         end;
-
-//        id_nos[i] := dm.ibq.Fields.Fields[0].AsString;
-//        names[i] := dm.ibq.Fields.Fields[1].AsString + ', ' + dm.ibq.Fields.Fields[2].AsString;
-//        MessageDlg(users[i].name, mtInformation, mbOKCancel, 1);
-//        name := dm.ibq.Fields.Fields[1].AsString + ', ' + dm.ibq.Fields.Fields[2].AsString;
 
         cbo_Requestor.Items.Add(users[i].name);
         dm.ibq.Next;
@@ -143,7 +137,7 @@ begin
         dm.ibt.Commit;
 
     // add a record to the flow_data table for this RIV
-    // instead i did this via the stored procedure
+    // this is done via the stored procedure UPDATE_RIVS
 
     Close;
     FormMain.lsvRefresh;

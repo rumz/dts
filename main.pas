@@ -33,6 +33,7 @@ type
     SpeedButton2: TSpeedButton;
     N2: TMenuItem;
     ProcessRecord1: TMenuItem;
+    Logout: TMenuItem;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
     procedure DeleteRecord1Click(Sender: TObject);
@@ -49,6 +50,7 @@ type
     procedure popItemLibPopup(Sender: TObject);
     procedure ProcessRecord1Click(Sender: TObject);
     procedure lsvRIV2ColumnClick(Sender: TObject; Column: TListColumn);
+    procedure LogoutClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,6 +84,7 @@ begin
 
     dm.ibq.SQL.Clear;
 
+    // need to change this to be able to query a generic table
     if pgc.TabIndex = 0 then
     begin
         dm.ibq.SQL.Add('select * from SELECT_RIVS2(:a, :b)');
@@ -248,6 +251,18 @@ begin
   lsvRIV2.CustomSort(@CustomSortProc, Column.Index -1);
   { Set the sort order for the column}
   LvSortOrder[Column.Index] := not LvSortOrder[Column.Index];
+
+end;
+
+procedure TFormMain.LogoutClick(Sender: TObject);
+begin
+    shared.user_id := '';
+    shared.CurrentUser := '';
+    shared.user_name := '';
+    shared.rights := '';
+
+    FormMain.Hide;
+    FormLogin.ShowModal;
 
 end;
 

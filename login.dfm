@@ -15,9 +15,10 @@ object FormLogin: TFormLogin
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object LabeledEdit1: TLabeledEdit
+  object leduser: TLabeledEdit
     Left = 91
     Top = 91
     Width = 202
@@ -35,7 +36,7 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     TabOrder = 0
   end
-  object LabeledEdit2: TLabeledEdit
+  object ledpass: TLabeledEdit
     Left = 91
     Top = 124
     Width = 202

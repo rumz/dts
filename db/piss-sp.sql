@@ -178,7 +178,7 @@ begin
        where r.current_step = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.riv_no) like upper(:s_data)
-       order by id
+       order by riv_no desc
         into :id, :riv_no, :requestor, :requestor_name, :description, :status, :remarks, :create_date
           do
             begin
@@ -193,7 +193,7 @@ begin
        where r.current_step = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.description) like upper(:s_data)
-       order by id
+       order by description
         into :id, :riv_no, :requestor, :requestor_name, :description, :status, :remarks, :create_date
           do
             begin

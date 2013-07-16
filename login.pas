@@ -8,8 +8,8 @@ uses
 
 type
   TFormLogin = class(TForm)
-    LabeledEdit1: TLabeledEdit;
-    LabeledEdit2: TLabeledEdit;
+    leduser: TLabeledEdit;
+    ledpass: TLabeledEdit;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     ledServer: TLabeledEdit;
@@ -20,6 +20,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,7 +74,7 @@ procedure TFormLogin.BitBtn1Click(Sender: TObject);
 begin
     if ConnectDB then begin
         shared.user_name := '';
-        shared.user_id := LabeledEdit1.Text;
+        shared.user_id := leduser.Text;
         shared.rights := '';
 
         if dm.ibt.InTransaction then
@@ -84,8 +85,8 @@ begin
         dm.ibq.SQL.Clear;
 
         dm.ibq.SQL.Add('select * from login(:a, :b)');
-        dm.ibq.Params[0].AsString := LabeledEdit1.Text;
-        dm.ibq.Params[1].AsString := LabeledEdit2.Text;
+        dm.ibq.Params[0].AsString := leduser.Text;
+        dm.ibq.Params[1].AsString := ledpass.Text;
         dm.ibq.Open;
 
         if dm.ibq.Eof then
@@ -96,10 +97,10 @@ begin
         begin
             while not dm.ibq.Eof do begin
                 shared.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
-                FormMain.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
+                FormMain.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
 
-                FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + LabeledEdit1.Text;
+                FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
                 shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
                 dm.ibq.Next;
@@ -110,6 +111,14 @@ begin
             FormLogin.Hide;
         end
     end;
+end;
+
+procedure TFormLogin.FormShow(Sender: TObject);
+begin
+    leduser.Text := '';
+    ledpass.Text := '';
+    leduser.SetFocus;
+    
 end;
 
 end.
