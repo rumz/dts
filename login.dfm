@@ -34,7 +34,6 @@ object FormLogin: TFormLogin
     LabelPosition = lpLeft
     LabelSpacing = 3
     TabOrder = 0
-    Text = '10323412'
   end
   object LabeledEdit2: TLabeledEdit
     Left = 91
@@ -54,7 +53,6 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     PasswordChar = '*'
     TabOrder = 1
-    Text = 'xxx123'
   end
   object BitBtn1: TBitBtn
     Left = 64

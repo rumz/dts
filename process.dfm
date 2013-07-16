@@ -11,6 +11,7 @@ object FormProcess: TFormProcess
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   WindowState = wsMaximized
   OnClose = FormClose
   OnShow = FormShow
