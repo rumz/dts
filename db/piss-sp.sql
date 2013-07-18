@@ -53,7 +53,7 @@ alter PROCEDURE UPDATE_FLOW_DATA(
     flow_id integer,
     approved integer,
     approved_by integer,
-    approved_date integer,
+    approved_date timestamp,
     remarks varchar(255)
 )
 as begin
@@ -61,7 +61,7 @@ as begin
         insert into flow_data(ftype, riv_id, flow_id, approved, approved_by, approved_date, remarks)
         values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks);
         update rivs
-           set current_step = :flow_id
+           set current_step = :flow_id + 1
          where id = :riv_id
            and :approved = 1;
     end
@@ -113,8 +113,9 @@ select * from select_rivs(0, '%')
 
 alter procedure select_rivs
 (
-    s_type integer,
-    s_data varchar(255)
+    s_type varchar(30),
+    s_data varchar(255),
+    s_user varchar(20)
 )
 returns
 (
@@ -127,17 +128,18 @@ returns
     status varchar(271),
     remarks varchar(255)
 )
-as begin
-    /* 0 for description */
-    if (:s_type = 0) then
+as
+begin
+    if (s_type = 'riv_no') then
     begin
          for
-      select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name,r.description, fl.rights || ' - ' || fl.description , remarks, create_date
+      select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name, r.description, fl.rights || ' - ' || fl.description , remarks, create_date
         from RIVS r, flow_lib fl, phic_201 p
-       where r.current_step = fl.id
+       where r.current_step  = fl.id
          and r.requestor = phic_201.id_no
-         and upper(r.description) like upper(:s_data)
-       order by id
+         and upper(r.riv_no) like upper(:s_data)
+         and fl.rights in (select right_id from user_rights where user_id = :s_user)
+       order by riv_no desc
         into :id, :riv_no, :requestor, :requestor_name, :description, :status, :remarks, :create_date
           do
             begin
@@ -174,7 +176,7 @@ begin
          for
       select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name, r.description, fl.rights || ' - ' || fl.description , remarks, create_date
         from RIVS r, flow_lib fl, phic_201 p
-       where r.current_step + 1 = fl.id
+       where r.current_step  = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.riv_no) like upper(:s_data)
        order by riv_no desc
@@ -189,7 +191,7 @@ begin
          for
       select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name,r.description, fl.rights || ' - ' || fl.description , remarks, create_date
         from RIVS r, flow_lib fl, phic_201 p
-       where r.current_step + 1 = fl.id
+       where r.current_step  = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.description) like upper(:s_data)
        order by description

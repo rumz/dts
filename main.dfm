@@ -63,7 +63,7 @@ object FormMain: TFormMain
           Caption = 'RIV Search: '
         end
         object SpeedButton1: TSpeedButton
-          Left = 390
+          Left = 597
           Top = 2
           Width = 60
           Height = 22
@@ -71,7 +71,7 @@ object FormMain: TFormMain
           OnClick = SpeedButton1Click
         end
         object SpeedButton2: TSpeedButton
-          Left = 463
+          Left = 542
           Top = 2
           Width = 42
           Height = 22
@@ -88,6 +88,16 @@ object FormMain: TFormMain
           Height = 22
           TabOrder = 0
           OnKeyDown = EditRIVSearchKeyDown
+        end
+        object myRights: TCheckBox
+          Left = 398
+          Top = 2
+          Width = 83
+          Height = 22
+          Caption = 'My Rights'
+          Checked = True
+          State = cbChecked
+          TabOrder = 1
         end
       end
       object lsvRIV2: TListView

@@ -177,7 +177,7 @@ begin
 
     // todo check user rights before running the SP
 
-    if ((Sender = Approve) or (Sender = Deny)) or
+    if ((Sender = Approve) or (Sender = Deny) or (Sender = Receive)) or
        (((Sender = ApproveAs) or (Sender = DenyAs)) and (loginas_hasrights = 1)) then begin
 
         if dm.ibt.InTransaction then
@@ -198,8 +198,7 @@ begin
         else
             dm.ibq.Params[5].AsString := shared.user_id;      // approved_by
         dm.ibq.Params[6].AsDateTime := Now;                   // approved_date
-        if MemoRemarks.Lines.Text = '' then                   // remarks
-        if action = 1 then
+        if action = 1 then                                    // remarks
             remarks := 'Approved'
         else if action = 0 then
             remarks := 'Denied'
