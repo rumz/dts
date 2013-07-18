@@ -28,6 +28,11 @@ INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '19', 'C', 
 
 
 
+
+insert into user_rights (user_id, right_id) values('30070809', 'EU');
+insert into user_rights (user_id, right_id) values('30068408', 'EU');
+insert into user_rights (user_id, right_id) values('10261808', 'EU');
+
 insert into user_rights (user_id, right_id) values('30070809', 'GSU2');  // ema
 insert into user_rights (user_id, right_id) values('30077010', 'GSU3');  // james
 insert into user_rights (user_id, right_id) values('30068408', 'GSU1');  // rhodz

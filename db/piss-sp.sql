@@ -20,9 +20,6 @@ END^
 
 
 
-
-
-SET TERM ^ ;
 alter PROCEDURE SELECT_USERS
 RETURNS
 (
@@ -32,23 +29,24 @@ RETURNS
     DEPT            VARCHAR(30) CHARACTER SET NONE,
     RIGHTS          VARCHAR(20) CHARACTER SET NONE
 )
-AS BEGIN
+as
+BEGIN
     for
     select id_no, L_NAME, f_NAME, '', ''
-      from PHIC_201
-     order by id_no
+      from PHIC_201 a
+     inner join USER_RIGHTS b
+        on a.id_no = b.user_id
+     where b.right_id = 'EU'
       into :id_no, :last_name, :first_name, :dept, :rights
         do
         begin
           suspend;
         end
-END^
-SET TERM ; ^
+END
 
 
 
-SET TERM ^ ;
-create PROCEDURE UPDATE_FLOW_DATA(
+alter PROCEDURE UPDATE_FLOW_DATA(
     id integer,
     ftype varchar(50),
     riv_id integer,
@@ -64,7 +62,8 @@ as begin
         values(:ftype, :riv_id, :flow_id, :approved, :approved_by, :approved_date, :remarks);
         update rivs
            set current_step = :flow_id
-         where id = :riv_id;
+         where id = :riv_id
+           and :approved = 1;
     end
     else if (:id < 0) then begin
         delete from flow_data where id = (:id * -1);
@@ -173,9 +172,9 @@ begin
     if (s_type = 'riv_no') then
     begin
          for
-      select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name,r.description, fl.rights || ' - ' || fl.description , remarks, create_date
+      select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name, r.description, fl.rights || ' - ' || fl.description , remarks, create_date
         from RIVS r, flow_lib fl, phic_201 p
-       where r.current_step = fl.id
+       where r.current_step + 1 = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.riv_no) like upper(:s_data)
        order by riv_no desc
@@ -190,7 +189,7 @@ begin
          for
       select r.id, riv_no, requestor, p.l_name || ', ' || p.f_name,r.description, fl.rights || ' - ' || fl.description , remarks, create_date
         from RIVS r, flow_lib fl, phic_201 p
-       where r.current_step = fl.id
+       where r.current_step + 1 = fl.id
          and r.requestor = phic_201.id_no
          and upper(r.description) like upper(:s_data)
        order by description

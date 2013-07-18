@@ -63,6 +63,8 @@ procedure TFormRIV.loadElements;
 var i: integer;
     name: string;
 begin
+    { you must have EU rights for you to appear in the Requestor combo box }
+
     if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
@@ -112,35 +114,49 @@ end;
 
 
 procedure TFormRIV.BitBtn1Click(Sender: TObject);
+var
+    form_validated : Boolean;
+
 begin
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit
+    form_validated := False;
+    if cbo_Requestor.ItemHeight = -1 then begin
+        MessageDlg('Requestor must not be blank.', mtError, mbOKCancel, 1);
+        cbo_Requestor.SetFocus;
+    end
     else
-        dm.ibt.StartTransaction;
+        form_validated := True;
 
-    dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h,:i)');
-    if riv_form_state = 'Add' then
-        dm.ibq.Params[0].AsInteger := 0
-    else
-        dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
-    dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text; // description
-    dm.ibq.Params[2].AsString := led_rivno.Text;                  // riv_no
-    dm.ibq.Params[3].AsString := users[cbo_Requestor.ItemIndex].id_no;  // requestor
-    dm.ibq.Params[4].AsDateTime := Now;                           // create_date
-    dm.ibq.Params[5].AsString := shared.user_id;              // created by, this should be the ID Number
-    dm.ibq.Params[6].AsInteger := 2;                              // current_step = 2
-    dm.ibq.Params[7].AsString := 'WIP';                           // status
-    dm.ibq.Params[8].AsString := Memo_Remarks.Lines.Text;         // remarks
-    dm.ibq.ExecSQL;
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
+    if (form_validated = True) then begin
 
-    // add a record to the flow_data table for this RIV
-    // this is done via the stored procedure UPDATE_RIVS
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit
+        else
+            dm.ibt.StartTransaction;
 
-    Close;
-    FormMain.lsvRefresh;
+        dm.ibq.SQL.Clear;
+        dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h,:i)');
+        if riv_form_state = 'Add' then
+            dm.ibq.Params[0].AsInteger := 0
+        else
+            dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
+        dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text; // description
+        dm.ibq.Params[2].AsString := led_rivno.Text;                  // riv_no
+        dm.ibq.Params[3].AsString := users[cbo_Requestor.ItemIndex].id_no;  // requestor
+        dm.ibq.Params[4].AsDateTime := Now;                           // create_date
+        dm.ibq.Params[5].AsString := shared.user_id;              // created by, this should be the ID Number
+        dm.ibq.Params[6].AsInteger := 2;                              // current_step = 2
+        dm.ibq.Params[7].AsString := 'WIP';                           // status
+        dm.ibq.Params[8].AsString := Memo_Remarks.Lines.Text;         // remarks
+        dm.ibq.ExecSQL;
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit;
+
+        // add a record to the flow_data table for this RIV
+        // this is done via the stored procedure UPDATE_RIVS
+
+        Close;
+        FormMain.lsvRefresh;
+    end
 
 
 end;
