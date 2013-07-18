@@ -1,9 +1,9 @@
 program dts;
 
-{%File 'db\piss-sp.sql'}
-{%File 'db\piss.sql'}
+{%File 'db\dts-sp.sql'}
+{%File 'db\dts-schema.sql'}
 {%File 'db\piss-data.txt'}
-{%File 'db\piss-triggers.sql'}
+{%File 'db\dts-triggers.sql'}
 
 uses
   Forms,
