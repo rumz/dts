@@ -4,7 +4,9 @@ INSERT INTO USER_RIGHTS_LIB (ID, SHORTD, LONGD) VALUES (3,'FMS','Fund Management
 INSERT INTO USER_RIGHTS_LIB (ID, SHORTD, LONGD) VALUES (4,'ORVP','Office of the Regional Vice President');
 INSERT INTO USER_RIGHTS_LIB (ID, SHORTD, LONGD) VALUES (5,'C','Cashier');
 
-
+insert into flow_types (ftype, description) values('RIV', 'RIV for Region');
+insert into flow_types (ftype, description) values('RIV2', 'RIV for LHIOs');
+insert into flow_types (ftype, description) values('Claims', 'Claims');
 
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '1',  'EU',      'Create RIV & Get Clearance from Division Head');
 INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '2',  'GSU1',     'Check APP and Assign Series Number');

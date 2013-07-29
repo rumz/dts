@@ -1,6 +1,6 @@
 object FormMain: TFormMain
   Left = 162
-  Top = 83
+  Top = 150
   Width = 999
   Height = 565
   Caption = 'DTS'
@@ -99,7 +99,7 @@ object FormMain: TFormMain
     object Label2: TLabel
       Left = 11
       Top = 2
-      Width = 62
+      Width = 61
       Height = 22
       Caption = 'RIV Search: '
       Layout = tlCenter
@@ -141,13 +141,20 @@ object FormMain: TFormMain
       State = cbChecked
       TabOrder = 1
     end
-    object ComboBox1: TComboBox
+    object cboType: TComboBox
       Left = 86
       Top = 2
       Width = 145
       Height = 21
+      Style = csDropDownList
       ItemHeight = 13
+      ItemIndex = 0
       TabOrder = 2
+      Text = 'RIV'
+      Items.Strings = (
+        'RIV'
+        'RIV2'
+        'Claims')
     end
   end
   object MainMenu1: TMainMenu
@@ -172,7 +179,6 @@ object FormMain: TFormMain
     end
   end
   object popItemLib: TPopupMenu
-    OnPopup = popItemLibPopup
     Left = 632
     Top = 264
     object Refresh1: TMenuItem

@@ -134,19 +134,33 @@ begin
             dm.ibt.StartTransaction;
 
         dm.ibq.SQL.Clear;
-        dm.ibq.SQL.Add('execute procedure UPDATE_RIVS(:a,:b,:c,:d,:e,:f,:g,:h,:i)');
+        dm.ibq.SQL.Add('execute procedure UPDATE_FLOWS(:id,:ftype,:description,:f_no,:requestor,:create_date,:created_by,:current_step,:status,:remarks)');
         if riv_form_state = 'Add' then
-            dm.ibq.Params[0].AsInteger := 0
+            dm.ibq.ParamByName('id').AsInteger := 0
         else
-            dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
+            dm.ibq.ParamByName('id').AsInteger := StrToInt(led_ID.Text);
+        dm.ibq.ParamByName('ftype').AsString := shared.ftype;
+        dm.ibq.ParamByName('description').AsString := Memo_RIV_Description.Lines.Text;
+        dm.ibq.ParamByName('f_no').AsString := led_rivno.Text;
+        dm.ibq.ParamByName('requestor').AsString := users[cbo_Requestor.ItemIndex].id_no;
+        dm.ibq.ParamByName('create_date').AsDateTime := Now;
+        dm.ibq.ParamByName('created_by').AsString := shared.user_id;
+        dm.ibq.ParamByName('current_step').AsInteger := 2;
+        dm.ibq.ParamByName('status').AsString := 'WIP';
+        dm.ibq.ParamByName('remarks').AsString := Memo_Remarks.Lines.Text;
+
+{
+//            dm.ibq.Params[0].AsInteger := 0
+        dm.ibq.Params[0].AsInteger := StrToInt(led_ID.Text);
         dm.ibq.Params[1].AsString := Memo_RIV_Description.Lines.Text; // description
-        dm.ibq.Params[2].AsString := led_rivno.Text;                  // riv_no
+        dm.ibq.Params[2].AsString := led_rivno.Text;                  // riv_no / f_no
         dm.ibq.Params[3].AsString := users[cbo_Requestor.ItemIndex].id_no;  // requestor
         dm.ibq.Params[4].AsDateTime := Now;                           // create_date
         dm.ibq.Params[5].AsString := shared.user_id;              // created by, this should be the ID Number
         dm.ibq.Params[6].AsInteger := 2;                              // current_step = 2
         dm.ibq.Params[7].AsString := 'WIP';                           // status
         dm.ibq.Params[8].AsString := Memo_Remarks.Lines.Text;         // remarks
+}
         dm.ibq.ExecSQL;
         if dm.ibt.InTransaction then
             dm.ibt.Commit;

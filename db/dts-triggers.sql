@@ -65,7 +65,18 @@ BEGIN
 END^
 
 
+CREATE GENERATOR Flows_Generator;
+SET GENERATOR Flows_Generator TO 344;
 
+
+CREATE TRIGGER TRIG_Flows FOR Flows
+ ACTIVE
+ BEFORE INSERT
+ POSITION 0
+AS
+BEGIN
+    NEW.id = gen_id(Flows_GENERATOR, 1);
+END
 
 
 

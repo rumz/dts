@@ -56,8 +56,9 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from SELECT_RIV_TRANSACTIONS(:a)');
-    dm.ibq.Params[0].AsInteger := riv_id;
+    dm.ibq.SQL.Add('select * from SELECT_FLOW_TRANSACTIONS(:f_id, :f_type)');
+    dm.ibq.ParamByName('f_id').AsInteger := riv_id;
+    dm.ibq.ParamByName('f_type').AsString := shared.ftype;
     dm.ibq.Open;
 
     lsvRIVtransactions.Items.BeginUpdate;
@@ -117,7 +118,8 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from select_riv_flow');
+    dm.ibq.SQL.Add('select * from SELECT_FLOW_LIB_DATA(:ftype)');
+    dm.ibq.ParamByName('ftype').AsString := shared.ftype;
     dm.ibq.Open;
     while not dm.ibq.Eof do begin
         NewItem := lsvRIV.Items.Add;
@@ -187,27 +189,30 @@ begin
 
         dm.ibq.SQL.Clear;
 
-        dm.ibq.SQL.Add('execute procedure update_flow_data(:id, :b, :c, :d, :e, :f, :g, :h)');
-        dm.ibq.Params[0].AsInteger := 0;                      // id  if 0 then generate_id
-        dm.ibq.Params[1].AsString := 'RIV';                   // ftype
-        dm.ibq.Params[2].AsInteger := riv_id;                 // riv_id
-        dm.ibq.Params[3].AsInteger := current_flow_id + 1;    // flow_id
-        dm.ibq.Params[4].AsInteger := action;                 // approved
+        dm.ibq.SQL.Add('execute procedure UPDATE_FLOW_DATA(:id, :f_id, :flow_id, :approved, :approved_by, :approved_date, :remarks)');
+
+        dm.ibq.ParamByName('id').AsInteger := 0;
+        dm.ibq.ParamByName('f_id').AsInteger := riv_id;
+        dm.ibq.ParamByName('flow_id').AsInteger := current_flow_id + 1;
+        dm.ibq.ParamByName('approved').AsInteger := action;
         if (Sender = ApproveAs) or (Sender = DenyAs) then
-            dm.ibq.Params[5].AsString := shared.loginasuserid // approved_by
+            dm.ibq.ParamByName('approved_by').AsString := shared.loginasuserid
         else
-            dm.ibq.Params[5].AsString := shared.user_id;      // approved_by
-        dm.ibq.Params[6].AsDateTime := Now;                   // approved_date
+            dm.ibq.ParamByName('approved_by').AsString := shared.user_id;
+        dm.ibq.ParamByName('approved_date').AsDateTime := Now;
+
         if action = 1 then                                    // remarks
             remarks := 'Approved'
         else if action = 0 then
             remarks := 'Denied'
         else if action = 2 then
-            remarks := 'Received';
+            remarks := 'Received'
+        else if action = 3 then
+            remarks := '';
 
         if MemoRemarks.Lines.Text <> '' then
             remarks := remarks + ' - ' + trim(MemoRemarks.Lines.Text);
-        dm.ibq.Params[7].AsString := remarks;
+        dm.ibq.ParamByName('remarks').AsString := remarks;
 
         dm.ibq.Prepare;
         dm.ibq.ExecSQL;

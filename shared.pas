@@ -19,6 +19,7 @@ var
     riv_form_state : String;
     riv_id : integer;
     riv_no, riv_rights, riv_description : string;
+    ftype : string;
 
     loginas, loginaspass, loginasrights, loginasuserid : string;
 

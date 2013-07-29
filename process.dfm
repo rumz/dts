@@ -1,8 +1,8 @@
 object FormProcess: TFormProcess
-  Left = 1429
-  Top = 121
-  Width = 1094
-  Height = 713
+  Left = 142
+  Top = 8
+  Width = 1101
+  Height = 716
   Caption = 'Process RIV'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -88,8 +88,8 @@ object FormProcess: TFormProcess
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 667
-    Width = 1086
+    Top = 669
+    Width = 1093
     Height = 19
     Panels = <
       item
@@ -106,7 +106,7 @@ object FormProcess: TFormProcess
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1086
+    Width = 1093
     Height = 553
     Align = alTop
     TabOrder = 6
@@ -159,7 +159,7 @@ object FormProcess: TFormProcess
     object TabControl1: TTabControl
       Left = 348
       Top = 1
-      Width = 737
+      Width = 744
       Height = 551
       Align = alClient
       TabOrder = 1
@@ -169,7 +169,7 @@ object FormProcess: TFormProcess
       object lsvRIVtransactions: TListView
         Left = 4
         Top = 24
-        Width = 729
+        Width = 736
         Height = 523
         Align = alClient
         Checkboxes = True

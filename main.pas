@@ -30,7 +30,7 @@ type
     SpeedButton2: TSpeedButton;
     EditRIVSearch: TEdit;
     myRights: TCheckBox;
-    ComboBox1: TComboBox;
+    cboType: TComboBox;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
     procedure DeleteRecord1Click(Sender: TObject);
@@ -44,7 +44,6 @@ type
     procedure EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure lsvRIV2DblClick(Sender: TObject);
-    procedure popItemLibPopup(Sender: TObject);
     procedure ProcessRecord1Click(Sender: TObject);
     procedure lsvRIV2ColumnClick(Sender: TObject; Column: TListColumn);
     procedure LogoutClick(Sender: TObject);
@@ -83,12 +82,12 @@ begin
 
     // need to change this to be able to query a generic table
     if myRights.Checked then begin
-        dm.ibq.SQL.Add('select * from SELECT_RIVS(:a, :b, :c)');
+        dm.ibq.SQL.Add('select * from SELECT_FLOWS(:a, :b, :c)');
         dm.ibq.Params[2].AsString := shared.user_id;
     end
     else
-        dm.ibq.SQL.Add('select * from SELECT_RIVS2(:a, :b)');
-    dm.ibq.Params[0].AsString := 'riv_no';
+        dm.ibq.SQL.Add('select * from SELECT_FLOWS2(:a, :b)');
+    dm.ibq.Params[0].AsString := cboType.Text;
     dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
 
     dm.ibq.Open;
@@ -131,16 +130,17 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure update_rivs(:id, :b, :c, :d, :e, :f, :g, :h, :i)');
-    dm.ibq.Params[0].AsInteger := strtoint(CurrentRIV.Caption) * -1;
-    dm.ibq.Params[1].AsString := '';
-    dm.ibq.Params[2].AsString := '';
-    dm.ibq.Params[3].AsString := '';
-    dm.ibq.Params[4].AsDateTime := Now;
-    dm.ibq.Params[5].AsString := '';
-    dm.ibq.Params[6].AsInteger := 1;  // current_step = 2
-    dm.ibq.Params[7].AsString := '';
-    dm.ibq.Params[8].AsString := '';
+    dm.ibq.SQL.Add('execute procedure UPDATE_FLOWS(:id,:ftype,:description,:f_no,:requestor,:create_date,:created_by,:current_step,:status,:remarks)');
+    dm.ibq.ParamByName('id').AsInteger := strtoint(CurrentRIV.Caption) * -1;
+    dm.ibq.ParamByName('ftype').AsString := '';
+    dm.ibq.ParamByName('description').AsString := '';
+    dm.ibq.ParamByName('f_no').AsString := '';
+    dm.ibq.ParamByName('requestor').AsString := '';
+    dm.ibq.ParamByName('create_date').AsDateTime := Now;
+    dm.ibq.ParamByName('created_by').AsString := '';
+    dm.ibq.ParamByName('current_step').AsInteger := 0;
+    dm.ibq.ParamByName('status').AsString := '';
+    dm.ibq.ParamByName('remarks').AsString := '';
 
     dm.ibq.Prepare;
     dm.ibq.ExecSQL;
@@ -156,6 +156,7 @@ end;
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
     shared.riv_form_state := 'Update';
+    shared.ftype := cboType.Text;
     FormRIV.led_ID.Text := CurrentRIV.Caption;
     FormRIV.led_rivno.Text := CurrentRIV.SubItems.Strings[0];
     FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
@@ -168,6 +169,7 @@ end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
+    shared.ftype := cboType.Text;
     shared.riv_form_state := 'Add';
     FormRIV.led_rivno.Text := '';
     FormRIV.cbo_Requestor.ItemIndex := -1;
@@ -183,6 +185,7 @@ end;
 
 procedure TFormMain.FormShow(Sender: TObject);
 begin
+
     lsvRefresh;
 end;
 
@@ -212,22 +215,9 @@ begin
 
 end;
 
-procedure TFormMain.popItemLibPopup(Sender: TObject);
-begin
-    { TODO: check rights based on the rights of the user and the current status the item has }
-    if (CurrentRIV <> nil) then
-    begin
-{        if trim(CurrentRIV.SubItems.Strings[1]) = trim(StatusBar1.Panels.Items[0].Text) then
-            ProcessRecord1.Enabled := True
-        else
-            ProcessRecord1.Enabled := False;
-}
-    end
-
-end;
-
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
+    shared.ftype := cboType.Text;
     shared.riv_id := strtoint(CurrentRIV.Caption);
     shared.riv_no := CurrentRIV.SubItems.Strings[0];
     shared.riv_description := CurrentRIV.SubItems.Strings[3];

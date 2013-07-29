@@ -12,8 +12,6 @@ Taken from the PIPS database
 
 */
 
-
-
 CREATE TABLE PHIC_201 (
     ID_NO           VARCHAR(16) CHARACTER SET NONE NOT NULL,
     L_NAME          VARCHAR(30) CHARACTER SET NONE,
@@ -39,13 +37,41 @@ CREATE TABLE USER_RIGHTS_LIB (
   LONGD VARCHAR(255) CHARACTER SET NONE
 )
 
-
-
 CREATE TABLE USER_RIGHTS (
   USER_ID VARCHAR(16) CHARACTER SET NONE NOT NULL,
   RIGHT_ID VARCHAR(16) CHARACTER SET NONE NOT NULL
 )
 
+
+CREATE TABLE FLOWS (
+    ID            INTEGER,
+    FTYPE         VARCHAR(50) CHARACTER SET NONE,   
+    DESCRIPTION   VARCHAR(255) CHARACTER SET NONE,
+    F_NO          VARCHAR(10) CHARACTER SET NONE,
+    REQUESTOR     VARCHAR(16) CHARACTER SET NONE,
+    CREATE_DATE   TIMESTAMP,
+    CREATED_BY    VARCHAR(16) CHARACTER SET NONE,
+    CURRENT_STEP  INTEGER,
+    STATUS        VARCHAR(20) CHARACTER SET NONE,
+    REMARKS       VARCHAR(255) CHARACTER SET NONE
+);
+
+/*
+Notes: FLOWS will replace RIVS
+Ftype - RIV, RIV2, Claims
+Description - e.g.  IT Supplies
+F_NO  - rhodz assigns this, previously riv_no
+Requestor
+Status - wip / complete / cancelled
+
+*/
+
+CREATE TABLE FLOW_TYPES (
+    FTYPE        VARCHAR(50) CHARACTER SET NONE,
+    DESCRIPTION  VARCHAR(255) CHARACTER SET NONE NOT NULL
+);
+
+/* This shows the different types of flows and a brief description of what they do  */ 
 
 
 /**************************************************
@@ -87,12 +113,10 @@ Description: e.g.  'EU - Create RIV and Get Clearance from Division Head'
 **************************************************/
 
 
-
 drop table FLOW_DATA;
 create table flow_data (
     id integer,
-    ftype varchar(50),
-    riv_id integer,
+    f_id integer,
     flow_id integer,
     approved integer,
     approved_by varchar(16),
@@ -100,7 +124,7 @@ create table flow_data (
     remarks varchar(255)
 )
 
-// approved can mean  1 approve, 0 deny, 2 received
+// approved can mean  1 approve, 0 deny, 2 received, 3 remarks
 
 /************************************************
 RIV table
@@ -130,7 +154,6 @@ create table RIVs (
     remarks varchar(255)
 )
 
-
 /************************************************
 RIV_DATA table
 
@@ -140,16 +163,6 @@ QTY - number of items
 UNIT - unit (e.g. pcs, roll, box, set, spool, jar, ca, ctn (carton), m, ream, lot)
 ITEM_ID - FK on ITEM_LIB.ID
 ************************************************/
-
-
-create table RIV_DATA (
-    id integer,
-    riv_id integer,
-    qty integer,
-    unit varchar(20),
-    item_id integer
-)
-
 
 
 
