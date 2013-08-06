@@ -31,6 +31,7 @@ type
     EditRIVSearch: TEdit;
     myRights: TCheckBox;
     cboType: TComboBox;
+    SpeedButton3: TSpeedButton;
     procedure Initialize;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
@@ -49,6 +50,7 @@ type
     procedure lsvRIV2ColumnClick(Sender: TObject; Column: TListColumn);
     procedure LogoutClick(Sender: TObject);
     procedure About2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -282,6 +284,11 @@ end;
 procedure TFormMain.About2Click(Sender: TObject);
 begin
     MessageDlg('Philhealth Document Tracking System Version 0.7.1', mtInformation, mbOKCancel, 1)
+end;
+
+procedure TFormMain.SpeedButton3Click(Sender: TObject);
+begin
+    Initialize;
 end;
 
 end.
