@@ -44,7 +44,7 @@ BEGIN
         end
 END
 
-create procedure select_flows (
+alter procedure select_flows (
     s_type varchar(30) character set none,
     s_data varchar(255) character set none,
     s_user varchar(20) character set none)
@@ -63,6 +63,7 @@ begin
   select f.id, f_no, requestor, p.l_name || ', ' || p.f_name, f.description, fl.rights || ' - ' || fl.description , remarks, create_date
     from flows f, flow_lib fl, phic_201 p
    where f.ftype = :s_type
+     and fl.ftype = :s_type
      and f.current_step  = fl.id
      and f.requestor = phic_201.id_no
      and upper(f.f_no) like upper(:s_data)
@@ -76,7 +77,7 @@ begin
 end
 
 
-create procedure select_flows2 (
+alter procedure select_flows2 (
     s_type varchar(30) character set none,
     s_data varchar(255) character set none)
 returns (
@@ -94,6 +95,7 @@ begin
   select f.id, f_no, requestor, p.l_name || ', ' || p.f_name, f.description, fl.rights || ' - ' || fl.description , remarks, create_date
     from flows f, flow_lib fl, phic_201 p
    where f.ftype = :s_type
+     and fl.ftype = :s_type
      and f.current_step  = fl.id
      and f.requestor = phic_201.id_no
      and upper(f.f_no) like upper(:s_data)
@@ -104,7 +106,6 @@ begin
           suspend;
         end
 end
-
 
 
 alter PROCEDURE UPDATE_FLOW_DATA(

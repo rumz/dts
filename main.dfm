@@ -148,13 +148,8 @@ object FormMain: TFormMain
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      ItemIndex = 0
       TabOrder = 2
-      Text = 'RIV'
-      Items.Strings = (
-        'RIV'
-        'RIV2'
-        'Claims')
+      OnChange = Refresh1Click
     end
   end
   object MainMenu1: TMainMenu
@@ -175,6 +170,7 @@ object FormMain: TFormMain
       Caption = '&Help'
       object About2: TMenuItem
         Caption = '&About'
+        OnClick = About2Click
       end
     end
   end

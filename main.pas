@@ -31,6 +31,7 @@ type
     EditRIVSearch: TEdit;
     myRights: TCheckBox;
     cboType: TComboBox;
+    procedure Initialize;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
     procedure DeleteRecord1Click(Sender: TObject);
@@ -47,6 +48,7 @@ type
     procedure ProcessRecord1Click(Sender: TObject);
     procedure lsvRIV2ColumnClick(Sender: TObject; Column: TListColumn);
     procedure LogoutClick(Sender: TObject);
+    procedure About2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,6 +70,30 @@ uses data_module, riv, login, process, shared;
 
 {$R *.dfm}
 
+procedure TFormMain.Initialize;
+var
+    idx : integer;
+begin
+    if cboType.Items.Count = 0 then begin
+        if dm.ibt.InTransaction then
+            dm.ibt.Commit
+        else
+            dm.ibt.StartTransaction;
+
+        dm.ibq.SQL.Clear;
+        dm.ibq.SQL.Add('select distinct ftype from FLOW_TYPES');
+        dm.ibq.Open;
+
+        while not dm.ibq.Eof do begin
+            cboType.Items.Add(dm.ibq.Fields.Fields[0].AsString);
+            dm.ibq.Next;
+        end;
+
+        idx := cboType.Items.IndexOf('RIV PRO');
+        cboType.ItemIndex := idx;
+
+    end;
+end;
 
 
 
@@ -185,7 +211,7 @@ end;
 
 procedure TFormMain.FormShow(Sender: TObject);
 begin
-
+    Initialize;
     lsvRefresh;
 end;
 
@@ -251,6 +277,11 @@ begin
     FormMain.Hide;
     FormLogin.ShowModal;
 
+end;
+
+procedure TFormMain.About2Click(Sender: TObject);
+begin
+    MessageDlg('Philhealth Document Tracking System Version 0.7.1', mtInformation, mbOKCancel, 1)
 end;
 
 end.

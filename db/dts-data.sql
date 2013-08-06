@@ -8,27 +8,40 @@ insert into flow_types (ftype, description) values('RIV', 'RIV for Region');
 insert into flow_types (ftype, description) values('RIV2', 'RIV for LHIOs');
 insert into flow_types (ftype, description) values('Claims', 'Claims');
 
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '1',  'EU',      'Create RIV & Get Clearance from Division Head');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '2',  'GSU1',     'Check APP and Assign Series Number');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '3',  'GSU2',     'Screening of Attachments/Signature of Recommending Approval');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '4',  'FMS',     'Budget Clearing');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '5',  'RVP',     'Approval of RIV');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '6',  'FMS',     'Forward to GSU');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '7',  'GSU3',     'Canvass Quotation');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '8',  'GSU1',     'Abstract and PO');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '9',  'GSU1',     'Procurement Monitoring Report');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '10', 'GSU2',     'Required Signatures for Abstract and PO');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '11', 'FMS',     'For Final Budgeting');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '12', 'RVP',     'Approval of PO');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '13', 'FMS',     'Forward to GSU');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '14', 'GSU1',     'Prepare Voucher');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '15', 'FMS',     'Checking');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '16', 'GSU3',     'Serve Payment and Pickup Supplies');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '17', 'EU',      'Receive Supplies via Withdrawal Slip');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '18', 'GSU4',     'Prepare Inspection Report and Delivery Receipt');
-INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV', '19', 'C',       'File Voucher');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '1',  'EU',   'Create RIV & Get Clearance from Division Head');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '2',  'GSU1', 'Check APP and Assign Series Number');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '3',  'GSU2', 'Screening of Attachments/Signature of Recommending Approval');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '4',  'FMS',  'Budget Clearing');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '5',  'RVP',  'Approval of RIV');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '6',  'FMS',  'Forward to GSU');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '7',  'GSU3', 'Canvass Quotation');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '8',  'GSU1', 'Abstract and PO');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '9',  'GSU1', 'Procurement Monitoring Report');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '10', 'GSU2', 'Required Signatures for Abstract and PO');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '11', 'FMS',  'For Final Budgeting');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '12', 'RVP',  'Approval of PO');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '13', 'FMS',  'Forward to GSU');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '14', 'GSU1', 'Prepare Voucher');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '15', 'FMS',  'Checking');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '16', 'GSU3', 'Serve Payment and Pickup Supplies');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '17', 'EU',   'Receive Supplies via Withdrawal Slip');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '18', 'GSU4', 'Prepare Inspection Report and Delivery Receipt');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV PRO', '19', 'C',    'File Voucher');
 
 
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '1',  'EU',   'Create RIV & Get Clearance from Division Head');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '2',  'GSU1', 'Check APP and Assign Series Number');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '3',  'GSU2', 'Screening of Attachments');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '4',  'FOD',  'Get Signature of Recommending Approval');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '5',  'FMS',  'Budget Clearing');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '6',  'GSU2', 'Submit Canvass Quotation, Abstract of Canvass, & Purchase Order');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '7',  'FMS',  'Approve PO');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '8',  'GSU2', 'Prepare Voucher for Check');
+INSERT INTO FLOW_LIB (FTYPE, ID, RIGHTS, DESCRIPTION) VALUES ('RIV LHIO', '9',  'FMS', 'Checking & Forwarding to LHIO');
+
+update flow_lib 
+   set id = id - 90
+ where ftype = 'RIV LHIO'
 
 
 insert into user_rights (user_id, right_id) values('30070809', 'EU');
