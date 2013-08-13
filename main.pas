@@ -76,25 +76,26 @@ procedure TFormMain.Initialize;
 var
     idx : integer;
 begin
-    if cboType.Items.Count = 0 then begin
-        if dm.ibt.InTransaction then
-            dm.ibt.Commit
-        else
-            dm.ibt.StartTransaction;
 
-        dm.ibq.SQL.Clear;
-        dm.ibq.SQL.Add('select distinct ftype from FLOW_TYPES');
-        dm.ibq.Open;
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit
+    else
+        dm.ibt.StartTransaction;
 
-        while not dm.ibq.Eof do begin
-            cboType.Items.Add(dm.ibq.Fields.Fields[0].AsString);
-            dm.ibq.Next;
-        end;
+    dm.ibq.SQL.Clear;
+    dm.ibq.SQL.Add('select distinct ftype from FLOW_TYPES');
+    dm.ibq.Open;
 
-        idx := cboType.Items.IndexOf('RIV PRO');
-        cboType.ItemIndex := idx;
+    cboType.Items.Clear;
 
+    while not dm.ibq.Eof do begin
+        cboType.Items.Add(dm.ibq.Fields.Fields[0].AsString);
+        dm.ibq.Next;
     end;
+
+    idx := cboType.Items.IndexOf('RIV PRO');
+    cboType.ItemIndex := idx;
+
 end;
 
 
