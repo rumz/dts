@@ -25,6 +25,8 @@ type
     Label1: TLabel;
     procedure Initialize;
     procedure Refresh;
+    procedure SaveFlowType;
+    procedure SaveFlowStep;
     procedure FormShow(Sender: TObject);
     procedure cboTypeChange(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
@@ -86,6 +88,55 @@ begin
 end;
 
 
+procedure TFormFlowAdmin.SaveFlowType;
+begin
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit
+    else
+        dm.ibt.StartTransaction;
+
+    dm.ibq.SQL.Clear;
+    dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype)');
+    dm.ibq.ParamByName('ftype').AsString := cboType.Text;
+    dm.ibq.Open;
+
+    if dm.ibq.Fields.FieldByName('success').AsInteger = 1 then begin
+        Initialize;
+        // no steps should appear
+    end
+    else begin
+        // unsuccessful because flow_type is existing, do nothing
+    end;
+
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit;
+end;
+
+procedure TFormFlowAdmin.SaveFlowStep;
+begin
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit
+    else
+        dm.ibt.StartTransaction;
+
+    dm.ibq.SQL.Clear;
+    dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype, )');
+    dm.ibq.ParamByName('ftype').AsString := cboType.Text;
+    dm.ibq.Open;
+
+    if dm.ibq.Fields.FieldByName('success').AsInteger = 1 then begin
+        Initialize;
+        // no steps should appear
+    end
+    else begin
+        // unsuccessful because flow_type is existing, do nothing
+    end;
+
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit;
+end;
+
+
 procedure TFormFlowAdmin.Refresh;
 begin
     lsvFlow.Items.Clear;
@@ -128,28 +179,7 @@ end;
 
 procedure TFormFlowAdmin.SpeedButton2Click(Sender: TObject);
 begin
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit
-    else
-        dm.ibt.StartTransaction;
-
-
-        dm.ibq.SQL.Clear;
-        dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype)');
-        dm.ibq.ParamByName('ftype').AsString := cboType.Text;
-        dm.ibq.Open;
-
-        if dm.ibq.Fields.FieldByName('success').AsInteger = 1 then begin
-            Initialize;
-            // no steps should appear
-        end
-        else begin
-            // unsuccessful because flow_type is existing, do nothing
-        end;
-
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
-
+    SaveFlowType;
 end;
 
 end.

@@ -187,7 +187,7 @@ object FormFlowAdmin: TFormFlowAdmin
     end
     object LabeledEdit1: TLabeledEdit
       Left = 16
-      Top = 36
+      Top = 43
       Width = 313
       Height = 21
       EditLabel.Width = 22
@@ -215,7 +215,7 @@ object FormFlowAdmin: TFormFlowAdmin
       TabOrder = 2
     end
     object BitBtn2: TBitBtn
-      Left = 238
+      Left = 190
       Top = 128
       Width = 75
       Height = 25
