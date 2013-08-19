@@ -353,21 +353,22 @@ end;
 
 
 
-create procedure select_flow_lib_data(
+alter procedure select_flow_lib_data(
   ftype varchar(50)
 )
 returns (
+    id integer,
     rights varchar(16) character set none,
     description varchar(255) character set none
 )
 as
 begin
        for
-    select rights, description
+    select id, rights, description
       from flow_lib
      where ftype = :ftype
      order by id
-      into :rights, :description
+      into :id, :rights, :description
       do
         begin
             suspend;

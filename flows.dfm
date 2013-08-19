@@ -1,8 +1,8 @@
 object FormFlowAdmin: TFormFlowAdmin
-  Left = 361
-  Top = 154
-  Width = 690
-  Height = 391
+  Left = 406
+  Top = 151
+  Width = 694
+  Height = 466
   Caption = 'Flow Administrator'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,14 +18,14 @@ object FormFlowAdmin: TFormFlowAdmin
     Left = 343
     Top = 30
     Width = 5
-    Height = 333
+    Height = 408
     Cursor = crHSplit
   end
   object TabControl2: TTabControl
     Left = 0
     Top = 30
     Width = 343
-    Height = 333
+    Height = 408
     Align = alLeft
     TabOrder = 0
     Tabs.Strings = (
@@ -35,7 +35,7 @@ object FormFlowAdmin: TFormFlowAdmin
       Left = 4
       Top = 24
       Width = 335
-      Height = 305
+      Height = 380
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -44,7 +44,11 @@ object FormFlowAdmin: TFormFlowAdmin
           Width = 55
         end
         item
-          Caption = 'Approved?'
+          Caption = 'ID'
+          Width = 276
+        end
+        item
+          Caption = 'Description'
           Width = 276
         end>
       Font.Charset = DEFAULT_CHARSET
@@ -58,12 +62,13 @@ object FormFlowAdmin: TFormFlowAdmin
       ParentFont = False
       TabOrder = 0
       ViewStyle = vsReport
+      OnSelectItem = lsvFlowSelectItem
     end
   end
   object ControlBar1: TControlBar
     Left = 0
     Top = 0
-    Width = 682
+    Width = 686
     Height = 30
     Align = alTop
     TabOrder = 1
@@ -166,8 +171,8 @@ object FormFlowAdmin: TFormFlowAdmin
   object GroupBox1: TGroupBox
     Left = 348
     Top = 30
-    Width = 334
-    Height = 333
+    Width = 338
+    Height = 408
     Align = alClient
     Caption = 'Steps '
     TabOrder = 2

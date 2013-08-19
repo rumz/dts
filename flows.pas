@@ -31,11 +31,13 @@ type
     procedure cboTypeChange(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
+    procedure lsvFlowSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
   private
     { Private declarations }
   public
     { Public declarations }
-    NewItem : TListItem;
+    NewItem, CurrentStep : TListItem;
     current_flow : string;
   end;
 
@@ -159,6 +161,7 @@ begin
         NewItem := lsvFlow.Items.Add;
         NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
         dm.ibq.Next;
     end;
     lsvFlow.Items.EndUpdate;
@@ -172,6 +175,10 @@ end;
 procedure TFormFlowAdmin.FormShow(Sender: TObject);
 begin
     Initialize;
+    if cboType.Items.Count <> 0 then
+        cboType.ItemIndex := 0;
+
+    Refresh;
 end;
 
 procedure TFormFlowAdmin.cboTypeChange(Sender: TObject);
@@ -179,7 +186,6 @@ begin
     if cboType.Items.Count <> 0 then
         current_flow := cboType.Items.Strings[cboType.itemIndex];
     Refresh;
-
 end;
 
 procedure TFormFlowAdmin.SpeedButton2Click(Sender: TObject);
@@ -207,6 +213,19 @@ begin
             cboRights.SetFocus;
         end
     end;
+end;
+
+procedure TFormFlowAdmin.lsvFlowSelectItem(Sender: TObject;
+  Item: TListItem; Selected: Boolean);
+begin
+    MessageDlg(Item.Caption, mtInformation, mbOKCancel, 1);
+    MessageDlg(Item.SubItems[0], mtInformation, mbOKCancel, 1);
+    MessageDlg(Item.SubItems[1], mtInformation, mbOKCancel, 1);
+
+//    CurrentStep := Item;
+//    leddescription.Text := CurrentStep.SubItems.Strings[1];
+//    cboRights.ItemIndex := cboRights.Items.IndexOfName(CurrentStep.Caption);
+
 end;
 
 end.

@@ -273,6 +273,7 @@ begin
 
 end;
 
+
 procedure TFormMain.LogoutClick(Sender: TObject);
 begin
     shared.user_id := '';
@@ -282,18 +283,20 @@ begin
 
     FormMain.Hide;
     FormLogin.ShowModal;
-
 end;
+
 
 procedure TFormMain.About2Click(Sender: TObject);
 begin
     MessageDlg('Philhealth Document Tracking System Version 0.7.1', mtInformation, mbOKCancel, 1)
 end;
 
+
 procedure TFormMain.SpeedButton3Click(Sender: TObject);
 begin
     Initialize;
 end;
+
 
 procedure TFormMain.FlowAdmin1Click(Sender: TObject);
 begin
