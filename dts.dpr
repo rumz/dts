@@ -13,7 +13,8 @@ uses
   login in 'login.pas' {FormLogin},
   process in 'process.pas' {FormProcess},
   shared in 'shared.pas',
-  loginas in 'loginas.pas' {FormLoginAs};
+  loginas in 'loginas.pas' {FormLoginAs},
+  flows in 'flows.pas' {FormFlowAdmin};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.CreateForm(TFormRIV, FormRIV);
   Application.CreateForm(TFormProcess, FormProcess);
   Application.CreateForm(TFormLoginAs, FormLoginAs);
+  Application.CreateForm(TFormFlowAdmin, FormFlowAdmin);
   Application.Run;
 end.

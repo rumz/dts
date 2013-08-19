@@ -21,6 +21,7 @@ var
     riv_no, riv_rights, riv_description : string;
     ftype : string;
 
+
     loginas, loginaspass, loginasrights, loginasuserid : string;
 
 

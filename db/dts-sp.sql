@@ -304,6 +304,29 @@ begin
     end
 end
 
+
+
+alter procedure insert_flow_type (
+    ftype varchar(50) character set none)
+returns (success integer)
+as
+declare variable flowtype varchar(50);
+begin
+    select ftype
+      from flow_types
+     where ftype = :ftype
+      into flowtype;
+    if (flowtype is null) then begin
+        insert into flow_types(ftype, description) values(:ftype, '');
+        success = 1;
+    end
+    else
+        success = 0;
+    suspend;
+end
+
+
+
 create procedure select_flow_lib_data(
   ftype varchar(50)
 )
@@ -324,4 +347,5 @@ begin
             suspend;
         end
 end
+
 

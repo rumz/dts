@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 205
-  Top = 120
+  Left = 270
+  Top = 81
   Width = 999
   Height = 565
   Caption = 'DTS'
@@ -223,16 +223,17 @@ object FormMain: TFormMain
   object MainMenu1: TMainMenu
     Left = 680
     Top = 264
-    object N1: TMenuItem
-      Caption = '&'
+    object File1: TMenuItem
+      Caption = '&File'
+      object FlowAdmin1: TMenuItem
+        Caption = '&Flow Admin'
+        OnClick = FlowAdmin1Click
+      end
       object Logout: TMenuItem
         Caption = '&Logout'
         ShortCut = 112
         OnClick = LogoutClick
       end
-    end
-    object File1: TMenuItem
-      Caption = '&File'
     end
     object About1: TMenuItem
       Caption = '&Help'

@@ -10,7 +10,6 @@ type
 
   TFormMain = class(TForm)
     MainMenu1: TMainMenu;
-    N1: TMenuItem;
     File1: TMenuItem;
     About1: TMenuItem;
     About2: TMenuItem;
@@ -32,6 +31,7 @@ type
     myRights: TCheckBox;
     cboType: TComboBox;
     SpeedButton3: TSpeedButton;
+    FlowAdmin1: TMenuItem;
     procedure Initialize;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
@@ -51,6 +51,7 @@ type
     procedure LogoutClick(Sender: TObject);
     procedure About2Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
+    procedure FlowAdmin1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,7 +69,7 @@ var
 
 implementation
 
-uses data_module, riv, login, process, shared;
+uses data_module, riv, login, process, shared, flows;
 
 {$R *.dfm}
 
@@ -95,6 +96,8 @@ begin
 
     idx := cboType.Items.IndexOf('RIV PRO');
     cboType.ItemIndex := idx;
+
+    
 
 end;
 
@@ -290,6 +293,11 @@ end;
 procedure TFormMain.SpeedButton3Click(Sender: TObject);
 begin
     Initialize;
+end;
+
+procedure TFormMain.FlowAdmin1Click(Sender: TObject);
+begin
+    FormFlowAdmin.ShowModal;
 end;
 
 end.
