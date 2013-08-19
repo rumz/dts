@@ -1,8 +1,8 @@
 object FormFlowAdmin: TFormFlowAdmin
   Left = 361
   Top = 154
-  Width = 697
-  Height = 519
+  Width = 690
+  Height = 391
   Caption = 'Flow Administrator'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,14 +18,14 @@ object FormFlowAdmin: TFormFlowAdmin
     Left = 343
     Top = 30
     Width = 5
-    Height = 461
+    Height = 333
     Cursor = crHSplit
   end
   object TabControl2: TTabControl
     Left = 0
     Top = 30
     Width = 343
-    Height = 461
+    Height = 333
     Align = alLeft
     TabOrder = 0
     Tabs.Strings = (
@@ -35,7 +35,7 @@ object FormFlowAdmin: TFormFlowAdmin
       Left = 4
       Top = 24
       Width = 335
-      Height = 433
+      Height = 305
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -63,7 +63,7 @@ object FormFlowAdmin: TFormFlowAdmin
   object ControlBar1: TControlBar
     Left = 0
     Top = 0
-    Width = 689
+    Width = 682
     Height = 30
     Align = alTop
     TabOrder = 1
@@ -166,8 +166,8 @@ object FormFlowAdmin: TFormFlowAdmin
   object GroupBox1: TGroupBox
     Left = 348
     Top = 30
-    Width = 341
-    Height = 461
+    Width = 334
+    Height = 333
     Align = alClient
     Caption = 'Steps '
     TabOrder = 2
@@ -185,14 +185,14 @@ object FormFlowAdmin: TFormFlowAdmin
       Height = 13
       Caption = 'NOTE: Records are inserted after the currently selected row.'
     end
-    object LabeledEdit1: TLabeledEdit
+    object leddescription: TLabeledEdit
       Left = 16
       Top = 43
       Width = 313
       Height = 21
-      EditLabel.Width = 22
+      EditLabel.Width = 78
       EditLabel.Height = 13
-      EditLabel.Caption = 'Step'
+      EditLabel.Caption = 'Step Description'
       LabelPosition = lpAbove
       LabelSpacing = 3
       MaxLength = 255
@@ -213,6 +213,7 @@ object FormFlowAdmin: TFormFlowAdmin
       Height = 25
       Caption = 'Insert'
       TabOrder = 2
+      OnClick = BitBtn1Click
     end
     object BitBtn2: TBitBtn
       Left = 190

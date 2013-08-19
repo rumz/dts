@@ -17,7 +17,7 @@ type
     cboType: TComboBox;
     Splitter1: TSplitter;
     GroupBox1: TGroupBox;
-    LabeledEdit1: TLabeledEdit;
+    leddescription: TLabeledEdit;
     cboRights: TComboBox;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
@@ -30,6 +30,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure cboTypeChange(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -120,8 +121,12 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype, )');
-    dm.ibq.ParamByName('ftype').AsString := cboType.Text;
+    dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype, :id, :rights, :description)');
+    dm.ibq.ParamByName('ftype').AsString  := cboType.Text;
+    dm.ibq.ParamByName('id').AsInteger    := 0;
+    dm.ibq.ParamByName('rights').AsString := cboRights.Text;
+    dm.ibq.ParamByName('description').AsString := leddescription.Text;
+
     dm.ibq.Open;
 
     if dm.ibq.Fields.FieldByName('success').AsInteger = 1 then begin
@@ -180,6 +185,28 @@ end;
 procedure TFormFlowAdmin.SpeedButton2Click(Sender: TObject);
 begin
     SaveFlowType;
+end;
+
+procedure TFormFlowAdmin.BitBtn1Click(Sender: TObject);
+begin
+    if (leddescription.Text <> '') and (cboRights.ItemIndex >= 0) then begin
+        // if no entries, add entry
+        // if entries exist and no selected entry, add to end of list
+        // if entry is selected and description or right is changed, update entry
+        // if entries exist and entry is selected, add new entry after selected entry
+        SaveFlowStep;
+        Refresh;
+    end
+    else begin
+        if leddescription.Text = '' then begin
+            MessageDlg('Description must not be empty.', mtError, mbOKCancel, 1);
+            leddescription.SetFocus;
+        end
+        else if cboRights.ItemIndex < 0 then begin
+            MessageDlg('Choose needed user Rights.', mtWarning, mbOKCancel, 1);
+            cboRights.SetFocus;
+        end
+    end;
 end;
 
 end.

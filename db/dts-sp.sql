@@ -326,6 +326,32 @@ begin
 end
 
 
+alter procedure update_flow_lib (
+    ftype varchar(50),
+    id integer,
+    rights varchar(16),
+    description varchar(255)
+)
+as
+declare variable maxid integer;
+begin
+    if (:id = 0) then begin
+        select max(id) from flow_lib where ftype = :ftype into maxid;
+            if (maxid is null) then
+                maxid = 1;
+
+        insert into flow_lib (ftype, id, rights, description) values (:ftype, :id, :rights, :description);
+    end
+    else if (:id <> 0) then begin
+        update flow_lib set ftype = :ftype, rights = :rights, description = :description
+         where id = :id;
+    end
+    else if (:id < 0) then begin
+        delete from flow_lib where id = :id * -1;
+    end
+end;
+
+
 
 create procedure select_flow_lib_data(
   ftype varchar(50)
