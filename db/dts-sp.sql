@@ -339,10 +339,9 @@ begin
         select max(id) from flow_lib where ftype = :ftype into maxid;
             if (maxid is null) then
                 maxid = 1;
-
-        insert into flow_lib (ftype, id, rights, description) values (:ftype, :id, :rights, :description);
+        insert into flow_lib (ftype, id, rights, description) values (:ftype, :maxid, :rights, :description);
     end
-    else if (:id <> 0) then begin
+    else if (:id > 0) then begin
         update flow_lib set ftype = :ftype, rights = :rights, description = :description
          where id = :id;
     end

@@ -39,6 +39,7 @@ type
     { Public declarations }
     NewItem, CurrentStep : TListItem;
     current_flow : string;
+    action : string;
   end;
 
 var
@@ -46,7 +47,7 @@ var
 
 implementation
 
-uses data_module, main, shared;
+uses data_module, main, shared, DB;
 
 
 {$R *.dfm}
@@ -122,22 +123,22 @@ begin
     else
         dm.ibt.StartTransaction;
 
+    // if action = insert then id = 0
+    // if action = update then id = id of current item
+    // if action = delete then id = id of current item or the last item in the list
+
+
+
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select * from INSERT_FLOW_TYPE(:ftype, :id, :rights, :description)');
+    dm.ibq.SQL.Add('execute procedure UPDATE_FLOW_LIB(:ftype, :id, :rights, :description)');
     dm.ibq.ParamByName('ftype').AsString  := cboType.Text;
     dm.ibq.ParamByName('id').AsInteger    := 0;
     dm.ibq.ParamByName('rights').AsString := cboRights.Text;
     dm.ibq.ParamByName('description').AsString := leddescription.Text;
-
     dm.ibq.Open;
 
-    if dm.ibq.Fields.FieldByName('success').AsInteger = 1 then begin
-        Initialize;
-        // no steps should appear
-    end
-    else begin
-        // unsuccessful because flow_type is existing, do nothing
-    end;
+    Initialize;
+    // saved steps should appear or be removed depending action
 
     if dm.ibt.InTransaction then
         dm.ibt.Commit;
@@ -159,9 +160,9 @@ begin
     dm.ibq.Open;
     while not dm.ibq.Eof do begin
         NewItem := lsvFlow.Items.Add;
-        NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
+        NewItem.Caption := dm.ibq.FieldValues['rights'];      // rights
+        NewItem.SubItems.Add(dm.ibq.FieldValues['id']);   // id
+        NewItem.SubItems.Add(dm.ibq.FieldValues['description']);   // description
         dm.ibq.Next;
     end;
     lsvFlow.Items.EndUpdate;
@@ -218,11 +219,13 @@ end;
 procedure TFormFlowAdmin.lsvFlowSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
 begin
-    MessageDlg(Item.Caption, mtInformation, mbOKCancel, 1);
+{    MessageDlg(Item.Caption, mtInformation, mbOKCancel, 1);
     MessageDlg(Item.SubItems[0], mtInformation, mbOKCancel, 1);
     MessageDlg(Item.SubItems[1], mtInformation, mbOKCancel, 1);
+}
+    CurrentStep := Item;
+    action := 'update';
 
-//    CurrentStep := Item;
 //    leddescription.Text := CurrentStep.SubItems.Strings[1];
 //    cboRights.ItemIndex := cboRights.Items.IndexOfName(CurrentStep.Caption);
 

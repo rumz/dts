@@ -45,7 +45,7 @@ object FormFlowAdmin: TFormFlowAdmin
         end
         item
           Caption = 'ID'
-          Width = 276
+          Width = 1
         end
         item
           Caption = 'Description'
@@ -177,8 +177,8 @@ object FormFlowAdmin: TFormFlowAdmin
     Caption = 'Steps '
     TabOrder = 2
     object Label3: TLabel
-      Left = 67
-      Top = 92
+      Left = 19
+      Top = 84
       Width = 30
       Height = 13
       Caption = 'Rights'
@@ -204,11 +204,12 @@ object FormFlowAdmin: TFormFlowAdmin
       TabOrder = 0
     end
     object cboRights: TComboBox
-      Left = 115
+      Left = 59
       Top = 84
       Width = 142
       Height = 21
       ItemHeight = 13
+      MaxLength = 50
       TabOrder = 1
     end
     object BitBtn1: TBitBtn
@@ -216,7 +217,7 @@ object FormFlowAdmin: TFormFlowAdmin
       Top = 128
       Width = 75
       Height = 25
-      Caption = 'Insert'
+      Caption = 'Save'
       TabOrder = 2
       OnClick = BitBtn1Click
     end
