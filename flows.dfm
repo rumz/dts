@@ -1,7 +1,7 @@
 object FormFlowAdmin: TFormFlowAdmin
   Left = 406
   Top = 151
-  Width = 694
+  Width = 748
   Height = 466
   Caption = 'Flow Administrator'
   Color = clBtnFace
@@ -27,15 +27,21 @@ object FormFlowAdmin: TFormFlowAdmin
     Width = 343
     Height = 408
     Align = alLeft
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
     Tabs.Strings = (
       'Steps')
     TabIndex = 0
     object lsvFlow: TListView
       Left = 4
-      Top = 24
+      Top = 27
       Width = 335
-      Height = 380
+      Height = 377
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -53,7 +59,7 @@ object FormFlowAdmin: TFormFlowAdmin
         end>
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -12
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       GridLines = True
@@ -68,16 +74,22 @@ object FormFlowAdmin: TFormFlowAdmin
   object ControlBar1: TControlBar
     Left = 0
     Top = 0
-    Width = 686
+    Width = 740
     Height = 30
     Align = alTop
     TabOrder = 1
     object Label2: TLabel
       Left = 11
       Top = 2
-      Width = 30
+      Width = 38
       Height = 22
       Caption = 'Flows '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       Layout = tlCenter
     end
     object SpeedButton2: TSpeedButton
@@ -87,6 +99,12 @@ object FormFlowAdmin: TFormFlowAdmin
       Height = 22
       Hint = 'Add RIV'
       Caption = '&Add '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       OnClick = SpeedButton2Click
@@ -159,7 +177,7 @@ object FormFlowAdmin: TFormFlowAdmin
         D4C8D0D40000}
     end
     object cboType: TComboBox
-      Left = 54
+      Left = 62
       Top = 2
       Width = 145
       Height = 21
@@ -171,32 +189,38 @@ object FormFlowAdmin: TFormFlowAdmin
   object GroupBox1: TGroupBox
     Left = 348
     Top = 30
-    Width = 338
+    Width = 392
     Height = 408
     Align = alClient
     Caption = 'Steps '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 2
     object Label3: TLabel
       Left = 19
       Top = 84
-      Width = 30
-      Height = 13
+      Width = 38
+      Height = 16
       Caption = 'Rights'
     end
     object Label1: TLabel
       Left = 28
       Top = 180
-      Width = 285
-      Height = 13
+      Width = 355
+      Height = 16
       Caption = 'NOTE: Records are inserted after the currently selected row.'
     end
     object leddescription: TLabeledEdit
       Left = 16
       Top = 43
       Width = 313
-      Height = 21
-      EditLabel.Width = 78
-      EditLabel.Height = 13
+      Height = 24
+      EditLabel.Width = 99
+      EditLabel.Height = 16
       EditLabel.Caption = 'Step Description'
       LabelPosition = lpAbove
       LabelSpacing = 3
@@ -207,8 +231,8 @@ object FormFlowAdmin: TFormFlowAdmin
       Left = 59
       Top = 84
       Width = 142
-      Height = 21
-      ItemHeight = 13
+      Height = 24
+      ItemHeight = 16
       MaxLength = 50
       TabOrder = 1
     end

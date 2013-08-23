@@ -1,8 +1,8 @@
 object FormMain: TFormMain
   Left = 270
   Top = 81
-  Width = 999
-  Height = 565
+  Width = 1046
+  Height = 570
   Caption = 'DTS'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,8 +19,8 @@ object FormMain: TFormMain
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 498
-    Width = 991
+    Top = 503
+    Width = 1038
     Height = 19
     Panels = <
       item
@@ -37,8 +37,8 @@ object FormMain: TFormMain
   object lsvRIV2: TListView
     Left = 0
     Top = 30
-    Width = 991
-    Height = 468
+    Width = 1038
+    Height = 473
     Align = alClient
     Columns = <
       item
@@ -75,7 +75,7 @@ object FormMain: TFormMain
       end>
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     GridLines = True
@@ -92,39 +92,57 @@ object FormMain: TFormMain
   object ControlBar1: TControlBar
     Left = 0
     Top = 0
-    Width = 991
+    Width = 1038
     Height = 30
     Align = alTop
     TabOrder = 2
     object Label2: TLabel
       Left = 11
       Top = 2
-      Width = 61
+      Width = 74
       Height = 22
       Caption = 'RIV Search: '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       Layout = tlCenter
     end
     object SpeedButton1: TSpeedButton
-      Left = 662
+      Left = 668
       Top = 2
       Width = 60
       Height = 22
       Caption = 'Go!'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       OnClick = SpeedButton1Click
     end
     object SpeedButton2: TSpeedButton
-      Left = 600
+      Left = 613
       Top = 2
       Width = 42
       Height = 22
       Hint = 'Add RIV'
       Caption = '&Add '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       OnClick = AddRecord1Click
     end
     object SpeedButton3: TSpeedButton
-      Left = 243
+      Left = 256
       Top = 2
       Width = 23
       Height = 22
@@ -192,7 +210,7 @@ object FormMain: TFormMain
       OnClick = SpeedButton3Click
     end
     object EditRIVSearch: TEdit
-      Left = 279
+      Left = 292
       Top = 2
       Width = 212
       Height = 22
@@ -200,17 +218,23 @@ object FormMain: TFormMain
       OnKeyDown = EditRIVSearchKeyDown
     end
     object myRights: TCheckBox
-      Left = 504
+      Left = 517
       Top = 2
       Width = 83
       Height = 22
       Caption = 'My Rights'
       Checked = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       State = cbChecked
       TabOrder = 1
     end
     object cboType: TComboBox
-      Left = 85
+      Left = 98
       Top = 2
       Width = 145
       Height = 21

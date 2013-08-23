@@ -19,9 +19,15 @@ object FormRIV: TFormRIV
   object Label1: TLabel
     Left = 16
     Top = 48
-    Width = 56
-    Height = 13
+    Width = 71
+    Height = 16
     Caption = 'Description '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
   end
   object Label2: TLabel
     Left = 196
@@ -33,9 +39,15 @@ object FormRIV: TFormRIV
   object Label3: TLabel
     Left = 18
     Top = 184
-    Width = 107
-    Height = 13
+    Width = 132
+    Height = 16
     Caption = 'Remarks (PO/DV, etc)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
   end
   object led_ID: TLabeledEdit
     Left = 55
@@ -57,11 +69,17 @@ object FormRIV: TFormRIV
     Top = 15
     Width = 98
     Height = 21
-    EditLabel.Width = 64
-    EditLabel.Height = 13
+    EditLabel.Width = 79
+    EditLabel.Height = 16
     EditLabel.Caption = 'RIV Number  '
     EditLabel.Color = clBtnFace
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -15
+    EditLabel.Font.Name = 'MS Sans Serif'
+    EditLabel.Font.Style = []
     EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
     LabelPosition = lpLeft
     LabelSpacing = 3
     TabOrder = 0
@@ -71,7 +89,13 @@ object FormRIV: TFormRIV
     Top = 67
     Width = 419
     Height = 105
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MaxLength = 255
+    ParentFont = False
     TabOrder = 2
   end
   object cbo_Requestor: TComboBox
@@ -89,16 +113,28 @@ object FormRIV: TFormRIV
     Width = 75
     Height = 25
     Caption = 'Save'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 4
     OnClick = BitBtn1Click
   end
   object BitBtn2: TBitBtn
-    Left = 248
+    Left = 256
     Top = 320
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Cancel'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 5
     OnClick = BitBtn2Click
   end
@@ -107,7 +143,13 @@ object FormRIV: TFormRIV
     Top = 203
     Width = 419
     Height = 105
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MaxLength = 255
+    ParentFont = False
     TabOrder = 3
   end
 end

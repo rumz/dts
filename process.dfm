@@ -7,7 +7,7 @@ object FormProcess: TFormProcess
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -15
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -16,20 +16,32 @@ object FormProcess: TFormProcess
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Label2: TLabel
     Left = 56
     Top = 593
-    Width = 228
-    Height = 13
+    Width = 291
+    Height = 16
     Caption = 'Remarks (Why RIV is Approved or Disapproved)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
   end
   object MemoRemarks: TMemo
     Left = 53
     Top = 611
     Width = 601
     Height = 47
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MaxLength = 255
+    ParentFont = False
     TabOrder = 0
   end
   object Deny: TBitBtn
@@ -38,6 +50,12 @@ object FormProcess: TFormProcess
     Width = 75
     Height = 25
     Caption = 'Deny'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
     OnClick = DenyClick
   end
@@ -48,6 +66,12 @@ object FormProcess: TFormProcess
     Height = 25
     Cancel = True
     Caption = 'Cancel'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 2
     OnClick = BitBtn2Click
   end
@@ -57,18 +81,18 @@ object FormProcess: TFormProcess
     Width = 457
     Height = 24
     TabStop = False
-    EditLabel.Width = 133
-    EditLabel.Height = 13
+    EditLabel.Width = 164
+    EditLabel.Height = 16
     EditLabel.Caption = 'Current Status for Approval: '
     EditLabel.Font.Charset = DEFAULT_CHARSET
     EditLabel.Font.Color = clRed
-    EditLabel.Font.Height = -11
+    EditLabel.Font.Height = -15
     EditLabel.Font.Name = 'MS Sans Serif'
     EditLabel.Font.Style = []
     EditLabel.ParentFont = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     LabelPosition = lpLeft
@@ -83,6 +107,12 @@ object FormProcess: TFormProcess
     Width = 75
     Height = 25
     Caption = 'Approve'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 4
     OnClick = DenyClick
   end
@@ -123,15 +153,21 @@ object FormProcess: TFormProcess
       Width = 343
       Height = 551
       Align = alLeft
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       Tabs.Strings = (
         'Sample RIV')
       TabIndex = 0
       object lsvRIV: TListView
         Left = 4
-        Top = 24
+        Top = 27
         Width = 335
-        Height = 523
+        Height = 520
         Align = alClient
         Checkboxes = True
         Columns = <
@@ -145,7 +181,7 @@ object FormProcess: TFormProcess
           end>
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         GridLines = True
@@ -162,15 +198,21 @@ object FormProcess: TFormProcess
       Width = 741
       Height = 551
       Align = alClient
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 1
       Tabs.Strings = (
         'Transactions')
       TabIndex = 0
       object lsvRIVtransactions: TListView
         Left = 4
-        Top = 24
+        Top = 27
         Width = 733
-        Height = 523
+        Height = 520
         Align = alClient
         Checkboxes = True
         Columns = <
@@ -196,7 +238,7 @@ object FormProcess: TFormProcess
           end>
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         GridLines = True
@@ -212,6 +254,12 @@ object FormProcess: TFormProcess
     Width = 75
     Height = 25
     Caption = 'Receive'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 7
     OnClick = DenyClick
   end
@@ -221,6 +269,12 @@ object FormProcess: TFormProcess
     Width = 75
     Height = 24
     Caption = 'Approve As'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 8
     OnClick = DenyClick
   end
@@ -230,6 +284,12 @@ object FormProcess: TFormProcess
     Width = 75
     Height = 25
     Caption = 'Deny As'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 9
     OnClick = DenyClick
   end
