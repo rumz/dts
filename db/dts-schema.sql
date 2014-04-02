@@ -165,4 +165,43 @@ ITEM_ID - FK on ITEM_LIB.ID
 ************************************************/
 
 
+create table category (
+    id integer,
+    name varchar(100),
+    description varchar(255),
+    created timestamp default 'NOW',
+    modified timestamp default 'NOW'
+)
+
+
+create table ticket (
+    id integer,
+    subject varchar(200),
+    description varchar(255),
+    status boolean,
+    priority integer,
+    category_id integer,
+    user_id varchar(16),
+    created timestamp default 'NOW',
+    modified timestamp default 'NOW'
+)
+
+
+create table ticket_interactions (
+    id integer,
+    ticket_id integer,
+    user_id integer,
+    created timestamp default 'NOW',
+    modified timestamp default 'NOW'
+)
+
+
+create table comment (
+    id integer,
+    user_id varchar(16),
+    ticket_id integer,
+    comment varchar(255),
+    defect_user varchar(16),
+    created timestamp default 'NOW'
+)
 

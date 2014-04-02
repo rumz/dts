@@ -69,7 +69,7 @@ var
 
 implementation
 
-uses data_module, riv, login, process, shared, flows;
+uses data_module, riv, login, process, shared, flows, ticket;
 
 {$R *.dfm}
 
@@ -84,7 +84,7 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select distinct ftype from FLOW_TYPES');
+    dm.ibq.SQL.Add('select distinct name from CATEGORY');
     dm.ibq.Open;
 
     cboType.Items.Clear;
@@ -94,11 +94,8 @@ begin
         dm.ibq.Next;
     end;
 
-    idx := cboType.Items.IndexOf('RIV PRO');
-    cboType.ItemIndex := idx;
-
-    
-
+{    idx := cboType.Items.IndexOf('Procurement');
+    cboType.ItemIndex := idx;}
 end;
 
 
@@ -202,12 +199,13 @@ end;
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
     shared.ftype := cboType.Text;
-    shared.riv_form_state := 'Add';
+    FormTicket.ShowModal;
+{    shared.riv_form_state := 'Add';
     FormRIV.led_rivno.Text := '';
     FormRIV.cbo_Requestor.ItemIndex := -1;
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.Memo_Remarks.Lines.Clear;
-    FormRIV.ShowModal;
+    FormRIV.ShowModal; }
 end;
 
 procedure TFormMain.SpeedButton1Click(Sender: TObject);

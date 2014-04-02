@@ -44,6 +44,69 @@ BEGIN
         end
 END
 
+
+create procedure select_tickets (
+    cat varchar(100),
+    subj varchar(200)
+)
+returns (
+    id integer,
+    subject varchar(200) character set none,
+    description varchar(255),
+    username varchar(16) character set none,
+    created timestamp,
+    modified timestamp
+)
+as
+begin
+     for
+  select t.id, subject, description, t.user_id, t.created, t.modified
+    from ticket t, category c
+   where t.category_id = c.id
+     and c.name = :cat
+     and upper(subject) like upper(:subj)
+   order by subject
+    into :id, :subject, description, :username, :created, :modified
+      do
+        begin
+            suspend;
+        end
+end
+
+create procedure update_ticket(
+    id integer,
+    subject varchar(200),
+    description varchar(255),
+    status boolean,
+    priority integer,
+    category_id integer,
+    user_id varchar(16),
+    created timestamp,
+    modified timestamp
+)
+as begin
+    if (:id = 0) then begin
+        insert into ticket(subject, description, status, priority, category_id, user_id, created, modified)
+        values(:subject, :description, :status, :priority, :category_id, :user_id, 'now', 'now');
+    end
+    else if (:id < 0) then begin
+        delete from flow_data where id = (:id * -1);
+    end
+    else begin
+        update ticket
+           set subject       = :subject,
+               description   = :description,
+               status        = :status,
+               priority      = :priority,
+               category_id   = :category_id,
+               user_id       = :user_id,
+               created       = :created,
+               modified      = :modified
+         where id = :id;
+    end
+end
+
+
 alter procedure select_flows (
     s_type varchar(30) character set none,
     s_data varchar(255) character set none,

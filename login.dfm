@@ -110,7 +110,7 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     ParentFont = False
     TabOrder = 4
-    Text = '172.22.16.72'
+    Text = '172.22.16.6'
   end
   object ledPath: TLabeledEdit
     Left = 91
@@ -135,6 +135,6 @@ object FormLogin: TFormLogin
     LabelSpacing = 3
     ParentFont = False
     TabOrder = 5
-    Text = 'd:\db\DTS.GDB'
+    Text = 'h:\databases\pipers ii\dts.gdb'
   end
 end

@@ -14,7 +14,8 @@ uses
   process in 'process.pas' {FormProcess},
   shared in 'shared.pas',
   loginas in 'loginas.pas' {FormLoginAs},
-  flows in 'flows.pas' {FormFlowAdmin};
+  flows in 'flows.pas' {FormFlowAdmin},
+  ticket in 'ticket.pas' {FormTicket};
 
 {$R *.res}
 
@@ -27,5 +28,6 @@ begin
   Application.CreateForm(TFormProcess, FormProcess);
   Application.CreateForm(TFormLoginAs, FormLoginAs);
   Application.CreateForm(TFormFlowAdmin, FormFlowAdmin);
+  Application.CreateForm(TFormTicket, FormTicket);
   Application.Run;
 end.

@@ -75,6 +75,7 @@ begin
     dm.ibq.Open;
     cbo_Requestor.Items.BeginUpdate;
     cbo_Requestor.Items.Clear;
+
     i := 0;
     while not dm.ibq.Eof do begin
         SetLength(id_nos, i+1);

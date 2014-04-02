@@ -52,6 +52,7 @@ begin
     if dm.ibd.Connected = False then begin
         dm.ibd.DatabaseName := trim(ledServer.Text) + ':' + trim(ledPath.Text);
         // Sample: 172.22.16.72:d:\db\DTS.GDB
+        // 172.22.16.6:h:\databases\pipers ii\dts.gdb
         dm.ibd.Connected := True;
     end;
     Result := dm.ibd.Connected;

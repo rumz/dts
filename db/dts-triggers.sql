@@ -15,7 +15,6 @@ END^
 SET TERM ; ^
 
 
-
 CREATE GENERATOR RIV_Data_Generator;
 SET GENERATOR RIV_Data_Generator TO 0;
 
@@ -33,7 +32,6 @@ END^
 SET TERM ; ^
 
 
-
 CREATE GENERATOR Flow_Data_Generator;
 SET GENERATOR Flow_Data_Generator TO 1;
 
@@ -47,9 +45,6 @@ BEGIN
     NEW.id = gen_id(Flow_Data_GENERATOR, 1);
     /* enter trigger code here */
 END^
-
-
-
 
 
 CREATE GENERATOR Flows_Generator;
@@ -66,8 +61,16 @@ BEGIN
 END
 
 
+create generator ticket_generator;
+set generator ticket_generator to 1;
 
 
+create trigger trig_ticket for ticket
+ active before insert position 0
+as
+begin
+    new.id = gen_id(ticket_generator, 1);
+end
 
 
 

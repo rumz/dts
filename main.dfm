@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 270
-  Top = 81
+  Left = 1503
+  Top = 99
   Width = 1046
   Height = 570
   Caption = 'DTS'
@@ -19,8 +19,8 @@ object FormMain: TFormMain
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 503
-    Width = 1038
+    Top = 493
+    Width = 1030
     Height = 19
     Panels = <
       item
@@ -37,8 +37,8 @@ object FormMain: TFormMain
   object lsvRIV2: TListView
     Left = 0
     Top = 30
-    Width = 1038
-    Height = 473
+    Width = 1030
+    Height = 463
     Align = alClient
     Columns = <
       item
@@ -46,32 +46,28 @@ object FormMain: TFormMain
         Width = 0
       end
       item
-        Caption = 'RIV No'
-        Width = 75
-      end
-      item
-        Caption = 'R_ID'
-        Width = 1
-      end
-      item
-        Caption = 'Requestor '
-        Width = 150
+        Caption = 'Subject'
+        Width = 300
       end
       item
         Caption = 'Description'
-        Width = 300
-      end
-      item
-        Caption = 'Create Date'
-        Width = 130
+        Width = 275
       end
       item
         Caption = 'Status'
-        Width = 300
+        Width = 1
       end
       item
-        Caption = 'Remarks'
-        Width = 100
+        Caption = 'User'
+        Width = 200
+      end
+      item
+        Caption = 'Created'
+        Width = 125
+      end
+      item
+        Caption = 'Modified'
+        Width = 125
       end>
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -92,16 +88,16 @@ object FormMain: TFormMain
   object ControlBar1: TControlBar
     Left = 0
     Top = 0
-    Width = 1038
+    Width = 1030
     Height = 30
     Align = alTop
     TabOrder = 2
     object Label2: TLabel
       Left = 11
       Top = 2
-      Width = 74
+      Width = 58
       Height = 22
-      Caption = 'RIV Search: '
+      Caption = 'Category'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -234,7 +230,7 @@ object FormMain: TFormMain
       TabOrder = 1
     end
     object cboType: TComboBox
-      Left = 98
+      Left = 82
       Top = 2
       Width = 145
       Height = 21
