@@ -73,7 +73,14 @@ begin
 end
 
 
-
+create generator comment_generator;
+set generator comment_generator to 1;
+create trigger trig_comment for comment
+ active before insert position 0
+as
+begin
+    new.id = gen_id(comment_generator, 1);
+end
 
 
 

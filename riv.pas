@@ -78,8 +78,8 @@ begin
 
     i := 0;
     while not dm.ibq.Eof do begin
-        SetLength(id_nos, i+1);
-        SetLength(names, i+1);
+{        SetLength(id_nos, i+1);
+        SetLength(names, i+1);}
         SetLength(users, i+1);
 
         with users[i] do begin
@@ -104,7 +104,7 @@ begin
     if shared.riv_form_state = 'Add' then
         cbo_Requestor.ItemIndex := findindex(shared.user_id);
     if riv_form_state = 'Update' then
-        cbo_Requestor.ItemIndex := findindex(FormMain.CurrentRIV.SubItems.Strings[1]);
+        cbo_Requestor.ItemIndex := findindex(FormMain.CurrentItem.SubItems.Strings[1]);
 end;
 
 

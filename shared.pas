@@ -5,21 +5,35 @@ interface
 uses ComCtrls, SysUtils, Windows;
 
 function CustomSortProc(Item1, Item2: TListItem; SortColumn: Integer): Integer; stdcall;
+function findindex(item : string):integer;
 
 
 
 type
   TCustomSortStyle = (cssAlphaNum, cssNumeric, cssDateTime);
 
+  TUser = record
+    name : string[50];
+    id_no : string[20];
+  end;
+
+  TCategory = record
+    name : string[100];
+    id : integer;
+  end;
+
 
 var
     CurrentUser: String;
     user_id, user_name: String;
     rights : String;
-    riv_form_state : String;
-    riv_id : integer;
+    riv_form_state, ticket_form_state : String;
+    riv_id, ticket_id : integer;
     riv_no, riv_rights, riv_description : string;
     ftype : string;
+
+    users: array of TUser;
+    categories: array of TCategory;
 
 
     loginas, loginaspass, loginasrights, loginasuserid : string;
@@ -32,9 +46,19 @@ var
 
 
 
+
 implementation
 
-
+function findindex(item : string):integer;
+var i : integer;
+begin
+    for i := Low(users) to High(users) do begin
+        if AnsiSameText(item, users[i].id_no) then begin
+            Result := i;
+            Break;
+        end;
+    end;
+end;
 
 
 function CustomSortProc(Item1, Item2: TListItem; SortColumn: Integer): Integer; stdcall;

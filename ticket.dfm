@@ -1,6 +1,6 @@
 object FormTicket: TFormTicket
-  Left = 1796
-  Top = 295
+  Left = 1744
+  Top = 213
   Width = 459
   Height = 354
   Caption = 'Ticket Details'
@@ -11,6 +11,7 @@ object FormTicket: TFormTicket
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,18 +44,30 @@ object FormTicket: TFormTicket
   object Label3: TLabel
     Left = 24
     Top = 188
-    Width = 42
-    Height = 13
+    Width = 55
+    Height = 16
     Caption = 'Category'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
   end
   object Label4: TLabel
     Left = 28
     Top = 215
-    Width = 22
-    Height = 13
+    Width = 29
+    Height = 16
     Caption = 'User'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
   end
-  object Memo_RIV_Description: TMemo
+  object Memo_Description: TMemo
     Left = 14
     Top = 67
     Width = 419
@@ -69,7 +82,7 @@ object FormTicket: TFormTicket
     TabOrder = 1
   end
   object BitBtn1: TBitBtn
-    Left = 128
+    Left = 152
     Top = 256
     Width = 75
     Height = 25
@@ -81,9 +94,10 @@ object FormTicket: TFormTicket
     Font.Style = []
     ParentFont = False
     TabOrder = 4
+    OnClick = BitBtn1Click
   end
   object BitBtn2: TBitBtn
-    Left = 232
+    Left = 256
     Top = 256
     Width = 75
     Height = 25
@@ -96,8 +110,9 @@ object FormTicket: TFormTicket
     Font.Style = []
     ParentFont = False
     TabOrder = 5
+    OnClick = BitBtn2Click
   end
-  object Edit1: TEdit
+  object edtSubject: TEdit
     Left = 72
     Top = 14
     Width = 361
@@ -106,7 +121,7 @@ object FormTicket: TFormTicket
     TabOrder = 0
   end
   object cboCategory: TComboBox
-    Left = 80
+    Left = 83
     Top = 184
     Width = 185
     Height = 21
@@ -115,7 +130,7 @@ object FormTicket: TFormTicket
     TabOrder = 2
   end
   object cboUser: TComboBox
-    Left = 80
+    Left = 82
     Top = 210
     Width = 185
     Height = 21

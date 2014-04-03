@@ -45,7 +45,7 @@ BEGIN
 END
 
 
-create procedure select_tickets (
+alter procedure select_tickets (
     cat varchar(100),
     subj varchar(200)
 )
@@ -60,7 +60,7 @@ returns (
 as
 begin
      for
-  select t.id, subject, description, t.user_id, t.created, t.modified
+  select t.id, t.subject, t.description, t.user_id, t.created, t.modified
     from ticket t, category c
    where t.category_id = c.id
      and c.name = :cat
@@ -73,21 +73,30 @@ begin
         end
 end
 
+execute procedure update_ticket(0, 'test', '', 1, 1, 1, '10323412', 'now', 'now');
+
 create procedure update_ticket(
     id integer,
     subject varchar(200),
     description varchar(255),
-    status boolean,
+    is_open integer,
     priority integer,
     category_id integer,
     user_id varchar(16),
     created timestamp,
     modified timestamp
 )
-as begin
+as
+declare variable newid integer;
+declare variable newcomment varchar(255);
+begin
     if (:id = 0) then begin
-        insert into ticket(subject, description, status, priority, category_id, user_id, created, modified)
-        values(:subject, :description, :status, :priority, :category_id, :user_id, 'now', 'now');
+        insert into ticket(subject, description, is_open, priority, category_id, user_id, created, modified)
+        values(:subject, :description, :is_open, :priority, :category_id, :user_id, :created, :modified);
+        select id from ticket where created = :created into :newid;
+        newcomment = 'Ticket opened by ' || :user_id || ' on ' || :created;
+        insert into comment(user_id, ticket_id, comment, defect_user, created)
+        values(:user_id, :newid, :newcomment, '', :created);
     end
     else if (:id < 0) then begin
         delete from flow_data where id = (:id * -1);
@@ -96,7 +105,7 @@ as begin
         update ticket
            set subject       = :subject,
                description   = :description,
-               status        = :status,
+               is_open       = :is_open,
                priority      = :priority,
                category_id   = :category_id,
                user_id       = :user_id,

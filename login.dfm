@@ -1,6 +1,6 @@
 object FormLogin: TFormLogin
-  Left = 503
-  Top = 245
+  Left = 1505
+  Top = 178
   Width = 321
   Height = 232
   Caption = 'Login - Philhealth Document Tracker'

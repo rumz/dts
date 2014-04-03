@@ -48,7 +48,7 @@ end;
 
 
 function TFormLogin.ConnectDB:Boolean;
-begin
+begin                                             
     if dm.ibd.Connected = False then begin
         dm.ibd.DatabaseName := trim(ledServer.Text) + ':' + trim(ledPath.Text);
         // Sample: 172.22.16.72:d:\db\DTS.GDB
@@ -106,8 +106,8 @@ begin
                 shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
                 dm.ibq.Next;
             end;
-            FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
-            FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
+            // FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
+            // FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
             FormMain.Show;
             FormLogin.Hide;
         end

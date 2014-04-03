@@ -178,7 +178,7 @@ create table ticket (
     id integer,
     subject varchar(200),
     description varchar(255),
-    status boolean,
+    is_open integer,
     priority integer,
     category_id integer,
     user_id varchar(16),

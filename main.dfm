@@ -1,8 +1,8 @@
 object FormMain: TFormMain
-  Left = 1503
-  Top = 99
+  Left = 172
+  Top = 92
   Width = 1046
-  Height = 570
+  Height = 560
   Caption = 'DTS'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FormMain: TFormMain
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 493
+    Top = 483
     Width = 1030
     Height = 19
     Panels = <
@@ -34,11 +34,11 @@ object FormMain: TFormMain
       end>
     SimplePanel = False
   end
-  object lsvRIV2: TListView
+  object lsvTickets: TListView
     Left = 0
     Top = 30
     Width = 1030
-    Height = 463
+    Height = 453
     Align = alClient
     Columns = <
       item
@@ -52,10 +52,6 @@ object FormMain: TFormMain
       item
         Caption = 'Description'
         Width = 275
-      end
-      item
-        Caption = 'Status'
-        Width = 1
       end
       item
         Caption = 'User'
@@ -81,9 +77,9 @@ object FormMain: TFormMain
     PopupMenu = popItemLib
     TabOrder = 1
     ViewStyle = vsReport
-    OnChange = lsvRIV2Change
-    OnColumnClick = lsvRIV2ColumnClick
-    OnDblClick = lsvRIV2DblClick
+    OnChange = lsvTicketsChange
+    OnColumnClick = lsvTicketsColumnClick
+    OnDblClick = lsvTicketsDblClick
   end
   object ControlBar1: TControlBar
     Left = 0
@@ -95,7 +91,7 @@ object FormMain: TFormMain
     object Label2: TLabel
       Left = 11
       Top = 2
-      Width = 58
+      Width = 55
       Height = 22
       Caption = 'Category'
       Font.Charset = DEFAULT_CHARSET
@@ -228,6 +224,7 @@ object FormMain: TFormMain
       ParentFont = False
       State = cbChecked
       TabOrder = 1
+      Visible = False
     end
     object cboType: TComboBox
       Left = 82

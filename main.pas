@@ -22,7 +22,7 @@ type
     ProcessRecord1: TMenuItem;
     Logout: TMenuItem;
     StatusBar1: TStatusBar;
-    lsvRIV2: TListView;
+    lsvTickets: TListView;
     ControlBar1: TControlBar;
     Label2: TLabel;
     SpeedButton1: TSpeedButton;
@@ -41,13 +41,13 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure lsvRIV2Change(Sender: TObject; Item: TListItem;
+    procedure lsvTicketsChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure lsvRIV2DblClick(Sender: TObject);
+    procedure lsvTicketsDblClick(Sender: TObject);
     procedure ProcessRecord1Click(Sender: TObject);
-    procedure lsvRIV2ColumnClick(Sender: TObject; Column: TListColumn);
+    procedure lsvTicketsColumnClick(Sender: TObject; Column: TListColumn);
     procedure LogoutClick(Sender: TObject);
     procedure About2Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
@@ -56,7 +56,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    NewItem, CurrentRIV : TListItem;
+    NewItem, CurrentItem : TListItem;
   end;
 
 
@@ -65,39 +65,70 @@ var
   FormMain: TFormMain;
 
 
-
-
 implementation
 
 uses data_module, riv, login, process, shared, flows, ticket;
 
 {$R *.dfm}
 
+
+
 procedure TFormMain.Initialize;
 var
-    idx : integer;
+    i: integer;
 begin
 
+    { LOAD CATEGORIES INTO SHARED SPACE }
     if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('select distinct name from CATEGORY');
+    dm.ibq.SQL.Add('select id, name from CATEGORY order by name');
     dm.ibq.Open;
 
+    cboType.Items.BeginUpdate;
     cboType.Items.Clear;
-
+    i := 0;
     while not dm.ibq.Eof do begin
-        cboType.Items.Add(dm.ibq.Fields.Fields[0].AsString);
+        SetLength(shared.categories, i+1);
+
+        with shared.categories[i] do begin
+            id := dm.ibq.Fields.Fields[0].AsInteger;
+            name := dm.ibq.Fields.Fields[1].AsString;
+        end;
+
+        cboType.Items.Add(shared.categories[i].name);
         dm.ibq.Next;
+        i := i + 1;
     end;
+    cboType.Items.EndUpdate;
+    cboType.ItemIndex := 0;
 
-{    idx := cboType.Items.IndexOf('Procurement');
-    cboType.ItemIndex := idx;}
+    { LOAD USERS INTO SHARED SPACE }
+    if dm.ibt.InTransaction then
+        dm.ibt.Commit
+    else
+        dm.ibt.StartTransaction;
+
+    dm.ibq.SQL.Clear;
+    dm.ibq.SQL.Add('select ID_NO, Last_name, first_name from SELECT_USERS order by last_name');
+    dm.ibq.Open;
+    i := 0;
+    while not dm.ibq.Eof do begin
+        SetLength(shared.users, i+1);
+        with shared.users[i] do begin
+           id_no := dm.ibq.Fields.Fields[0].AsString;
+           name  := dm.ibq.Fields.Fields[1].AsString + ', ' + dm.ibq.Fields.Fields[2].AsString;
+        end;
+        dm.ibq.Next;
+        i := i + 1;
+    end;
+    dm.ibt.Commit;
+
+    FormTicket.loadElements;
 end;
-
 
 
 procedure TFormMain.lsvRefresh;
@@ -109,33 +140,25 @@ begin
 
     dm.ibq.SQL.Clear;
 
-    // need to change this to be able to query a generic table
-    if myRights.Checked then begin
-        dm.ibq.SQL.Add('select * from SELECT_FLOWS(:a, :b, :c)');
-        dm.ibq.Params[2].AsString := shared.user_id;
-    end
-    else
-        dm.ibq.SQL.Add('select * from SELECT_FLOWS2(:a, :b)');
+    dm.ibq.SQL.Add('select * from SELECT_TICKETS(:a, :b)');
     dm.ibq.Params[0].AsString := cboType.Text;
-    dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
+    dm.ibq.Params[1].AsString := EditRIVSearch.Text + '%';
 
     dm.ibq.Open;
 
-    lsvRIV2.Items.BeginUpdate;
-    lsvRIV2.Items.Clear;
+    lsvTickets.Items.BeginUpdate;
+    lsvTickets.Items.Clear;
     while not dm.ibq.Eof do begin
-        NewItem := lsvRIV2.Items.Add;
+        NewItem := lsvTickets.Items.Add;
         NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;      // id
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);   // riv_no
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);   // requestor
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);   // requestor_name
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // description
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // create_date
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // status
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);   // remarks
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);   // subject
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);   // description
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);   // user_id
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // created
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // modified
         dm.ibq.Next;
     end;
-    lsvRIV2.Items.EndUpdate;
+    lsvTickets.Items.EndUpdate;
 end;
 
 
@@ -160,7 +183,7 @@ begin
 
     dm.ibq.SQL.Clear;
     dm.ibq.SQL.Add('execute procedure UPDATE_FLOWS(:id,:ftype,:description,:f_no,:requestor,:create_date,:created_by,:current_step,:status,:remarks)');
-    dm.ibq.ParamByName('id').AsInteger := strtoint(CurrentRIV.Caption) * -1;
+    dm.ibq.ParamByName('id').AsInteger := strtoint(CurrentItem.Caption) * -1;
     dm.ibq.ParamByName('ftype').AsString := '';
     dm.ibq.ParamByName('description').AsString := '';
     dm.ibq.ParamByName('f_no').AsString := '';
@@ -184,24 +207,25 @@ end;
 
 procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 begin
-    shared.riv_form_state := 'Update';
+    shared.ticket_form_state := 'Update';
     shared.ftype := cboType.Text;
-    FormRIV.led_ID.Text := CurrentRIV.Caption;
-    FormRIV.led_rivno.Text := CurrentRIV.SubItems.Strings[0];
-    FormRIV.cbo_Requestor.Text := CurrentRIV.SubItems.Strings[1];
+    shared.ticket_id := StrToInt(CurrentItem.Caption);
 
-    FormRIV.Memo_RIV_Description.Lines.Clear;
-    FormRIV.Memo_RIV_Description.Lines.Text := CurrentRIV.SubItems.Strings[3];
-    FormRIV.Memo_Remarks.Lines.Text := CurrentRIV.SubItems.Strings[6];
-    FormRIV.ShowModal;
+    FormTicket.Caption := CurrentItem.Caption;
+    FormTicket.edtSubject.Text := CurrentItem.SubItems.Strings[0];
+    FormTicket.Memo_Description.Text := CurrentItem.SubItems.Strings[1];
+    FormTicket.cboCategory.ItemIndex := cboType.ItemIndex;
+    FormTicket.cboUser.ItemIndex := findindex(CurrentItem.SubItems.Strings[2]);
+    FormTicket.ShowModal;
+
 end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
     shared.ftype := cboType.Text;
+    shared.ticket_form_state := 'Add';
     FormTicket.ShowModal;
-{    shared.riv_form_state := 'Add';
-    FormRIV.led_rivno.Text := '';
+{    FormRIV.led_rivno.Text := '';
     FormRIV.cbo_Requestor.ItemIndex := -1;
     FormRIV.Memo_RIV_Description.Lines.Clear;
     FormRIV.Memo_Remarks.Lines.Clear;
@@ -219,16 +243,19 @@ begin
     lsvRefresh;
 end;
 
+
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     Application.Terminate;
 end;
 
-procedure TFormMain.lsvRIV2Change(Sender: TObject; Item: TListItem;
+
+procedure TFormMain.lsvTicketsChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
-    CurrentRIV := lsvRIV2.Selected;
+    CurrentItem := lsvTickets.Selected;
 end;
+
 
 procedure TFormMain.EditRIVSearchKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -238,24 +265,26 @@ begin
 
 end;
 
-procedure TFormMain.lsvRIV2DblClick(Sender: TObject);
+
+procedure TFormMain.lsvTicketsDblClick(Sender: TObject);
 begin
-  if CurrentRIV <> nil then
+  if CurrentItem <> nil then
       UpdateRecord1Click(self);
 
 end;
 
+
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
     shared.ftype := cboType.Text;
-    shared.riv_id := strtoint(CurrentRIV.Caption);
+{    shared.riv_id := strtoint(CurrentItem.Caption);
     shared.riv_no := CurrentRIV.SubItems.Strings[0];
     shared.riv_description := CurrentRIV.SubItems.Strings[3];
-    FormProcess.ShowModal;
+    FormProcess.ShowModal;}
 end;
 
 
-procedure TFormMain.lsvRIV2ColumnClick(Sender: TObject;
+procedure TFormMain.lsvTicketsColumnClick(Sender: TObject;
   Column: TListColumn);
 begin
   { determine the sort style }
@@ -265,7 +294,7 @@ begin
     LvSortStyle := cssAlphaNum;
 
   { Call the CustomSort method }
-  lsvRIV2.CustomSort(@CustomSortProc, Column.Index -1);
+  lsvTickets.CustomSort(@CustomSortProc, Column.Index -1);
   { Set the sort order for the column}
   LvSortOrder[Column.Index] := not LvSortOrder[Column.Index];
 
@@ -302,6 +331,3 @@ begin
 end;
 
 end.
-
-
-
