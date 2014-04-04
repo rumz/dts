@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 172
-  Top = 92
+  Left = 1493
+  Top = 209
   Width = 1046
   Height = 560
   Caption = 'DTS'
@@ -54,8 +54,16 @@ object FormMain: TFormMain
         Width = 275
       end
       item
+        Caption = 'UserID'
+        Width = 1
+      end
+      item
         Caption = 'User'
         Width = 200
+      end
+      item
+        Caption = 'Is_Open'
+        Width = 1
       end
       item
         Caption = 'Created'
@@ -276,15 +284,8 @@ object FormMain: TFormMain
       OnClick = UpdateRecord1Click
     end
     object ProcessRecord1: TMenuItem
-      Caption = '&Process Record'
+      Caption = '&View Record'
       OnClick = ProcessRecord1Click
-    end
-    object N2: TMenuItem
-      Caption = ' '
-    end
-    object DeleteRecord1: TMenuItem
-      Caption = 'Delete Record'
-      OnClick = DeleteRecord1Click
     end
   end
 end

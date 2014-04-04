@@ -4,36 +4,53 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons;
+  Dialogs, StdCtrls, Buttons, ComCtrls, ExtCtrls;
 
 type
 
   TUser = record
-    name : string[50];
+    name  : string[50];
     id_no : string[20];
   end;
 
   TCategory = record
-    name : string[100];
-    id : integer;
+    name  : string[100];
+    id    : integer;
   end;
 
+  TTicket = record
+    id          : integer;
+    subject     : string[200];
+    description : string[255];
+    is_open     : integer;
+    priority    : integer;
+    category_id : integer;
+    user_id     : string[16];
+    created     : TDateTime;
+    modified    : TDateTime;
+  end;
 
   TFormTicket = class(TForm)
-    Label1: TLabel;
-    Memo_Description: TMemo;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    Label2: TLabel;
+    GroupBox1: TGroupBox;
+    Panel1: TPanel;
     edtSubject: TEdit;
+    Label2: TLabel;
+    Memo_Description: TMemo;
+    Label1: TLabel;
     Label3: TLabel;
-    cboCategory: TComboBox;
     Label4: TLabel;
+    cboCategory: TComboBox;
     cboUser: TComboBox;
+    btnSave: TBitBtn;
+    btnCancel: TBitBtn;
+    lsvComments: TListView;
+    btnComment: TBitBtn;
+    chkbox_isOpen: TCheckBox;
     procedure loadElements;
     procedure FormShow(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnCommentClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,7 +61,9 @@ var
   FormTicket: TFormTicket;
   users : array of TUser;
   categories : array of TCategory;
+  ticket_data : TTicket;
   id_nos, names : array of String;
+  NewItem, CurrentItem: TListItem;
 
 implementation
 
@@ -53,19 +72,8 @@ uses data_module, shared, DB, main;
 {$R *.dfm}
 
 
-function findindex(item : string):integer;
-var i : integer;
-begin
-    for i := Low(users) to High(users) do begin
-        if AnsiSameText(item, users[i].id_no) then begin
-            Result := i;
-            Break;
-        end;
-    end;
-end;
 
-
-procedure TFormTicket.BitBtn2Click(Sender: TObject);
+procedure TFormTicket.btnCancelClick(Sender: TObject);
 begin
     Close;
 end;
@@ -75,7 +83,7 @@ procedure TFormTicket.loadElements;
 var
     i : integer;
 begin
-    { LOAD ELEMENTS FROM SHARED SPACE - THIS IS CALLED FROM MAIN FORM}
+    { LOAD ELEMENTS FROM SHARED SPACE - THIS IS CALLED FROM MAIN FORM }
 
     { FIRST LOAD CATEGORIES }
     cboCategory.Items.BeginUpdate;
@@ -87,7 +95,7 @@ begin
     end;
     cboCategory.Items.EndUpdate;
 
-    { SECOND LOAD USERS } 
+    { SECOND LOAD USERS }
     cboUser.Items.BeginUpdate;
     cboUser.Items.Clear;
     i := 0;
@@ -100,28 +108,71 @@ end;
 
 
 procedure TFormTicket.FormShow(Sender: TObject);
+var
+    user_name, defect_user_name : string;
 begin
 
+    chkbox_isOpen.Checked := False;
     if shared.ticket_form_state = 'Add' then begin
+        FormTicket.Caption := 'Open Ticket';
         edtSubject.Text := '';
         Memo_Description.Text := '';
+        cboCategory.ItemIndex := -1;
+        cboUser.ItemIndex := -1;
+        chkbox_isOpen.Checked := False;
+        lsvComments.Items.Clear;
+
     end
     else if shared.ticket_form_state = 'Update' then begin
-{        if dm.ibt.InTransaction then
+
+        { load comments }
+
+        if dm.ibt.InTransaction then
             dm.ibt.Commit
         else
             dm.ibt.StartTransaction;
-
         dm.ibq.SQL.Clear;
-        dm.ibq.SQL.Add('');}
+        dm.ibq.SQL.Add('select * from SELECT_COMMENTS(:a)');
+        dm.ibq.Params[0].AsInteger := ticket_id;
+        dm.ibq.Open;
 
+        lsvComments.Items.BeginUpdate;
+        lsvComments.Items.Clear;
+        while not dm.ibq.Eof do begin
+            NewItem := lsvComments.Items.Add;
+            NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
+
+            { get user }
+
+            if dm.ibq.Fields.Fields[1].AsString <> '' then
+                user_name := shared.users[shared.findindex(dm.ibq.Fields.Fields[1].AsString)].name
+            else
+                user_name := '';
+            NewItem.SubItems.Add(user_name);
+            NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
+            { need to investigate if we can make a multi-line hint with the value of the comment in it } 
+
+            { get defect user }
+            
+            if dm.ibq.Fields.Fields[3].AsString <> '' then
+                defect_user_name := shared.users[shared.findindex(dm.ibq.Fields.Fields[3].AsString)].name
+            else
+                defect_user_name := '';
+            NewItem.SubItems.Add(defect_user_name);
+            NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
+            dm.ibq.Next;
+        end;
+        lsvComments.Items.EndUpdate;
     end
 end;
 
 
-procedure TFormTicket.BitBtn1Click(Sender: TObject);
+procedure TFormTicket.btnSaveClick(Sender: TObject);
 var
     form_validated : Boolean;
+    comment : string;
+    ischecked : integer;
+
 begin
     form_validated := False;
 
@@ -149,23 +200,84 @@ begin
 
 		dm.ibq.SQL.Clear;
 		dm.ibq.SQL.Add('execute procedure update_ticket(:id, :subject, :description, :is_open, :priority, :category_id, :user_id, :created, :modified)');
-        if riv_form_state = 'Add' then
+        if ticket_form_state = 'Add' then
             dm.ibq.ParamByName('id').AsInteger := 0
         else
-            dm.ibq.ParamByName('id').AsInteger := shared.ticket_id;
-        dm.ibq.ParamByName('subject').AsString := edtSubject.text;
-        dm.ibq.ParamByName('description').AsString := Memo_Description.Text;
-        dm.ibq.ParamByName('is_open').AsInteger := 1;
+            dm.ibq.ParamByName('id').AsInteger := ticket_data.id;
+        dm.ibq.ParamByName('subject').AsString := trim(edtSubject.text);
+        dm.ibq.ParamByName('description').AsString := trim(Memo_Description.Text);
+
+        { 0 closed, 1 open }
+        if chkbox_isOpen.Checked then
+            dm.ibq.ParamByName('is_open').AsInteger := 0
+        else
+            dm.ibq.ParamByName('is_open').AsInteger := 1;
+
         dm.ibq.ParamByName('priority').AsInteger := 1;
-        dm.ibq.ParamByName('category_id').AsInteger := categories[cboCategory.ItemIndex].id;
-        dm.ibq.ParamByName('user_id').AsString := users[cboUser.ItemIndex].id_no;
-        dm.ibq.ParamByName('created').AsDateTime := Now;
+        dm.ibq.ParamByName('category_id').AsInteger := shared.categories[cboCategory.ItemIndex].id;
+        dm.ibq.ParamByName('user_id').AsString := shared.users[cboUser.ItemIndex].id_no;
+        dm.ibq.ParamByName('created').AsDateTime := Now;      { SP doesnt use this when in UPDATE mode }
         dm.ibq.ParamByName('modified').AsDateTime := Now;
         dm.ibq.ExecSQL;
+
+        if ticket_form_state = 'Update' then begin
+
+            {
+             check all fields if they have differences with existing ticket data
+             if there are changes, add them to the comment
+             if no changes, do not make any changes
+            }
+            with ticket_data do begin
+
+
+                if    (subject     <> edtSubject.Text)
+                   or (Memo_Description.Text <> description)
+                   or (category_id <> cboCategory.ItemIndex)
+                   or (user_id     <> shared.users[cboUser.ItemIndex].id_no)
+                   or (chkbox_isOpen.Checked) then
+                begin
+    				comment := 'User ' + shared.users[findindex(CurrentUser)].name + ' made change(s): ' + sLineBreak;
+                    if edtSubject.Text <> subject then
+		    		    comment := comment + 'NEW SUBJECT: "' + edtSubject.Text + '" OLD SUBJECT: "' + subject + '"';
+                    if Memo_Description.Text <> description then
+				        comment := comment + 'NEW DESC: "' + Memo_Description.Text + '" OLD DESC: "' + description + '"';
+                    if cboCategory.ItemIndex <> category_id then
+	    			    comment := comment + sLineBreak + 'CATEGORY: ' +  shared.categories[cboCategory.ItemIndex].name;
+                    if shared.users[cboUser.ItemIndex].id_no <> user_id then
+			    	    comment := comment + sLineBreak + 'ASSIGNED USER: ' + shared.users[cboUser.ItemIndex].name;
+                    if chkbox_isOpen.Checked then
+                        if chkbox_isOpen.Caption = 'Close Ticket' then
+                            comment := comment + sLineBreak + 'Ticket Closed at ' + DateToStr(NOW)
+                        else if chkbox_isOpen.Caption = 'Reopen Ticket' then
+                            comment := comment + sLineBreak + 'Ticket Reopened at ' + DateToStr(NOW);
+
+                end;
+				dm.ibq.SQL.Clear;
+				dm.ibq.SQL.Add('execute procedure update_comment(:id, :user_id, :ticket_id, :comment, :defect_user, :created)');
+				dm.ibq.ParamByName('id').AsInteger := 0;  { 0 autogenerate new id, -1 delete }
+				dm.ibq.ParamByName('user_id').AsString := CurrentUser;
+				dm.ibq.ParamByName('ticket_id').AsInteger := ticket_data.id;
+				dm.ibq.ParamByName('comment').AsString := comment;
+				dm.ibq.ParamByName('created').AsDateTime := Now;
+				dm.ibq.ExecSQL;
+            end
+        end;
+
+		if dm.ibt.InTransaction then
+			dm.ibt.Commit
+		else
+			dm.ibt.StartTransaction;
+
+
 
         Close;
         FormMain.lsvRefresh;
     end;
+end;
+
+procedure TFormTicket.btnCommentClick(Sender: TObject);
+begin
+    // FormComment.ShowModal;
 end;
 
 end.

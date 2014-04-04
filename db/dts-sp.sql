@@ -54,28 +54,70 @@ returns (
     subject varchar(200) character set none,
     description varchar(255),
     username varchar(16) character set none,
+    is_open integer,
     created timestamp,
     modified timestamp
 )
 as
 begin
      for
-  select t.id, t.subject, t.description, t.user_id, t.created, t.modified
+  select t.id, t.subject, t.description, t.user_id, t.is_open, t.created, t.modified
     from ticket t, category c
    where t.category_id = c.id
      and c.name = :cat
      and upper(subject) like upper(:subj)
    order by subject
-    into :id, :subject, description, :username, :created, :modified
+    into :id, :subject, description, :username, :is_open, :created, :modified
       do
         begin
             suspend;
         end
 end
 
-execute procedure update_ticket(0, 'test', '', 1, 1, 1, '10323412', 'now', 'now');
 
-create procedure update_ticket(
+create procedure select_comments (
+    t_id integer
+)
+returns (
+    id integer,
+    user_id varchar(16),
+    comment varchar(1000),
+    defect_user varchar(16),
+    created timestamp
+)
+as begin
+        for
+     select id, user_id, comment, defect_user, created
+       from COMMENT c
+      where ticket_id = :t_id
+      order by id
+       into :id, :user_id, :comment, :defect_user, :created
+         do
+           begin
+               suspend;
+           end
+end
+
+create procedure update_comment(
+    id integer,
+    user_id varchar(16),
+    ticket_Id integer,
+    comment varchar(1000),
+    defect_user varchar(16),
+    created timestamp
+)
+as begin
+    if (:id = 0) then begin
+        insert into comment(user_id, ticket_id, comment, defect_user, created)
+        values(:user_id, :ticket_id, :comment, :defect_user, :created);
+    end
+    else if (:id < 0) then begin
+        delete from COMMENT where id = (:id * -1);
+    end
+end
+
+
+alter procedure update_ticket(
     id integer,
     subject varchar(200),
     description varchar(255),
@@ -88,13 +130,15 @@ create procedure update_ticket(
 )
 as
 declare variable newid integer;
+declare variable username varchar(200);
 declare variable newcomment varchar(255);
 begin
+    select last_name || ', ' || first_name from SELECT_USERS where id_no = :user_id into :username;
     if (:id = 0) then begin
         insert into ticket(subject, description, is_open, priority, category_id, user_id, created, modified)
         values(:subject, :description, :is_open, :priority, :category_id, :user_id, :created, :modified);
         select id from ticket where created = :created into :newid;
-        newcomment = 'Ticket opened by ' || :user_id || ' on ' || :created;
+        newcomment = 'Ticket opened by ' || :username || ' on ' || :created;
         insert into comment(user_id, ticket_id, comment, defect_user, created)
         values(:user_id, :newid, :newcomment, '', :created);
     end
@@ -109,9 +153,13 @@ begin
                priority      = :priority,
                category_id   = :category_id,
                user_id       = :user_id,
-               created       = :created,
                modified      = :modified
          where id = :id;
+         if (:is_open = 0) then begin
+            newcomment = 'Ticket closed by ' || :username || ' on ' || :modified;
+            insert into comment(user_id, ticket_id, comment, defect_user, created)
+            values(:user_id, :newid, :newcomment, '', :created);
+         end
     end
 end
 

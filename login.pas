@@ -97,7 +97,7 @@ begin
         else
         begin
             while not dm.ibq.Eof do begin
-                shared.CurrentUser := dm.ibq.Fields.Fields[0].AsString;
+                shared.CurrentUser := leduser.Text;
                 FormMain.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
 

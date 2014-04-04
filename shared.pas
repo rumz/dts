@@ -45,11 +45,10 @@ var
   LvSortOrder: array[0..10] of Boolean; // High[LvSortOrder] = Number of Lv Columns
 
 
-
-
 implementation
 
-function findindex(item : string):integer;
+
+function findIndex(item : string):integer;
 var i : integer;
 begin
     for i := Low(users) to High(users) do begin
@@ -59,6 +58,8 @@ begin
         end;
     end;
 end;
+
+
 
 
 function CustomSortProc(Item1, Item2: TListItem; SortColumn: Integer): Integer; stdcall;
@@ -160,4 +161,3 @@ end;
 
 
 end.
- 

@@ -16,9 +16,7 @@ type
     popItemLib: TPopupMenu;
     Refresh1: TMenuItem;
     AddRecord1: TMenuItem;
-    DeleteRecord1: TMenuItem;
     UpdateRecord1: TMenuItem;
-    N2: TMenuItem;
     ProcessRecord1: TMenuItem;
     Logout: TMenuItem;
     StatusBar1: TStatusBar;
@@ -139,11 +137,9 @@ begin
         dm.ibt.StartTransaction;
 
     dm.ibq.SQL.Clear;
-
     dm.ibq.SQL.Add('select * from SELECT_TICKETS(:a, :b)');
     dm.ibq.Params[0].AsString := cboType.Text;
-    dm.ibq.Params[1].AsString := EditRIVSearch.Text + '%';
-
+    dm.ibq.Params[1].AsString := '%' + EditRIVSearch.Text + '%';
     dm.ibq.Open;
 
     lsvTickets.Items.BeginUpdate;
@@ -153,9 +149,12 @@ begin
         NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;      // id
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[1].AsString);   // subject
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);   // description
+
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);   // user_id
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // created
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // modified
+        NewItem.SubItems.Add(shared.users[shared.findindex(dm.ibq.Fields.Fields[3].AsString)].name);   // user_name
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // is_open
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // created
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // modified
         dm.ibq.Next;
     end;
     lsvTickets.Items.EndUpdate;
@@ -211,13 +210,28 @@ begin
     shared.ftype := cboType.Text;
     shared.ticket_id := StrToInt(CurrentItem.Caption);
 
+    with ticket_data do begin
+        id          := StrToInt(CurrentItem.Caption);
+        subject     := CurrentItem.SubItems.Strings[0];
+        description := CurrentItem.SubItems.Strings[1];
+        user_id     := CurrentItem.SubItems.Strings[2];
+        is_open     := StrToInt(CurrentItem.SubItems.Strings[4]);
+        category_id := cboType.ItemIndex;
+        created     := StrToDateTime(CurrentItem.SubItems.Strings[5]);
+    end;
+
     FormTicket.Caption := CurrentItem.Caption;
     FormTicket.edtSubject.Text := CurrentItem.SubItems.Strings[0];
     FormTicket.Memo_Description.Text := CurrentItem.SubItems.Strings[1];
     FormTicket.cboCategory.ItemIndex := cboType.ItemIndex;
     FormTicket.cboUser.ItemIndex := findindex(CurrentItem.SubItems.Strings[2]);
-    FormTicket.ShowModal;
 
+    if CurrentItem.SubItems.Strings[4] = '1' then
+        FormTicket.chkbox_isOpen.Caption := 'Close Ticket'
+    else
+        FormTicket.chkbox_isOpen.Caption := 'Reopen Ticket';
+        
+    FormTicket.ShowModal;
 end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
@@ -225,11 +239,6 @@ begin
     shared.ftype := cboType.Text;
     shared.ticket_form_state := 'Add';
     FormTicket.ShowModal;
-{    FormRIV.led_rivno.Text := '';
-    FormRIV.cbo_Requestor.ItemIndex := -1;
-    FormRIV.Memo_RIV_Description.Lines.Clear;
-    FormRIV.Memo_Remarks.Lines.Clear;
-    FormRIV.ShowModal; }
 end;
 
 procedure TFormMain.SpeedButton1Click(Sender: TObject);
@@ -277,10 +286,6 @@ end;
 procedure TFormMain.ProcessRecord1Click(Sender: TObject);
 begin
     shared.ftype := cboType.Text;
-{    shared.riv_id := strtoint(CurrentItem.Caption);
-    shared.riv_no := CurrentRIV.SubItems.Strings[0];
-    shared.riv_description := CurrentRIV.SubItems.Strings[3];
-    FormProcess.ShowModal;}
 end;
 
 
@@ -315,7 +320,7 @@ end;
 
 procedure TFormMain.About2Click(Sender: TObject);
 begin
-    MessageDlg('Philhealth Document Tracking System Version 0.7.1', mtInformation, mbOKCancel, 1)
+    MessageDlg('PROARMM Ticketing System Version 0.8.1', mtInformation, mbOKCancel, 1)
 end;
 
 
