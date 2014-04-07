@@ -54,6 +54,7 @@ returns (
     subject varchar(200) character set none,
     description varchar(255),
     username varchar(16) character set none,
+    requester varchar(16) character set none,
     is_open integer,
     created timestamp,
     modified timestamp
@@ -61,13 +62,13 @@ returns (
 as
 begin
      for
-  select t.id, t.subject, t.description, t.user_id, t.is_open, t.created, t.modified
+  select t.id, t.subject, t.description, t.user_id, t.requester, t.is_open, t.created, t.modified
     from ticket t, category c
    where t.category_id = c.id
      and c.name = :cat
      and upper(subject) like upper(:subj)
    order by subject
-    into :id, :subject, description, :username, :is_open, :created, :modified
+    into :id, :subject, description, :username, :requester, :is_open, :created, :modified
       do
         begin
             suspend;
@@ -125,6 +126,7 @@ alter procedure update_ticket(
     priority integer,
     category_id integer,
     user_id varchar(16),
+    requester varchar(16),
     created timestamp,
     modified timestamp
 )
@@ -135,8 +137,8 @@ declare variable newcomment varchar(255);
 begin
     select last_name || ', ' || first_name from SELECT_USERS where id_no = :user_id into :username;
     if (:id = 0) then begin
-        insert into ticket(subject, description, is_open, priority, category_id, user_id, created, modified)
-        values(:subject, :description, :is_open, :priority, :category_id, :user_id, :created, :modified);
+        insert into ticket(subject, description, is_open, priority, category_id, user_id, requester, created, modified)
+        values(:subject, :description, :is_open, :priority, :category_id, :user_id, :requester, :created, :modified);
         select id from ticket where created = :created into :newid;
         newcomment = 'Ticket opened by ' || :username || ' on ' || :created;
         insert into comment(user_id, ticket_id, comment, defect_user, created)
@@ -153,6 +155,7 @@ begin
                priority      = :priority,
                category_id   = :category_id,
                user_id       = :user_id,
+               requester     = :requester,
                modified      = :modified
          where id = :id;
          if (:is_open = 0) then begin

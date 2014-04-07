@@ -59,7 +59,15 @@ object FormMain: TFormMain
       end
       item
         Caption = 'User'
-        Width = 200
+        Width = 175
+      end
+      item
+        Caption = 'RequesterID'
+        Width = 1
+      end
+      item
+        Caption = 'Requester'
+        Width = 175
       end
       item
         Caption = 'Is_Open'
@@ -282,10 +290,6 @@ object FormMain: TFormMain
     object UpdateRecord1: TMenuItem
       Caption = 'Update Record'
       OnClick = UpdateRecord1Click
-    end
-    object ProcessRecord1: TMenuItem
-      Caption = '&View Record'
-      OnClick = ProcessRecord1Click
     end
   end
 end

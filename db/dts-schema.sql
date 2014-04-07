@@ -182,6 +182,7 @@ create table ticket (
     priority integer,
     category_id integer,
     user_id varchar(16),
+    requester varchar(16),
     created timestamp default 'NOW',
     modified timestamp default 'NOW'
 )

@@ -17,7 +17,6 @@ type
     Refresh1: TMenuItem;
     AddRecord1: TMenuItem;
     UpdateRecord1: TMenuItem;
-    ProcessRecord1: TMenuItem;
     Logout: TMenuItem;
     StatusBar1: TStatusBar;
     lsvTickets: TListView;
@@ -152,9 +151,13 @@ begin
 
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[3].AsString);   // user_id
         NewItem.SubItems.Add(shared.users[shared.findindex(dm.ibq.Fields.Fields[3].AsString)].name);   // user_name
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // is_open
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // created
-        NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // modified
+
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);   // requester_id
+        NewItem.SubItems.Add(shared.users[shared.findindex(dm.ibq.Fields.Fields[4].AsString)].name);   // requester
+
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // is_open
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // created
+        NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);   // modified
         dm.ibq.Next;
     end;
     lsvTickets.Items.EndUpdate;
@@ -215,9 +218,10 @@ begin
         subject     := CurrentItem.SubItems.Strings[0];
         description := CurrentItem.SubItems.Strings[1];
         user_id     := CurrentItem.SubItems.Strings[2];
-        is_open     := StrToInt(CurrentItem.SubItems.Strings[4]);
+        requester   := CurrentItem.SubItems.Strings[4];
+        is_open     := StrToInt(CurrentItem.SubItems.Strings[6]);
         category_id := cboType.ItemIndex;
-        created     := StrToDateTime(CurrentItem.SubItems.Strings[5]);
+        created     := StrToDateTime(CurrentItem.SubItems.Strings[7]);
     end;
 
     FormTicket.Caption := CurrentItem.Caption;
@@ -225,8 +229,9 @@ begin
     FormTicket.Memo_Description.Text := CurrentItem.SubItems.Strings[1];
     FormTicket.cboCategory.ItemIndex := cboType.ItemIndex;
     FormTicket.cboUser.ItemIndex := findindex(CurrentItem.SubItems.Strings[2]);
+    FormTicket.cboRequester.ItemIndex := findindex(CurrentItem.SubItems.Strings[4]);
 
-    if CurrentItem.SubItems.Strings[4] = '1' then
+    if CurrentItem.SubItems.Strings[6] = '1' then
         FormTicket.chkbox_isOpen.Caption := 'Close Ticket'
     else
         FormTicket.chkbox_isOpen.Caption := 'Reopen Ticket';
@@ -320,7 +325,7 @@ end;
 
 procedure TFormMain.About2Click(Sender: TObject);
 begin
-    MessageDlg('PROARMM Ticketing System Version 0.8.1', mtInformation, mbOKCancel, 1)
+    MessageDlg('PROARMM Ticketing System Version 0.8.2', mtInformation, mbOKCancel, 1)
 end;
 
 

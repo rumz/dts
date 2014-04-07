@@ -15,7 +15,8 @@ uses
   shared in 'shared.pas',
   loginas in 'loginas.pas' {FormLoginAs},
   flows in 'flows.pas' {FormFlowAdmin},
-  ticket in 'ticket.pas' {FormTicket};
+  ticket in 'ticket.pas' {FormTicket},
+  comment in 'comment.pas' {FormComment};
 
 {$R *.res}
 
@@ -29,5 +30,6 @@ begin
   Application.CreateForm(TFormLoginAs, FormLoginAs);
   Application.CreateForm(TFormFlowAdmin, FormFlowAdmin);
   Application.CreateForm(TFormTicket, FormTicket);
+  Application.CreateForm(TFormComment, FormComment);
   Application.Run;
 end.
