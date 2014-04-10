@@ -53,6 +53,7 @@ type
     MemoComments: TMemo;
     procedure loadElements;
     procedure loadComments;
+    procedure loadTicket;
     procedure FormShow(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -124,6 +125,18 @@ begin
 end;
 
 
+procedure TformTicket.loadTicket;
+begin
+    with ticket_data do begin
+        edtSubject.Text := subject;
+        Memo_Description.Text := description;
+        cboUser.ItemIndex := findindex(user_id);
+        cboRequester.ItemIndex := findindex(requester);
+    end;
+end;
+
+
+
 procedure TFormTicket.loadComments;
 var
     user_name, defect_user_name : string;
@@ -152,48 +165,19 @@ begin
 			user_name := '';
 
         MemoComments.Lines.Add('User: ' + user_name);
-        MemoComments.Lines.Add('Comment id: ' + dm.ibq.Fields.Fields[2].AsString);
 		if dm.ibq.Fields.Fields[3].AsString <> '' then begin
 			defect_user_name := shared.users[shared.findindex(dm.ibq.Fields.Fields[3].AsString)].name;
     		MemoComments.Lines.Add('Defect user: ' + defect_user_name);
         end
 		else
 			defect_user_name := '';
+        MemoComments.Lines.Add('Comment: ' + dm.ibq.Fields.Fields[2].AsString);
 		dm.ibq.Next;
         MemoComments.Lines.Add('');
         MemoComments.Lines.Add('');
     end;
     MemoComments.Lines.EndUpdate;
 
-
-    {
-    lsvComments.Items.BeginUpdate;
-	lsvComments.Items.Clear;
-	while not dm.ibq.Eof do begin
-		NewItem := lsvComments.Items.Add;
-		NewItem.Caption := dm.ibq.Fields.Fields[0].AsString;
-
-		// get user
-
-		if dm.ibq.Fields.Fields[1].AsString <> '' then
-			user_name := shared.users[shared.findindex(dm.ibq.Fields.Fields[1].AsString)].name
-		else
-			user_name := '';
-		NewItem.SubItems.Add(user_name);
-		NewItem.SubItems.Add(dm.ibq.Fields.Fields[2].AsString);
-
-		// get defect user
-
-		if dm.ibq.Fields.Fields[3].AsString <> '' then
-			defect_user_name := shared.users[shared.findindex(dm.ibq.Fields.Fields[3].AsString)].name
-		else
-			defect_user_name := '';
-		NewItem.SubItems.Add(defect_user_name);
-		NewItem.SubItems.Add(dm.ibq.Fields.Fields[4].AsString);
-		dm.ibq.Next;
-	end;
-	lsvComments.Items.EndUpdate;
-    }
 end;
 
 
@@ -209,15 +193,22 @@ begin
         Memo_Description.Text := '';
         cboCategory.ItemIndex := -1;
         cboUser.ItemIndex := -1;
-        cboRequester.ItemIndex := -1;
+
+        cboRequester.ItemIndex := shared.findindex(CurrentUser);
+
         chkbox_isOpen.Checked := False;
         lsvComments.Items.Clear;
-
+        chkbox_isOpen.Visible := False;
+        btnComment.Visible := False;
+        MemoComments.Lines.Clear;
     end
     else if shared.ticket_form_state = 'Update' then begin
         { load comments }
         loadComments;
-    end
+        chkbox_isOpen.Visible := True;
+        btnComment.Visible := True;
+    end;
+    edtSubject.SetFocus;
 end;
 
 
@@ -294,19 +285,31 @@ begin
                    or (chkbox_isOpen.Checked) then
                 begin
     				comment := 'User ' + shared.users[findindex(CurrentUser)].name + ' made change(s): ';
-                    if edtSubject.Text <> subject then
-		    		    comment := comment + 'NEW SUBJECT: "' + edtSubject.Text + '" OLD SUBJECT: "' + subject + '"';
-                    if Memo_Description.Text <> description then
-				        comment := comment + 'NEW DESC: "' + Memo_Description.Text + '" OLD DESC: "' + description + '"';
-                    if cboCategory.ItemIndex <> category_id then
+                    if edtSubject.Text <> subject then begin
+		    		    comment := comment + 'NEW SUBJECT: "' + trim(edtSubject.Text) + '" OLD SUBJECT: "' + subject + '"';
+                        subject := trim(edtSubject.Text);
+                    end;
+                    if Memo_Description.Text <> description then begin
+				        comment := comment + 'NEW DESC: "' + trim(Memo_Description.Text) + '" OLD DESC: "' + description + '"';
+                        description := trim(Memo_Description.Text);
+                    end;
+                    if cboCategory.ItemIndex <> category_id then begin
 	    			    comment := comment + sLineBreak + 'CATEGORY: ' +  shared.categories[cboCategory.ItemIndex].name;
-                    if shared.users[cboUser.ItemIndex].id_no <> user_id then
+                        category_id := shared.categories[cboCategory.ItemIndex].id;
+                    end;
+                    if shared.users[cboUser.ItemIndex].id_no <> user_id then begin
 			    	    comment := comment + sLineBreak + 'ASSIGNED USER: ' + shared.users[cboUser.ItemIndex].name;
+                        user_id := shared.users[cboUser.ItemIndex].id_no;
+                    end;
                     if chkbox_isOpen.Checked then
-                        if chkbox_isOpen.Caption = 'Close Ticket' then
-                            comment := comment + sLineBreak + 'Ticket Closed at ' + DateToStr(NOW) + 'by ' + shared.users[findindex(CurrentUser)].name
-                        else if chkbox_isOpen.Caption = 'Reopen Ticket' then
-                            comment := comment + sLineBreak + 'Ticket Reopened at ' + DateToStr(NOW) + 'by ' + shared.users[findindex(CurrentUser)].name;;
+                        if chkbox_isOpen.Caption = 'Close Ticket' then begin
+                            comment := comment + sLineBreak + 'Ticket Closed at ' + DateToStr(NOW) + ' by ' + shared.users[findindex(CurrentUser)].name;
+                            is_open := 0;
+                        end
+                        else if chkbox_isOpen.Caption = 'Reopen Ticket' then begin
+                            comment := comment + sLineBreak + 'Ticket Reopened at ' + DateToStr(NOW) + 'by ' + shared.users[findindex(CurrentUser)].name;
+                            is_open := 1;
+                        end;
 
     				dm.ibq.SQL.Clear;
 	    			dm.ibq.SQL.Add('execute procedure update_comment(:id, :user_id, :ticket_id, :comment, :defect_user, :created)');

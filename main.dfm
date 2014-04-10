@@ -1,8 +1,8 @@
 object FormMain: TFormMain
-  Left = 1493
-  Top = 209
-  Width = 1046
-  Height = 560
+  Left = 143
+  Top = 97
+  Width = 1038
+  Height = 548
   Caption = 'DTS'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -80,6 +80,10 @@ object FormMain: TFormMain
       item
         Caption = 'Modified'
         Width = 125
+      end
+      item
+        Caption = 'Age'
+        Width = 150
       end>
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls, Buttons;
+  Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls, Buttons, DateUtils;
 
 type
 
@@ -158,6 +158,9 @@ begin
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[5].AsString);   // is_open
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // created
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);   // modified
+        NewItem.SubItems.Add(IntToStr(DaysBetween(Now, dm.ibq.Fields.Fields[6].AsDateTime)) + ' days');
+
+
         dm.ibq.Next;
     end;
     lsvTickets.Items.EndUpdate;

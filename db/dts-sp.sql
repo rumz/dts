@@ -1,23 +1,20 @@
-create PROCEDURE login(id_no varchar(20), pw varchar(30))
+alter PROCEDURE login(id_no varchar(20), pw varchar(30))
 RETURNS
 (
-    NAME       VARCHAR(80) CHARACTER SET NONE,
-    RIGHTS     VARCHAR(20) CHARACTER SET NONE
+    NAME       VARCHAR(80) CHARACTER SET NONE
 )
 AS BEGIN
     for
- select f_name || ' ' || l_name, right_id
+ select f_name || ' ' || l_name
    from phic_201
-  inner join user_rights on phic_201.id_no = user_id
   where id_no = :id_no
     and pw = :pw
-   into :name, :rights
+   into :name
      do
      begin
        suspend;
      end
-END^
-
+END
 
 
 alter PROCEDURE SELECT_USERS
@@ -26,18 +23,14 @@ RETURNS
     ID_NO           INTEGER,
     LAST_NAME       VARCHAR(80) CHARACTER SET NONE,
     FIRST_NAME       VARCHAR(80) CHARACTER SET NONE,
-    DEPT            VARCHAR(30) CHARACTER SET NONE,
-    RIGHTS          VARCHAR(20) CHARACTER SET NONE
+    DEPT            VARCHAR(30) CHARACTER SET NONE
 )
 as
 BEGIN
     for
-    select id_no, L_NAME, f_NAME, '', ''
+    select id_no, L_NAME, f_NAME, ''
       from PHIC_201 a
-     inner join USER_RIGHTS b
-        on a.id_no = b.user_id
-     where b.right_id = 'EU'
-      into :id_no, :last_name, :first_name, :dept, :rights
+      into :id_no, :last_name, :first_name, :dept
         do
         begin
           suspend;
@@ -45,7 +38,33 @@ BEGIN
 END
 
 
-alter procedure select_tickets (
+create procedure change_password(
+    id_no varchar(16),
+    pw varchar(30),
+    newpw varchar(30)
+)
+returns (
+    success integer
+)
+as
+declare variable username varchar(200);
+begin
+    select * from login(:id_no, :pw) into :username;
+    success = 0;
+    if (:username is not null) then
+    begin
+        update phic_201
+           set pw = :newpw
+         where id_no = :id_no;
+        success = 1;
+    end
+    suspend;
+end
+
+
+
+
+create procedure select_tickets (
     cat varchar(100),
     subj varchar(200)
 )
@@ -82,7 +101,7 @@ create procedure select_comments (
 returns (
     id integer,
     user_id varchar(16),
-    comment varchar(1000),
+    comment varchar(2000),
     defect_user varchar(16),
     created timestamp
 )
@@ -103,7 +122,7 @@ create procedure update_comment(
     id integer,
     user_id varchar(16),
     ticket_Id integer,
-    comment varchar(1000),
+    comment varchar(2000),
     defect_user varchar(16),
     created timestamp
 )
@@ -118,7 +137,7 @@ as begin
 end
 
 
-alter procedure update_ticket(
+create procedure update_ticket(
     id integer,
     subject varchar(200),
     description varchar(255),
@@ -135,7 +154,7 @@ declare variable newid integer;
 declare variable username varchar(200);
 declare variable newcomment varchar(255);
 begin
-    select last_name || ', ' || first_name from SELECT_USERS where id_no = :user_id into :username;
+    select last_name || ', ' || first_name from SELECT_USERS where id_no = :requester into :username;
     if (:id = 0) then begin
         insert into ticket(subject, description, is_open, priority, category_id, user_id, requester, created, modified)
         values(:subject, :description, :is_open, :priority, :category_id, :user_id, :requester, :created, :modified);
@@ -145,7 +164,7 @@ begin
         values(:user_id, :newid, :newcomment, '', :created);
     end
     else if (:id < 0) then begin
-        delete from flow_data where id = (:id * -1);
+        delete from ticket where id = (:id * -1);
     end
     else begin
         update ticket
@@ -366,32 +385,8 @@ begin
         end
 end
 
-// probably dont need this anymore but lets keep it around for the meantime
-alter procedure select_current_transaction(
-    riv_id integer
-)
-returns(
-    id integer,
-    rights varchar(16),
-    description varchar(255)
-)
-as begin
-    select id, rights, description
-      from flow_lib
-     where id = (select count(fd.flow_id)
-                   from flow_data fd, flow_lib fl
-                  where fd.flow_id = fl.id
-                    and riv_id = :riv_id
-                    and fd.approved = 1) + 1
-      into :id, :rights, :description;
-      suspend;
-end
 
 
-
-select * from select_current_transaction(14)
-
-select * from select_riv_transactions(14)
 
 
 create procedure update_flow_data (

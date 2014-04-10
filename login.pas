@@ -12,8 +12,8 @@ type
     ledpass: TLabeledEdit;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
-    ledServer: TLabeledEdit;
-    ledPath: TLabeledEdit;
+    cboDB: TComboBox;
+    Label1: TLabel;
     function ConnectDB:Boolean;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure AppExit;
@@ -48,11 +48,12 @@ end;
 
 
 function TFormLogin.ConnectDB:Boolean;
-begin                                             
+begin
     if dm.ibd.Connected = False then begin
-        dm.ibd.DatabaseName := trim(ledServer.Text) + ':' + trim(ledPath.Text);
-        // Sample: 172.22.16.72:d:\db\DTS.GDB
-        // 172.22.16.6:h:\databases\pipers ii\dts.gdb
+        // dm.ibd.DatabaseName := trim(ledServer.Text) + ':' + trim(ledPath.Text);
+        // Sample: 172.22.16.6:h:\databases\pipers ii\dts.gdb
+
+        dm.ibd.DatabaseName := cboDB.Text;
         dm.ibd.Connected := True;
     end;
     Result := dm.ibd.Connected;
@@ -103,21 +104,19 @@ begin
 
                 FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
-                shared.rights := rights + dm.ibq.Fields.Fields[1].AsString + '|';
                 dm.ibq.Next;
             end;
-            // FormMain.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
-            // FormProcess.StatusBar1.Panels.Items[2].Text := '  Rights:  ' + shared.rights;
             FormMain.Show;
             FormLogin.Hide;
         end
     end;
 end;
 
+
 procedure TFormLogin.FormShow(Sender: TObject);
 begin
-    //leduser.Text := '';
-    //ledpass.Text := '';
+    leduser.Text := '';
+    ledpass.Text := '';
     leduser.SetFocus;
     
 end;

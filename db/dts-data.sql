@@ -72,11 +72,11 @@ insert into user_rights (user_id, right_id) values('10323412', 'GSU2');
 insert into user_rights (user_id, right_id) values('10323412', 'GSU4');
 
 
-insert into category (id, name, description, created, modified) values(1, 'Procurement', 'Procurement', 'now', 'now')
-insert into category (id, name, description, created, modified) values(2, 'Local Support', '', 'now', 'now')
-insert into category (id, name, description, created, modified) values(3, 'Data Extraction', '', 'now', 'now')
-insert into category (id, name, description, created, modified) values(4, 'Hardware Maintenance', '', 'now', 'now')
-insert into category (id, name, description, created, modified) values(5, 'IT Project', '', 'now', 'now')
-insert into category (id, name, description, created, modified) values(6, 'Misc', '', 'now', 'now')
+insert into category (name, description, created, modified) values(1, 'Procurement', 'Procurement', 'now', 'now')
+insert into category (name, description, created, modified) values('Local Support', '', 'now', 'now')
+insert into category (name, description, created, modified) values('Data Extraction', '', 'now', 'now')
+insert into category (name, description, created, modified) values('Hardware Maintenance', '', 'now', 'now')
+insert into category (name, description, created, modified) values('IT Project', '', 'now', 'now')
+insert into category (name, description, created, modified) values('Misc', '', 'now', 'now')
 
 

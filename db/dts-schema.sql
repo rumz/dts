@@ -201,7 +201,7 @@ create table comment (
     id integer,
     user_id varchar(16),
     ticket_id integer,
-    comment varchar(500),
+    comment varchar(2000),
     defect_user varchar(16),
     created timestamp default 'NOW'
 )

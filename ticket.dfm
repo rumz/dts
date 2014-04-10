@@ -1,8 +1,8 @@
 object FormTicket: TFormTicket
-  Left = 1392
-  Top = 123
-  Width = 1183
-  Height = 778
+  Left = 145
+  Top = 34
+  Width = 1175
+  Height = 711
   Align = alClient
   Caption = 'Ticket Details'
   Color = clBtnFace
@@ -33,7 +33,7 @@ object FormTicket: TFormTicket
     Left = 0
     Top = 218
     Width = 1167
-    Height = 522
+    Height = 466
     Align = alClient
     Caption = 'Comments'
     TabOrder = 0
@@ -76,14 +76,22 @@ object FormTicket: TFormTicket
       ShowHint = True
       TabOrder = 0
       ViewStyle = vsReport
+      Visible = False
     end
     object MemoComments: TMemo
       Left = 2
       Top = 15
       Width = 1163
-      Height = 505
+      Height = 449
       Align = alClient
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       ReadOnly = True
+      ScrollBars = ssVertical
       TabOrder = 1
     end
   end
