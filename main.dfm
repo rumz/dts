@@ -1,5 +1,5 @@
 object FormMain: TFormMain
-  Left = 143
+  Left = 135
   Top = 97
   Width = 1038
   Height = 548
@@ -27,7 +27,7 @@ object FormMain: TFormMain
         Width = 75
       end
       item
-        Width = 150
+        Width = 300
       end
       item
         Width = 200
@@ -288,11 +288,15 @@ object FormMain: TFormMain
       OnClick = Refresh1Click
     end
     object AddRecord1: TMenuItem
-      Caption = 'Add Record'
+      Caption = '&Add Record'
       OnClick = AddRecord1Click
     end
     object UpdateRecord1: TMenuItem
-      Caption = 'Update Record'
+      Caption = '&Update Record'
+      OnClick = UpdateRecord1Click
+    end
+    object DeleteRecord1: TMenuItem
+      Caption = '&Delete Record'
       OnClick = UpdateRecord1Click
     end
   end

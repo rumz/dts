@@ -192,8 +192,8 @@ create table ticket_interactions (
     id integer,
     ticket_id integer,
     user_id integer,
-    created timestamp default 'NOW',
-    modified timestamp default 'NOW'
+    start_time timestamp default 'NOW',
+    end_time timestamp default 'NOW'   
 )
 
 

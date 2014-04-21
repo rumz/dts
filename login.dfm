@@ -1,8 +1,8 @@
 object FormLogin: TFormLogin
-  Left = 459
-  Top = 262
-  Width = 353
-  Height = 196
+  Left = 431
+  Top = 251
+  Width = 365
+  Height = 197
   Caption = 'Login - Philhealth Document Tracker'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,8 +19,8 @@ object FormLogin: TFormLogin
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 13
-    Top = 10
+    Left = 21
+    Top = 18
     Width = 60
     Height = 16
     Caption = 'Database'
@@ -32,8 +32,8 @@ object FormLogin: TFormLogin
     ParentFont = False
   end
   object leduser: TLabeledEdit
-    Left = 81
-    Top = 39
+    Left = 89
+    Top = 47
     Width = 246
     Height = 24
     EditLabel.Width = 66
@@ -57,8 +57,8 @@ object FormLogin: TFormLogin
     Text = '10323412'
   end
   object ledpass: TLabeledEdit
-    Left = 81
-    Top = 72
+    Left = 89
+    Top = 80
     Width = 246
     Height = 24
     EditLabel.Width = 63
@@ -83,8 +83,8 @@ object FormLogin: TFormLogin
     Text = '1'
   end
   object BitBtn1: TBitBtn
-    Left = 64
-    Top = 116
+    Left = 72
+    Top = 124
     Width = 75
     Height = 25
     TabOrder = 2
@@ -92,8 +92,8 @@ object FormLogin: TFormLogin
     Kind = bkOK
   end
   object BitBtn2: TBitBtn
-    Left = 184
-    Top = 116
+    Left = 192
+    Top = 124
     Width = 75
     Height = 25
     TabOrder = 3
@@ -101,8 +101,8 @@ object FormLogin: TFormLogin
     Kind = bkCancel
   end
   object cboDB: TComboBox
-    Left = 82
-    Top = 6
+    Left = 90
+    Top = 14
     Width = 247
     Height = 21
     Style = csDropDownList

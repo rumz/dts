@@ -1,6 +1,6 @@
 object FormFlowAdmin: TFormFlowAdmin
-  Left = 406
-  Top = 151
+  Left = 310
+  Top = 113
   Width = 748
   Height = 466
   Caption = 'Flow Administrator'
@@ -18,14 +18,14 @@ object FormFlowAdmin: TFormFlowAdmin
     Left = 343
     Top = 30
     Width = 5
-    Height = 408
+    Height = 409
     Cursor = crHSplit
   end
   object TabControl2: TTabControl
     Left = 0
     Top = 30
     Width = 343
-    Height = 408
+    Height = 409
     Align = alLeft
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -41,7 +41,7 @@ object FormFlowAdmin: TFormFlowAdmin
       Left = 4
       Top = 27
       Width = 335
-      Height = 377
+      Height = 378
       Align = alClient
       Checkboxes = True
       Columns = <
@@ -190,7 +190,7 @@ object FormFlowAdmin: TFormFlowAdmin
     Left = 348
     Top = 30
     Width = 392
-    Height = 408
+    Height = 409
     Align = alClient
     Caption = 'Steps '
     Font.Charset = DEFAULT_CHARSET

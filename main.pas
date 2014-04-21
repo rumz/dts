@@ -29,10 +29,10 @@ type
     cboType: TComboBox;
     SpeedButton3: TSpeedButton;
     FlowAdmin1: TMenuItem;
+    DeleteRecord1: TMenuItem;
     procedure Initialize;
     procedure lsvRefresh;
     procedure Refresh1Click(Sender: TObject);
-    procedure DeleteRecord1Click(Sender: TObject);
     procedure UpdateRecord1Click(Sender: TObject);
     procedure AddRecord1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -130,6 +130,8 @@ end;
 
 procedure TFormMain.lsvRefresh;
 begin
+
+    shared.main_form_state := 'Refresh';
     if dm.ibt.InTransaction then
         dm.ibt.Commit
     else
@@ -164,6 +166,7 @@ begin
         dm.ibq.Next;
     end;
     lsvTickets.Items.EndUpdate;
+    shared.main_form_state := '';
 end;
 
 
@@ -174,73 +177,60 @@ begin
 end;
 
 
-procedure TFormMain.DeleteRecord1Click(Sender: TObject);
+procedure TFormMain.UpdateRecord1Click(Sender: TObject);
 var
     pass : string;
 begin
-    pass := '121';
-    if InputBox('Enter Administrator Password', 'Password: ', '') = pass then begin
+    if Sender = UpdateRecord1 then
+    begin
+		shared.ticket_form_state := 'Update';
 
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit
-    else
-        dm.ibt.StartTransaction;
+		FormTicket.Caption := CurrentItem.Caption;
+		FormTicket.edtSubject.Text := CurrentItem.SubItems.Strings[0];
+		FormTicket.Memo_Description.Text := CurrentItem.SubItems.Strings[1];
+		FormTicket.cboCategory.ItemIndex := cboType.ItemIndex;
+		FormTicket.cboUser.ItemIndex := findindex(CurrentItem.SubItems.Strings[2]);
+		FormTicket.cboRequester.ItemIndex := findindex(CurrentItem.SubItems.Strings[4]);
 
-    dm.ibq.SQL.Clear;
-    dm.ibq.SQL.Add('execute procedure UPDATE_FLOWS(:id,:ftype,:description,:f_no,:requestor,:create_date,:created_by,:current_step,:status,:remarks)');
-    dm.ibq.ParamByName('id').AsInteger := strtoint(CurrentItem.Caption) * -1;
-    dm.ibq.ParamByName('ftype').AsString := '';
-    dm.ibq.ParamByName('description').AsString := '';
-    dm.ibq.ParamByName('f_no').AsString := '';
-    dm.ibq.ParamByName('requestor').AsString := '';
-    dm.ibq.ParamByName('create_date').AsDateTime := Now;
-    dm.ibq.ParamByName('created_by').AsString := '';
-    dm.ibq.ParamByName('current_step').AsInteger := 0;
-    dm.ibq.ParamByName('status').AsString := '';
-    dm.ibq.ParamByName('remarks').AsString := '';
+		if CurrentItem.SubItems.Strings[6] = '1' then
+			FormTicket.chkbox_isOpen.Caption := 'Close Ticket'
+		else
+			FormTicket.chkbox_isOpen.Caption := 'Reopen Ticket';
 
-    dm.ibq.Prepare;
-    dm.ibq.ExecSQL;
-    if dm.ibt.InTransaction then
-        dm.ibt.Commit;
-    lsvRefresh;
+		FormTicket.ShowModal;
+    end
+    else if Sender = DeleteRecord1 then
+    begin
+		pass := '1213';
+		if InputBox('Enter Administrator Password', 'Password: ', '') = pass then
+        begin
+			if dm.ibt.InTransaction then
+				dm.ibt.Commit
+			else
+				dm.ibt.StartTransaction;
 
+			dm.ibq.SQL.Clear;
+			dm.ibq.SQL.Add('execute procedure update_ticket(:id, :subject, :description, :is_open, :priority, :category_id, :user_id, :requester, :created, :modified)');
+			dm.ibq.ParamByName('id').AsInteger          := ticket_data.id * -1;
+			dm.ibq.ParamByName('subject').AsString      := ticket_data.subject;
+			dm.ibq.ParamByName('description').AsString  := ticket_data.description;
+			dm.ibq.ParamByName('is_open').AsInteger     := ticket_data.is_open;
+			dm.ibq.ParamByName('priority').AsInteger    := 1;
+			dm.ibq.ParamByName('category_id').AsInteger := ticket_data.category_id;
+			dm.ibq.ParamByName('user_id').AsString      := ticket_data.user_id;
+			dm.ibq.ParamByName('requester').AsString    := ticket_data.requester;
+			dm.ibq.ParamByName('created').AsDateTime    := Now;      { SP doesnt use this when in UPDATE mode }
+			dm.ibq.ParamByName('modified').AsDateTime   := Now;
+
+			dm.ibq.Prepare;
+			dm.ibq.ExecSQL;
+			if dm.ibt.InTransaction then
+				dm.ibt.Commit;
+			lsvRefresh;
+        end;
     end;
 end;
 
-
-
-procedure TFormMain.UpdateRecord1Click(Sender: TObject);
-begin
-    shared.ticket_form_state := 'Update';
-    shared.ftype := cboType.Text;
-    shared.ticket_id := StrToInt(CurrentItem.Caption);
-
-    with ticket_data do begin
-        id          := StrToInt(CurrentItem.Caption);
-        subject     := CurrentItem.SubItems.Strings[0];
-        description := CurrentItem.SubItems.Strings[1];
-        user_id     := CurrentItem.SubItems.Strings[2];
-        requester   := CurrentItem.SubItems.Strings[4];
-        is_open     := StrToInt(CurrentItem.SubItems.Strings[6]);
-        category_id := cboType.ItemIndex;
-        created     := StrToDateTime(CurrentItem.SubItems.Strings[7]);
-    end;
-
-    FormTicket.Caption := CurrentItem.Caption;
-    FormTicket.edtSubject.Text := CurrentItem.SubItems.Strings[0];
-    FormTicket.Memo_Description.Text := CurrentItem.SubItems.Strings[1];
-    FormTicket.cboCategory.ItemIndex := cboType.ItemIndex;
-    FormTicket.cboUser.ItemIndex := findindex(CurrentItem.SubItems.Strings[2]);
-    FormTicket.cboRequester.ItemIndex := findindex(CurrentItem.SubItems.Strings[4]);
-
-    if CurrentItem.SubItems.Strings[6] = '1' then
-        FormTicket.chkbox_isOpen.Caption := 'Close Ticket'
-    else
-        FormTicket.chkbox_isOpen.Caption := 'Reopen Ticket';
-        
-    FormTicket.ShowModal;
-end;
 
 procedure TFormMain.AddRecord1Click(Sender: TObject);
 begin
@@ -270,7 +260,26 @@ end;
 procedure TFormMain.lsvTicketsChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
-    CurrentItem := lsvTickets.Selected;
+    if shared.main_form_state <> 'Refresh' then
+    begin
+
+		CurrentItem := lsvTickets.Selected;
+		// lets try to phase out next two lines
+		shared.ftype := cboType.Text;
+		shared.ticket_id := StrToInt(CurrentItem.Caption);
+
+		with ticket_data do begin
+			id          := StrToInt(CurrentItem.Caption);
+			subject     := CurrentItem.SubItems.Strings[0];
+			description := CurrentItem.SubItems.Strings[1];
+			user_id     := CurrentItem.SubItems.Strings[2];
+			requester   := CurrentItem.SubItems.Strings[4];
+			is_open     := StrToInt(CurrentItem.SubItems.Strings[6]);
+			category_id := cboType.ItemIndex;
+			created     := StrToDateTime(CurrentItem.SubItems.Strings[7]);
+		end;
+
+    end;
 end;
 
 
