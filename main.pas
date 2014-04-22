@@ -295,7 +295,7 @@ end;
 procedure TFormMain.lsvTicketsDblClick(Sender: TObject);
 begin
   if CurrentItem <> nil then
-      UpdateRecord1Click(self);
+      UpdateRecord1Click(UpdateRecord1);
 
 end;
 

@@ -102,8 +102,6 @@ begin
                 FormMain.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
 
-                FormProcess.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
-                FormProcess.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
                 dm.ibq.Next;
             end;
             FormMain.Show;
