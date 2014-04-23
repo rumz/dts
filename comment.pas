@@ -129,7 +129,7 @@ begin
         dm.ibq.SQL.Clear;
         dm.ibq.SQL.Add('execute procedure update_comment(:id, :user_id, :ticket_id, :comment, :defect_user, :created)');
 		dm.ibq.ParamByName('id').AsInteger := 0;  { 0 autogenerate new id, -1 delete }
-		dm.ibq.ParamByName('user_id').AsString := CurrentUser;
+		dm.ibq.ParamByName('user_id').AsString := shared.CurrentUser.id_no;
     	dm.ibq.ParamByName('ticket_id').AsInteger := ticket_data.id;
 
         comment := comment + trim(MemoComment.Text);

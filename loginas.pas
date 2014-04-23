@@ -26,7 +26,7 @@ var
 
 implementation
 
-uses data_module, shared, process;
+uses data_module, shared;
 
 {$R *.dfm}
 

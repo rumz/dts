@@ -264,7 +264,6 @@ object FormMain: TFormMain
       Caption = '&File'
       object FlowAdmin1: TMenuItem
         Caption = '&Flow Admin'
-        OnClick = FlowAdmin1Click
       end
       object Logout: TMenuItem
         Caption = '&Logout'

@@ -1,9 +1,9 @@
 object FormLogin: TFormLogin
-  Left = 405
+  Left = 432
   Top = 251
   Width = 365
   Height = 197
-  Caption = 'Login - Philhealth Document Tracker'
+  Caption = 'Login - Document Tracker                           Build 100'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -80,7 +80,7 @@ object FormLogin: TFormLogin
     ParentFont = False
     PasswordChar = '*'
     TabOrder = 1
-    Text = '1'
+    Text = '2'
   end
   object BitBtn1: TBitBtn
     Left = 72

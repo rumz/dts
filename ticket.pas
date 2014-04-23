@@ -194,7 +194,7 @@ begin
         cboCategory.ItemIndex := -1;
         cboUser.ItemIndex := -1;
 
-        cboRequester.ItemIndex := shared.findindex(CurrentUser);
+        cboRequester.ItemIndex := shared.findindex(CurrentUser.name);
 
         chkbox_isOpen.Checked := False;
         lsvComments.Items.Clear;
@@ -284,7 +284,7 @@ begin
                    or (user_id     <> shared.users[cboUser.ItemIndex].id_no)
                    or (chkbox_isOpen.Checked) then
                 begin
-    				comment := 'User ' + shared.users[findindex(CurrentUser)].name + ' made change(s): ';
+    				comment := 'User ' + shared.users[findindex(CurrentUser.id_no)].name + ' made change(s): ';
                     if edtSubject.Text <> subject then begin
 		    		    comment := comment + 'NEW SUBJECT: "' + trim(edtSubject.Text) + '" OLD SUBJECT: "' + subject + '"';
                         subject := trim(edtSubject.Text);
@@ -303,18 +303,18 @@ begin
                     end;
                     if chkbox_isOpen.Checked then
                         if chkbox_isOpen.Caption = 'Close Ticket' then begin
-                            comment := comment + sLineBreak + 'Ticket Closed at ' + DateToStr(NOW) + ' by ' + shared.users[findindex(CurrentUser)].name;
+                            comment := comment + sLineBreak + 'Ticket Closed at ' + DateToStr(NOW) + ' by ' + shared.users[findindex(CurrentUser.id_no)].name;
                             is_open := 0;
                         end
                         else if chkbox_isOpen.Caption = 'Reopen Ticket' then begin
-                            comment := comment + sLineBreak + 'Ticket Reopened at ' + DateToStr(NOW) + 'by ' + shared.users[findindex(CurrentUser)].name;
+                            comment := comment + sLineBreak + 'Ticket Reopened at ' + DateToStr(NOW) + 'by ' + shared.users[findindex(CurrentUser.id_no)].name;
                             is_open := 1;
                         end;
 
     				dm.ibq.SQL.Clear;
 	    			dm.ibq.SQL.Add('execute procedure update_comment(:id, :user_id, :ticket_id, :comment, :defect_user, :created)');
 		    		dm.ibq.ParamByName('id').AsInteger := 0;  { 0 autogenerate new id, -1 delete }
-			    	dm.ibq.ParamByName('user_id').AsString := CurrentUser;
+			    	dm.ibq.ParamByName('user_id').AsString := CurrentUser.id_no;
     				dm.ibq.ParamByName('ticket_id').AsInteger := ticket_data.id;
 	    			dm.ibq.ParamByName('comment').AsString := comment;
 	    			dm.ibq.ParamByName('defect_user').AsString := '';

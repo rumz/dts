@@ -32,7 +32,7 @@ var
 
 implementation
 
-uses data_module, main, shared, process;
+uses data_module, main, shared;
 
 {$R *.dfm}
 
@@ -75,9 +75,9 @@ end;
 procedure TFormLogin.BitBtn1Click(Sender: TObject);
 begin
     if ConnectDB then begin
-        shared.user_name := '';
-        shared.user_id := leduser.Text;
-        shared.rights := '';
+        shared.CurrentUser.name := '';
+        shared.CurrentUser.id_no := trim(leduser.Text);
+//        shared.rights := '';
 
         if dm.ibt.InTransaction then
             dm.ibt.Commit
@@ -98,7 +98,7 @@ begin
         else
         begin
             while not dm.ibq.Eof do begin
-                shared.CurrentUser := leduser.Text;
+                shared.CurrentUser.id_no := leduser.Text;
                 FormMain.StatusBar1.Panels.Items[0].Text := '  ' + leduser.Text;
                 FormMain.StatusBar1.Panels.Items[1].Text := '  ' + dm.ibq.Fields.Fields[0].AsString;
 
@@ -113,8 +113,8 @@ end;
 
 procedure TFormLogin.FormShow(Sender: TObject);
 begin
-    leduser.Text := '';
-    ledpass.Text := '';
+    // leduser.Text := '';
+    // ledpass.Text := '';
     leduser.SetFocus;
     
 end;

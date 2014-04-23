@@ -24,16 +24,15 @@ type
 
 
 var
-    CurrentUser: String;
-    user_id, user_name: String;
-    rights : String;
+    CurrentUser: TUser;
+    users: array of TUser;
+    categories: array of TCategory;
+
     main_form_state, riv_form_state, ticket_form_state : String;
     riv_id, ticket_id : integer;
     riv_no, riv_rights, riv_description : string;
     ftype : string;
 
-    users: array of TUser;
-    categories: array of TCategory;
 
 
     loginas, loginaspass, loginasrights, loginasuserid : string;

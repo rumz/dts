@@ -48,7 +48,6 @@ type
     procedure LogoutClick(Sender: TObject);
     procedure About2Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
-    procedure FlowAdmin1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,7 +63,7 @@ var
 
 implementation
 
-uses data_module, riv, login, process, shared, flows, ticket;
+uses data_module, login, shared, ticket;
 
 {$R *.dfm}
 
@@ -101,7 +100,7 @@ begin
         i := i + 1;
     end;
     cboType.Items.EndUpdate;
-    cboType.ItemIndex := 0;
+    cboType.ItemIndex := cboType.Items.IndexOf('Procurement');
 
     { LOAD USERS INTO SHARED SPACE }
     if dm.ibt.InTransaction then
@@ -161,8 +160,6 @@ begin
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[6].AsString);   // created
         NewItem.SubItems.Add(dm.ibq.Fields.Fields[7].AsString);   // modified
         NewItem.SubItems.Add(IntToStr(DaysBetween(Now, dm.ibq.Fields.Fields[6].AsDateTime)) + ' days');
-
-
         dm.ibq.Next;
     end;
     lsvTickets.Items.EndUpdate;
@@ -325,10 +322,8 @@ end;
 
 procedure TFormMain.LogoutClick(Sender: TObject);
 begin
-    shared.user_id := '';
-    shared.CurrentUser := '';
-    shared.user_name := '';
-    shared.rights := '';
+    shared.CurrentUser.id_no := '';
+    shared.CurrentUser.name  := '';
 
     FormMain.Hide;
     FormLogin.ShowModal;
@@ -337,7 +332,7 @@ end;
 
 procedure TFormMain.About2Click(Sender: TObject);
 begin
-    MessageDlg('PROARMM Ticketing System Version 0.8.2', mtInformation, mbOKCancel, 1)
+    MessageDlg('PROARMM Ticketing System Version 0.8.3', mtInformation, mbOKCancel, 1)
 end;
 
 
@@ -346,10 +341,5 @@ begin
     Initialize;
 end;
 
-
-procedure TFormMain.FlowAdmin1Click(Sender: TObject);
-begin
-    FormFlowAdmin.ShowModal;
-end;
 
 end.

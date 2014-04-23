@@ -9,7 +9,6 @@ uses
   Forms,
   main in 'main.pas' {FormMain},
   data_module in 'data_module.pas' {dm: TDataModule},
-  riv in 'riv.pas' {FormRIV},
   login in 'login.pas' {FormLogin},
   shared in 'shared.pas',
   loginas in 'loginas.pas' {FormLoginAs},
@@ -23,7 +22,6 @@ begin
   Application.CreateForm(TFormLogin, FormLogin);
   Application.CreateForm(TFormMain, FormMain);
   Application.CreateForm(Tdm, dm);
-  Application.CreateForm(TFormRIV, FormRIV);
   Application.CreateForm(TFormLoginAs, FormLoginAs);
   Application.CreateForm(TFormTicket, FormTicket);
   Application.CreateForm(TFormComment, FormComment);
