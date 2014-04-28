@@ -6,6 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, ComCtrls, StdCtrls, ExtCtrls, Buttons, DateUtils;
 
+const
+  InputBoxMessage = WM_USER + 200;
+
 type
 
   TFormMain = class(TForm)
@@ -50,6 +53,7 @@ type
     procedure SpeedButton3Click(Sender: TObject);
   private
     { Private declarations }
+    procedure InputBoxSetPasswordChar(var Msg: TMessage); message InputBoxMessage;
   public
     { Public declarations }
     NewItem, CurrentItem : TListItem;
@@ -66,6 +70,24 @@ implementation
 uses data_module, login, shared, ticket;
 
 {$R *.dfm}
+
+
+procedure TFormMain.InputBoxSetPasswordChar(var Msg: TMessage);
+var
+  hInputForm, hEdit, hButton: HWND;
+begin
+  hInputForm := Screen.Forms[0].Handle;
+  if (hInputForm <> 0) then
+  begin
+    hEdit := FindWindowEx(hInputForm, 0, 'TEdit', nil);
+    {
+      // Change button text:
+      hButton := FindWindowEx(hInputForm, 0, 'TButton', nil);
+      SendMessage(hButton, WM_SETTEXT, 0, Integer(PChar('Cancel')));
+    }
+    SendMessage(hEdit, EM_SETPASSWORDCHAR, Ord('*'), 0);
+  end;
+end;
 
 
 
@@ -199,6 +221,7 @@ begin
     else if Sender = DeleteRecord1 then
     begin
 		pass := '1213';
+        PostMessage(Handle, InputBoxMessage, 0, 0);
 		if InputBox('Enter Administrator Password', 'Password: ', '') = pass then
         begin
 			if dm.ibt.InTransaction then

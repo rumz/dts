@@ -6,3 +6,4 @@ copy dts.exe m:
 net use m: /d
 rem uncomment the line below if you are doing a new install 
 rem copy m:\gds32.dll .
+pause

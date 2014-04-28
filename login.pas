@@ -113,8 +113,8 @@ end;
 
 procedure TFormLogin.FormShow(Sender: TObject);
 begin
-    // leduser.Text := '';
-    // ledpass.Text := '';
+    leduser.Text := '';
+    ledpass.Text := '';
     leduser.SetFocus;
     
 end;
