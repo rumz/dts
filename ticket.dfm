@@ -3,7 +3,6 @@ object FormTicket: TFormTicket
   Top = 34
   Width = 1175
   Height = 711
-  Align = alClient
   Caption = 'Ticket Details'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

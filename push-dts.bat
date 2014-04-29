@@ -1,6 +1,6 @@
 rem 1. In order to use this correctly, the newest update must be in \\172.22.16.10\transfer\SystemUpdates\dts
 rem    Please still copy the update folder into that directory as well
-rem 2. Copy this file to the path on the pc where you want to update mcis 
+rem 2. Copy this file to the path on the pc where you want to update dtsn 
 net use m: /persistent:yes  \\172.22.16.10\transfer\SystemUpdates\dts
 copy dts.exe m:
 net use m: /d

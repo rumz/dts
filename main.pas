@@ -285,20 +285,22 @@ begin
 
 		CurrentItem := lsvTickets.Selected;
 		// lets try to phase out next two lines
-		shared.ftype := cboType.Text;
-		shared.ticket_id := StrToInt(CurrentItem.Caption);
+//		shared.ftype := cboType.Text;
 
-		with ticket_data do begin
-			id          := StrToInt(CurrentItem.Caption);
-			subject     := CurrentItem.SubItems.Strings[0];
-			description := CurrentItem.SubItems.Strings[1];
-			user_id     := CurrentItem.SubItems.Strings[2];
-			requester   := CurrentItem.SubItems.Strings[4];
-			is_open     := StrToInt(CurrentItem.SubItems.Strings[6]);
-			category_id := cboType.ItemIndex;
-			created     := StrToDateTime(CurrentItem.SubItems.Strings[7]);
-		end;
-
+        if CurrentItem <> nil then
+        begin
+    		shared.ticket_id := StrToInt(CurrentItem.Caption);
+    		with ticket_data do begin
+	    		id          := StrToInt(CurrentItem.Caption);
+		    	subject     := CurrentItem.SubItems.Strings[0];
+			    description := CurrentItem.SubItems.Strings[1];
+    			user_id     := CurrentItem.SubItems.Strings[2];
+	    		requester   := CurrentItem.SubItems.Strings[4];
+		    	is_open     := StrToInt(CurrentItem.SubItems.Strings[6]);
+			    category_id := cboType.ItemIndex;
+    			created     := StrToDateTime(CurrentItem.SubItems.Strings[7]);
+	    	end;
+        end;
     end;
 end;
 
@@ -355,7 +357,7 @@ end;
 
 procedure TFormMain.About2Click(Sender: TObject);
 begin
-    MessageDlg('PROARMM Ticketing System Version 0.8.3', mtInformation, mbOKCancel, 1)
+    MessageDlg('PROARMM Ticketing System  Build 102', mtInformation, mbOKCancel, 1)
 end;
 
 

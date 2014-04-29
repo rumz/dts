@@ -86,6 +86,7 @@ begin
    where t.category_id = c.id
      and c.name = :cat
      and upper(subject) like upper(:subj)
+     and t.id not in (select id from deleted)
    order by subject
     into :id, :subject, description, :username, :requester, :is_open, :created, :modified
       do
@@ -132,6 +133,7 @@ as begin
         values(:user_id, :ticket_id, :comment, :defect_user, :created);
     end
     else if (:id < 0) then begin
+        insert into deleted(item_type, id) values('C', :id * -1);
         delete from COMMENT where id = (:id * -1);
     end
 end
@@ -164,7 +166,7 @@ begin
         values(:user_id, :newid, :newcomment, '', :created);
     end
     else if (:id < 0) then begin
-        delete from ticket where id = (:id * -1);
+        insert into deleted(item_type, id) values('T', :id * -1);
     end
     else begin
         update ticket

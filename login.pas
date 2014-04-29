@@ -77,7 +77,6 @@ begin
     if ConnectDB then begin
         shared.CurrentUser.name := '';
         shared.CurrentUser.id_no := trim(leduser.Text);
-//        shared.rights := '';
 
         if dm.ibt.InTransaction then
             dm.ibt.Commit

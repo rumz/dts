@@ -3,7 +3,7 @@ object FormLogin: TFormLogin
   Top = 251
   Width = 365
   Height = 197
-  Caption = 'Login - Document Tracker                           Build 100'
+  Caption = 'Tracker Login       Build 102 - 20140429'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

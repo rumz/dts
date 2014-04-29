@@ -188,6 +188,18 @@ create table ticket (
 )
 
 
+/*  TABLE DELETED
+
+type - 'T'
+id   - fk on ticket table or comment table {we can hide sensitive tickets/comments}
+*/
+
+create table deleted (
+    item_type varchar(1) not null,
+    id integer not null
+)
+
+
 create table ticket_interactions (
     id integer,
     ticket_id integer,
